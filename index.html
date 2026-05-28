@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Capiarcos — Carpintaria com fábrica própria desde 1998. Cozinhas, roupeiros, pavimentos e mobiliário por medida em Arcos de Valdevez.">
+  <title>Capiarcos — Carpintaria por medida</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+</head>
+<body>
+
+<!-- ════ NAV ════ -->
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/img/logo.png" alt="Capiarcos">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active" data-i18n="nav.home">Home</a></li>
+      <li><a href="empresa.html" data-i18n="nav.empresa">Empresa e Serviços</a></li>
+      <li><a href="catalogo.html" data-i18n="nav.catalogo">Catálogo</a></li>
+      <li><a href="contactos.html" data-i18n="nav.contactos">Contactos</a></li>
+    </ul>
+    <div class="lang-group">
+      <button class="lb on" data-lang="pt">PT</button>
+      <button class="lb"    data-lang="en">EN</button>
+      <button class="lb"    data-lang="fr">FR</button>
+    </div>
+    <a href="contactos.html" class="nav-cta" data-i18n="nav.quote">Pedir Orçamento</a>
+    <button class="ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mob" id="mob">
+  <button class="mob-close" id="mob-close">✕</button>
+  <a href="index.html" class="active" data-i18n="nav.home">Home</a>
+  <a href="empresa.html" data-i18n="nav.empresa">Empresa e Serviços</a>
+  <a href="catalogo.html" data-i18n="nav.catalogo">Catálogo</a>
+  <a href="contactos.html" data-i18n="nav.contactos">Contactos</a>
+  <div class="mob-lang">
+    <button class="on" data-lang="pt">PT</button>
+    <button data-lang="en">EN</button>
+    <button data-lang="fr">FR</button>
+  </div>
+</div>
+
+<main>
+
+  <!-- ════ HERO ════ -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-eyebrow"><span></span><em data-i18n="home.eyebrow">Desde 1998 · Arcos de Valdevez</em></div>
+        <h1 class="hero-h1" data-i18n="home.h1">Carpintaria<br>feita à <em>medida</em>.</h1>
+        <p class="hero-sub" data-i18n="home.sub">Fábrica própria. Cozinhas, roupeiros, escadas, pavimentos e mobiliário interior — fabricados por nós, do esboço à montagem.</p>
+        <div class="hero-btns">
+          <a href="contactos.html" class="btn btn-primary" data-i18n="home.cta_quote">Pedir Orçamento</a>
+          <a href="empresa.html" class="btn btn-ghost" data-i18n="home.cta_more">Conhecer a empresa</a>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-visual">
+          <img class="hero-img"
+               src="assets/img/areas/hero.jpg"
+               alt="Trabalho Capiarcos">
+          <div class="hero-stamp">
+            <span data-i18n="home.stamp_year">1998</span>
+            <small data-i18n="home.stamp_label">fundada em</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ COMMITMENT (slogan literal do site) ════ -->
+  <section class="commitment">
+    <div class="wrap">
+      <span class="tag commit-tag r" data-i18n="home.commit_tag">O nosso compromisso</span>
+      <h2 class="commit-title r d1" data-i18n="home.commit_t">Profissionalismo e qualidade.</h2>
+      <p class="commit-sub r d2" data-i18n="home.commit_s">Fabricamos tudo por medida, com vários designers — pode escolher qualquer pormenor, cor, madeira ou acabamento. Acompanhamos o seu projeto da planificação à montagem.</p>
+    </div>
+  </section>
+
+  <!-- ════ AREAS TEASER ════ -->
+  <section class="areas">
+    <div class="wrap">
+      <div class="areas-head r">
+        <span class="tag" data-i18n="home.areas_tag">Áreas de atuação</span>
+        <h2 class="h2" data-i18n="home.areas_h2">Tudo o que faz uma casa única</h2>
+        <p class="lead" style="margin-top:.6rem;max-width:50ch" data-i18n="home.areas_sub">Especializados em fabricação de mobiliário por medida para qualquer divisão.</p>
+      </div>
+      <div class="areas-grid">
+
+        <!-- Cozinhas — móvel de cozinha (armário em cima + bancada + base com gavetas) -->
+        <a href="empresa.html" class="area-card r d1">
+          <div class="area-ico-box">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Armário superior -->
+              <rect x="6" y="6" width="36" height="13" rx="1"/>
+              <line x1="24" y1="6" x2="24" y2="19"/>
+              <circle cx="22" cy="12.5" r=".9" fill="currentColor"/>
+              <circle cx="26" cy="12.5" r=".9" fill="currentColor"/>
+              <!-- Bancada -->
+              <rect x="4" y="21" width="40" height="3" rx="1"/>
+              <!-- Móvel inferior com gaveta + duas portas -->
+              <rect x="6" y="26" width="36" height="16" rx="1"/>
+              <line x1="6" y1="31" x2="42" y2="31"/>
+              <circle cx="16" cy="28.5" r=".7" fill="currentColor"/>
+              <circle cx="24" cy="28.5" r=".7" fill="currentColor"/>
+              <circle cx="32" cy="28.5" r=".7" fill="currentColor"/>
+              <line x1="24" y1="31" x2="24" y2="42"/>
+              <circle cx="22" cy="37" r=".9" fill="currentColor"/>
+              <circle cx="26" cy="37" r=".9" fill="currentColor"/>
+              <!-- Pés -->
+              <line x1="8" y1="42" x2="8" y2="44"/>
+              <line x1="40" y1="42" x2="40" y2="44"/>
+            </svg>
+          </div>
+          <div class="area-body">
+            <h3 class="area-name" data-i18n="home.areas.0.name">Cozinhas</h3>
+            <p class="area-desc" data-i18n="home.areas.0.desc">Cozinhas por medida, acessórios e bancos.</p>
+            <span class="area-arr" data-i18n="home.areas_cta">Ver tudo →</span>
+          </div>
+        </a>
+
+        <!-- Roupeiros — armário alto de 2 portas + gaveta -->
+        <a href="empresa.html" class="area-card r d2">
+          <div class="area-ico-box">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Corpo do roupeiro -->
+              <rect x="9" y="4" width="30" height="40" rx="1.5"/>
+              <!-- Topo decorativo (cornija) -->
+              <line x1="7" y1="6" x2="41" y2="6"/>
+              <!-- Divisor das portas -->
+              <line x1="24" y1="6" x2="24" y2="36"/>
+              <!-- Puxadores verticais nas portas -->
+              <line x1="22" y1="18" x2="22" y2="24"/>
+              <line x1="26" y1="18" x2="26" y2="24"/>
+              <!-- Gaveta inferior -->
+              <line x1="9" y1="36" x2="39" y2="36"/>
+              <line x1="20" y1="40" x2="28" y2="40"/>
+              <!-- Pés -->
+              <line x1="11" y1="44" x2="11" y2="46"/>
+              <line x1="37" y1="44" x2="37" y2="46"/>
+            </svg>
+          </div>
+          <div class="area-body">
+            <h3 class="area-name" data-i18n="home.areas.1.name">Roupeiros</h3>
+            <p class="area-desc" data-i18n="home.areas.1.desc">Roupeiros com acessórios integrados.</p>
+            <span class="area-arr" data-i18n="home.areas_cta">Ver tudo →</span>
+          </div>
+        </a>
+
+        <!-- Salas e Quartos — cama com cabeceira e almofadas -->
+        <a href="empresa.html" class="area-card r d3">
+          <div class="area-ico-box">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Cabeceira -->
+              <path d="M8 22 V12 a3 3 0 0 1 3 -3 h26 a3 3 0 0 1 3 3 v10"/>
+              <!-- Almofadas -->
+              <rect x="11" y="16" width="11" height="6" rx="2"/>
+              <rect x="26" y="16" width="11" height="6" rx="2"/>
+              <!-- Estrado / colchão -->
+              <rect x="4" y="22" width="40" height="10" rx="2"/>
+              <line x1="4" y1="28" x2="44" y2="28"/>
+              <!-- Pés -->
+              <line x1="7" y1="32" x2="7" y2="40"/>
+              <line x1="41" y1="32" x2="41" y2="40"/>
+            </svg>
+          </div>
+          <div class="area-body">
+            <h3 class="area-name" data-i18n="home.areas.2.name">Salas e Quartos</h3>
+            <p class="area-desc" data-i18n="home.areas.2.desc">Modernos, rústicos, mesas, cadeiras, sofás.</p>
+            <span class="area-arr" data-i18n="home.areas_cta">Ver tudo →</span>
+          </div>
+        </a>
+
+        <!-- Casas de Banho — móvel de WC (espelho + bancada com lavatório + portas inferiores) -->
+        <a href="empresa.html" class="area-card r d1">
+          <div class="area-ico-box">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Espelho -->
+              <rect x="15" y="4" width="18" height="13" rx="1.5"/>
+              <!-- Torneira -->
+              <path d="M22 20 v2 h4 v-2"/>
+              <line x1="24" y1="20" x2="24" y2="17"/>
+              <!-- Bancada com lavatório -->
+              <rect x="5" y="22" width="38" height="6" rx="1"/>
+              <ellipse cx="24" cy="25" rx="7" ry="2"/>
+              <!-- Móvel inferior -->
+              <rect x="7" y="28" width="34" height="14" rx="1"/>
+              <line x1="24" y1="28" x2="24" y2="42"/>
+              <line x1="22" y1="33" x2="22" y2="37"/>
+              <line x1="26" y1="33" x2="26" y2="37"/>
+              <!-- Pés -->
+              <line x1="9" y1="42" x2="9" y2="45"/>
+              <line x1="39" y1="42" x2="39" y2="45"/>
+            </svg>
+          </div>
+          <div class="area-body">
+            <h3 class="area-name" data-i18n="home.areas.3.name">Casas de Banho</h3>
+            <p class="area-desc" data-i18n="home.areas.3.desc">Móveis de banho resistentes e elegantes.</p>
+            <span class="area-arr" data-i18n="home.areas_cta">Ver tudo →</span>
+          </div>
+        </a>
+
+        <!-- Pavimentos & Portas — porta com aro + tábuas de soalho -->
+        <a href="empresa.html" class="area-card r d2">
+          <div class="area-ico-box">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Aro -->
+              <path d="M12 6 v32 M36 6 v32 M10 4 h28"/>
+              <!-- Porta -->
+              <rect x="14" y="6" width="20" height="32"/>
+              <!-- Painéis da porta -->
+              <rect x="17" y="9" width="14" height="9" rx="1"/>
+              <rect x="17" y="22" width="14" height="11" rx="1"/>
+              <!-- Maçaneta -->
+              <circle cx="30" cy="25" r="1.2" fill="currentColor"/>
+              <!-- Tábuas do pavimento -->
+              <line x1="4" y1="40" x2="44" y2="40"/>
+              <line x1="4" y1="44" x2="44" y2="44"/>
+              <line x1="13" y1="40" x2="13" y2="44"/>
+              <line x1="24" y1="40" x2="24" y2="44"/>
+              <line x1="35" y1="40" x2="35" y2="44"/>
+            </svg>
+          </div>
+          <div class="area-body">
+            <h3 class="area-name" data-i18n="home.areas.4.name">Pavimentos & Portas</h3>
+            <p class="area-desc" data-i18n="home.areas.4.desc">Soalho, forros, portas e escadas.</p>
+            <span class="area-arr" data-i18n="home.areas_cta">Ver tudo →</span>
+          </div>
+        </a>
+
+        <!-- Especialidades — biblioteca/estante com livros e jarra -->
+        <a href="empresa.html" class="area-card r d3">
+          <div class="area-ico-box">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Corpo da estante -->
+              <rect x="7" y="5" width="34" height="38" rx="1"/>
+              <!-- Prateleiras -->
+              <line x1="7" y1="19" x2="41" y2="19"/>
+              <line x1="7" y1="31" x2="41" y2="31"/>
+              <!-- Prateleira 1: 4 livros + pequena jarra -->
+              <rect x="11" y="8"  width="3.2" height="11"/>
+              <rect x="15" y="10" width="3.2" height="9"/>
+              <rect x="19" y="9"  width="3.2" height="10"/>
+              <rect x="23" y="11" width="3.2" height="8"/>
+              <path d="M31 19 v-3 q0 -2 2 -2 q2 0 2 2 v3"/>
+              <!-- Prateleira 2: 7 livros de alturas diferentes -->
+              <rect x="11"   y="22" width="2.8" height="9"/>
+              <rect x="14.4" y="21" width="2.8" height="10"/>
+              <rect x="17.8" y="23" width="2.8" height="8"/>
+              <rect x="21.2" y="21" width="2.8" height="10"/>
+              <rect x="24.6" y="22" width="2.8" height="9"/>
+              <rect x="28"   y="20" width="2.8" height="11"/>
+              <rect x="31.4" y="23" width="2.8" height="8"/>
+              <!-- Prateleira 3: 2 livros verticais + 2 livros empilhados -->
+              <rect x="11" y="35" width="3.2" height="8"/>
+              <rect x="15" y="34" width="3.2" height="9"/>
+              <rect x="23" y="40" width="13"   height="3"/>
+              <rect x="24" y="37" width="11"   height="3"/>
+              <!-- Pés -->
+              <line x1="9"  y1="43" x2="9"  y2="46"/>
+              <line x1="39" y1="43" x2="39" y2="46"/>
+            </svg>
+          </div>
+          <div class="area-body">
+            <h3 class="area-name" data-i18n="home.areas.5.name">Especialidades</h3>
+            <p class="area-desc" data-i18n="home.areas.5.desc">Escadas, sapateiras, bibliotecas, consolas e vitrais.</p>
+            <span class="area-arr" data-i18n="home.areas_cta">Ver tudo →</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ INTERNACIONAL (mesmo estilo que a página da empresa, texto à esquerda, bandeiras à direita) ════ -->
+  <section class="intl-section">
+    <div class="wrap">
+      <div class="intl-grid intl-grid-rev">
+        <div class="r-l">
+          <span class="tag" data-i18n="empresa.intl_tag">Internacional</span>
+          <h2 class="h2" data-i18n="empresa.intl_h2">Exportação e colocação<br>para França</h2>
+          <p class="lead" style="margin-top:1.2rem" data-i18n="empresa.intl_p">Fazemos exportação e colocação para França. A qualidade portuguesa, levada além-fronteiras.</p>
+        </div>
+        <div class="intl-flags r-r">
+          <div class="flag-box"><div class="flag-ring">🇵🇹</div><span class="flag-lbl">Portugal</span></div>
+          <div class="intl-sep">
+            <div class="intl-sep-line"></div>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 7h11M8 3l4 4-4 4"/></svg>
+            <div class="intl-sep-line"></div>
+          </div>
+          <div class="flag-box"><div class="flag-ring">🇫🇷</div><span class="flag-lbl">France</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ CTA STRIP ════ -->
+  <section class="cta-strip">
+    <div class="wrap">
+      <div class="cta-strip-text">
+        <h3 class="cta-strip-t" data-i18n="home.cta_t">Vamos começar o seu projeto?</h3>
+        <p class="cta-strip-s" data-i18n="home.cta_s">Conte-nos o que precisa. Respondemos a cada pedido com atenção.</p>
+      </div>
+      <a href="contactos.html" class="btn btn-gold" data-i18n="home.cta_btn">Pedir Orçamento</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div class="wrap">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <img src="assets/img/logo.png" alt="Capiarcos">
+        <p class="ft-tagline" data-i18n="ft.tagline">Carpintaria por medida desde 1998. Fábrica própria em Arcos de Valdevez.</p>
+      </div>
+      <div>
+        <div class="ft-col-t" data-i18n="ft.links">Navegação</div>
+        <ul class="ft-links">
+          <li><a href="index.html"     data-i18n="nav.home">Home</a></li>
+          <li><a href="empresa.html"   data-i18n="nav.empresa">Empresa e Serviços</a></li>
+          <li><a href="catalogo.html"  data-i18n="nav.catalogo">Catálogo</a></li>
+          <li><a href="contactos.html" data-i18n="nav.contactos">Contactos</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-t" data-i18n="ft.contacto">Contactos</div>
+        <div class="ft-ci"><span class="ft-ci-l">Morada</span><span class="ft-ci-v">Zona Industrial de Mogueiras – Tabaço<br>4970-685 Arcos de Valdevez</span></div>
+        <div class="ft-ci"><span class="ft-ci-l">Tlf</span><span class="ft-ci-v">258 522 978</span></div>
+        <div class="ft-ci"><span class="ft-ci-l">Tlm</span><span class="ft-ci-v">935 229 788 · 935 229 789</span></div>
+        <div class="ft-ci"><span class="ft-ci-l">Email</span><span class="ft-ci-v">patriciacapiarcos@sapo.pt</span></div>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span class="ft-copy" data-i18n="ft.copy">© 2026 Capiarcos — Todos os direitos reservados.</span>
+      <div class="ft-lang">
+        <button class="on" data-lang="pt">PT</button>
+        <button data-lang="en">EN</button>
+        <button data-lang="fr">FR</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

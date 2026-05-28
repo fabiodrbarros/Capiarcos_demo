@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Capiarcos — Sociedade Unipessoal de Carpintaria, Lda. Fundada em 1998. Fábrica própria em Arcos de Valdevez.">
+  <title>Empresa e Serviços — Capiarcos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+</head>
+<body>
+
+<!-- ════ NAV ════ -->
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/img/logo.png" alt="Capiarcos">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html"     data-i18n="nav.home">Home</a></li>
+      <li><a href="empresa.html"   class="active" data-i18n="nav.empresa">Empresa e Serviços</a></li>
+      <li><a href="catalogo.html"  data-i18n="nav.catalogo">Catálogo</a></li>
+      <li><a href="contactos.html" data-i18n="nav.contactos">Contactos</a></li>
+    </ul>
+    <div class="lang-group">
+      <button class="lb on" data-lang="pt">PT</button>
+      <button class="lb"    data-lang="en">EN</button>
+      <button class="lb"    data-lang="fr">FR</button>
+    </div>
+    <a href="contactos.html" class="nav-cta" data-i18n="nav.quote">Pedir Orçamento</a>
+    <button class="ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mob" id="mob">
+  <button class="mob-close" id="mob-close">✕</button>
+  <a href="index.html" data-i18n="nav.home">Home</a>
+  <a href="empresa.html" class="active" data-i18n="nav.empresa">Empresa e Serviços</a>
+  <a href="catalogo.html" data-i18n="nav.catalogo">Catálogo</a>
+  <a href="contactos.html" data-i18n="nav.contactos">Contactos</a>
+  <div class="mob-lang">
+    <button class="on" data-lang="pt">PT</button>
+    <button data-lang="en">EN</button>
+    <button data-lang="fr">FR</button>
+  </div>
+</div>
+
+<main>
+
+  <!-- ════ PAGE HEADER ════ -->
+  <header class="page-header page-header--compact">
+    <div class="wrap">
+      <div class="page-crumbs"><a href="index.html">Home</a> / <span data-i18n="empresa.crumb">Empresa</span></div>
+    </div>
+  </header>
+
+  <!-- ════ ABOUT (texto literal do site) ════ -->
+  <section class="about-section">
+    <div class="wrap">
+      <div class="about-intro">
+        <div class="about-text r-l">
+          <span class="tag" data-i18n="empresa.about_tag">Quem somos</span>
+          <h2 class="h2" data-i18n="empresa.about_h2">Carpintaria por medida,<br>desde <em>1998</em>.</h2>
+          <p class="lead" style="margin-top:1.4rem" data-i18n="empresa.about_p1">Capiarcos – Sociedade Unipessoal de Carpintaria, Lda, fundada em 4 de Maio de 1998, é uma empresa dinâmica, direccionada para o ramo de carpintaria, com fábrica própria.</p>
+          <p class="lead" style="margin-top:1rem" data-i18n="empresa.about_p2">Somos uma empresa que fabrica tudo por medida e com vários designers, o que possibilita ao cliente escolher qualquer tipo de pormenor, cor, madeira, utensílios, etc.</p>
+        </div>
+        <figure class="about-visual r-r">
+          <img src="assets/img/empresa.png" alt="Capiarcos — Arcos de Valdevez">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ DIFERENCIAIS (lista literal do site) ════ -->
+  <section class="diff-section">
+    <div class="wrap">
+      <div class="diff-head r">
+        <span class="tag" data-i18n="empresa.diff_tag">Diferenciais</span>
+        <h2 class="h2" data-i18n="empresa.diff_h2">O que nos distingue</h2>
+      </div>
+      <div class="diff-grid">
+        <div class="diff-card r d1">
+          <div class="diff-num">01</div>
+          <h3 class="diff-t" data-i18n="empresa.diff.0.t">Rapidez</h3>
+          <p class="diff-d" data-i18n="empresa.diff.0.d">Resposta e execução com prazos curtos.</p>
+        </div>
+        <div class="diff-card r d2">
+          <div class="diff-num">02</div>
+          <h3 class="diff-t" data-i18n="empresa.diff.1.t">Atendimento personalizado</h3>
+          <p class="diff-d" data-i18n="empresa.diff.1.d">Cada cliente, cada projeto, único.</p>
+        </div>
+        <div class="diff-card r d3">
+          <div class="diff-num">03</div>
+          <h3 class="diff-t" data-i18n="empresa.diff.2.t">Capacidade de resposta</h3>
+          <p class="diff-d" data-i18n="empresa.diff.2.d">Equipa preparada para os seus desafios.</p>
+        </div>
+        <div class="diff-card r d1">
+          <div class="diff-num">04</div>
+          <h3 class="diff-t" data-i18n="empresa.diff.3.t">Qualidade nas matérias-primas</h3>
+          <p class="diff-d" data-i18n="empresa.diff.3.d">Materiais e acabamentos selecionados.</p>
+        </div>
+        <div class="diff-card r d2">
+          <div class="diff-num">05</div>
+          <h3 class="diff-t" data-i18n="empresa.diff.4.t">Exclusividade e versatilidade</h3>
+          <p class="diff-d" data-i18n="empresa.diff.4.d">Soluções únicas, em qualquer estilo.</p>
+        </div>
+        <div class="diff-card r d3">
+          <div class="diff-num">06</div>
+          <h3 class="diff-t" data-i18n="empresa.diff.5.t">Inovação</h3>
+          <p class="diff-d" data-i18n="empresa.diff.5.d">Designers que acompanham as tendências.</p>
+        </div>
+        <div class="diff-card r d1">
+          <div class="diff-num">07</div>
+          <h3 class="diff-t" data-i18n="empresa.diff.6.t">Relação qualidade-preço</h3>
+          <p class="diff-d" data-i18n="empresa.diff.6.d">Elevada relação valor para o cliente.</p>
+        </div>
+        <div class="diff-card r d2">
+          <div class="diff-num">08</div>
+          <h3 class="diff-t" data-i18n="empresa.diff.7.t">Cumprimento de prazos</h3>
+          <p class="diff-d" data-i18n="empresa.diff.7.d">Compromisso com datas de entrega.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ SERVIÇOS / ÁREAS (literal do catálogo do site) ════ -->
+  <section class="svc-section">
+    <div class="wrap">
+      <div class="svc-head r">
+        <span class="tag" data-i18n="empresa.svc_tag">Áreas de fabricação</span>
+        <h2 class="h2" data-i18n="empresa.svc_h2">Especialistas em todas as áreas</h2>
+        <p class="lead" style="margin-top:.6rem;max-width:50ch" data-i18n="empresa.svc_sub">Profissionais especializados em fabricação de mobiliário.</p>
+      </div>
+      <div class="svc-list">
+
+        <div class="svc-row r d1">
+          <svg class="svc-row-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><rect x="3" y="10" width="30" height="22" rx="2"/><circle cx="12" cy="20" r="4"/><circle cx="24" cy="20" r="4"/></svg>
+          <div class="svc-row-name" data-i18n="empresa.svc.0.t">Cozinhas <span class="svc-row-sub" data-i18n="empresa.svc.0.s">Cozinhas, acessórios, bancos</span></div>
+        </div>
+
+        <div class="svc-row r d2">
+          <svg class="svc-row-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><rect x="5" y="3" width="26" height="30" rx="2"/><line x1="18" y1="3" x2="18" y2="33"/><circle cx="15" cy="18" r="1.5"/><circle cx="21" cy="18" r="1.5"/></svg>
+          <div class="svc-row-name" data-i18n="empresa.svc.1.t">Roupeiros <span class="svc-row-sub" data-i18n="empresa.svc.1.s">Roupeiros e acessórios</span></div>
+        </div>
+
+        <div class="svc-row r d1">
+          <svg class="svc-row-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><rect x="3" y="18" width="30" height="12" rx="2"/><path d="M6 18 C6 12,30 12,30 18"/><line x1="8" y1="30" x2="8" y2="33"/><line x1="28" y1="30" x2="28" y2="33"/></svg>
+          <div class="svc-row-name" data-i18n="empresa.svc.2.t">Salas <span class="svc-row-sub" data-i18n="empresa.svc.2.s">Modernas, rústicas, cadeiras, mesas, sofás</span></div>
+        </div>
+
+        <div class="svc-row r d2">
+          <svg class="svc-row-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><rect x="4" y="14" width="28" height="14" rx="2"/><path d="M7 14 C7 9,29 9,29 14"/></svg>
+          <div class="svc-row-name" data-i18n="empresa.svc.3.t">Quartos <span class="svc-row-sub" data-i18n="empresa.svc.3.s">Crianças, modernos, rústicos</span></div>
+        </div>
+
+        <div class="svc-row r d1">
+          <svg class="svc-row-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><rect x="6" y="6" width="24" height="16" rx="2"/><rect x="3" y="24" width="30" height="6" rx="2"/></svg>
+          <div class="svc-row-name" data-i18n="empresa.svc.4.t">Casas de Banho <span class="svc-row-sub" data-i18n="empresa.svc.4.s">Móveis por medida</span></div>
+        </div>
+
+        <div class="svc-row r d2">
+          <svg class="svc-row-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><rect x="3" y="6" width="30" height="24" rx="2"/><line x1="3" y1="14" x2="33" y2="14"/><line x1="3" y1="22" x2="33" y2="22"/><line x1="18" y1="14" x2="18" y2="22"/></svg>
+          <div class="svc-row-name" data-i18n="empresa.svc.5.t">Pavimentos <span class="svc-row-sub" data-i18n="empresa.svc.5.s">Soalho e forros</span></div>
+        </div>
+
+        <div class="svc-row r d1">
+          <svg class="svc-row-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><rect x="4" y="14" width="28" height="6" rx="1"/><line x1="4" y1="22" x2="32" y2="22"/></svg>
+          <div class="svc-row-name" data-i18n="empresa.svc.6.t">Tampos <span class="svc-row-sub" data-i18n="empresa.svc.6.s">Granitos, compactado, quartzo</span></div>
+        </div>
+
+        <div class="svc-row r d2">
+          <svg class="svc-row-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><rect x="10" y="3" width="16" height="30" rx="1"/><circle cx="22" cy="18" r="1.5"/></svg>
+          <div class="svc-row-name" data-i18n="empresa.svc.7.t">Portas <span class="svc-row-sub" data-i18n="empresa.svc.7.s">Interiores e exteriores</span></div>
+        </div>
+
+        <div class="svc-row r d1">
+          <svg class="svc-row-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><polyline points="3,33 3,27 10,27 10,21 17,21 17,15 24,15 24,9 32,9"/></svg>
+          <div class="svc-row-name" data-i18n="empresa.svc.8.t">Escadas <span class="svc-row-sub" data-i18n="empresa.svc.8.s">Em madeira maciça</span></div>
+        </div>
+
+        <div class="svc-row r d2">
+          <svg class="svc-row-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><rect x="4" y="6" width="28" height="24" rx="2"/><line x1="4" y1="14" x2="32" y2="14"/><line x1="4" y1="22" x2="32" y2="22"/></svg>
+          <div class="svc-row-name" data-i18n="empresa.svc.9.t">Sapateiras <span class="svc-row-sub" data-i18n="empresa.svc.9.s">Por medida</span></div>
+        </div>
+
+        <div class="svc-row r d1">
+          <svg class="svc-row-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><rect x="3" y="6" width="30" height="24" rx="2"/><line x1="9" y1="6" x2="9" y2="30"/><line x1="15" y1="6" x2="15" y2="30"/><line x1="21" y1="6" x2="21" y2="30"/><line x1="27" y1="6" x2="27" y2="30"/></svg>
+          <div class="svc-row-name" data-i18n="empresa.svc.10.t">Escritórios e Bibliotecas <span class="svc-row-sub" data-i18n="empresa.svc.10.s">Mobiliário integrado</span></div>
+        </div>
+
+        <div class="svc-row r d2">
+          <svg class="svc-row-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><rect x="6" y="6" width="24" height="22" rx="1"/><line x1="6" y1="17" x2="30" y2="17"/><line x1="18" y1="6" x2="18" y2="28"/></svg>
+          <div class="svc-row-name" data-i18n="empresa.svc.11.t">Consolas e Vitrais <span class="svc-row-sub" data-i18n="empresa.svc.11.s">Trabalhos exclusivos</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ INTERNATIONAL ════ -->
+  <section class="intl-section">
+    <div class="wrap">
+      <div class="intl-grid">
+        <div class="intl-flags r-l">
+          <div class="flag-box"><div class="flag-ring">🇵🇹</div><span class="flag-lbl">Portugal</span></div>
+          <div class="intl-sep">
+            <div class="intl-sep-line"></div>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 7h11M8 3l4 4-4 4"/></svg>
+            <div class="intl-sep-line"></div>
+          </div>
+          <div class="flag-box"><div class="flag-ring">🇫🇷</div><span class="flag-lbl">France</span></div>
+        </div>
+        <div class="r-r">
+          <span class="tag" data-i18n="empresa.intl_tag">Internacional</span>
+          <h2 class="h2" data-i18n="empresa.intl_h2">Exportação e colocação<br>para França</h2>
+          <p class="lead" style="margin-top:1.2rem" data-i18n="empresa.intl_p">Fazemos exportação e colocação para França. A qualidade portuguesa, levada além-fronteiras.</p>
+          <a href="contactos.html" class="btn btn-primary" style="margin-top:2rem" data-i18n="nav.quote">Pedir Orçamento</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div class="wrap">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <img src="assets/img/logo.png" alt="Capiarcos">
+        <p class="ft-tagline" data-i18n="ft.tagline">Carpintaria por medida desde 1998. Fábrica própria em Arcos de Valdevez.</p>
+      </div>
+      <div>
+        <div class="ft-col-t" data-i18n="ft.links">Navegação</div>
+        <ul class="ft-links">
+          <li><a href="index.html"     data-i18n="nav.home">Home</a></li>
+          <li><a href="empresa.html"   data-i18n="nav.empresa">Empresa e Serviços</a></li>
+          <li><a href="catalogo.html"  data-i18n="nav.catalogo">Catálogo</a></li>
+          <li><a href="contactos.html" data-i18n="nav.contactos">Contactos</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-t" data-i18n="ft.contacto">Contactos</div>
+        <div class="ft-ci"><span class="ft-ci-l">Morada</span><span class="ft-ci-v">Zona Industrial de Mogueiras – Tabaço<br>4970-685 Arcos de Valdevez</span></div>
+        <div class="ft-ci"><span class="ft-ci-l">Tlf</span><span class="ft-ci-v">258 522 978</span></div>
+        <div class="ft-ci"><span class="ft-ci-l">Tlm</span><span class="ft-ci-v">935 229 788 · 935 229 789</span></div>
+        <div class="ft-ci"><span class="ft-ci-l">Email</span><span class="ft-ci-v">patriciacapiarcos@sapo.pt</span></div>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span class="ft-copy" data-i18n="ft.copy">© 2026 Capiarcos — Todos os direitos reservados.</span>
+      <div class="ft-lang">
+        <button class="on" data-lang="pt">PT</button>
+        <button data-lang="en">EN</button>
+        <button data-lang="fr">FR</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
