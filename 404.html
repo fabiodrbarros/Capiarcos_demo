@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Capiarcos — página não encontrada.">
+  <meta name="robots" content="noindex">
+  <title>404 — Capiarcos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/img/logo.png">
+  <style>
+    /* Page-specific layout */
+    .nf-wrap {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+    .nf-main {
+      display: grid; place-items: center;
+      padding: 8rem 1.5rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .nf-main::before,
+    .nf-main::after {
+      content: '';
+      position: absolute;
+      width: 440px; height: 440px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .nf-main::before {
+      top: 8%; left: -10%;
+      background: radial-gradient(circle, rgba(216,168,56,.10), transparent 65%);
+    }
+    .nf-main::after {
+      bottom: 8%; right: -10%;
+      background: radial-gradient(circle, rgba(92,61,32,.07), transparent 65%);
+    }
+    .nf-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 540px;
+    }
+    .nf-code {
+      font-family: var(--serif);
+      font-size: clamp(7rem, 18vw, 13rem);
+      font-weight: 400;
+      line-height: 1;
+      color: var(--burgundy);
+      letter-spacing: -.04em;
+      margin-bottom: .8rem;
+      position: relative;
+      display: inline-block;
+    }
+    .nf-code::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -.4rem;
+      transform: translateX(-50%);
+      width: 56px;
+      height: 2px;
+      background: var(--gold);
+    }
+    .nf-tag {
+      display: inline-block;
+      font-size: .68rem;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+    }
+    .nf-tag::before { content: '— '; color: var(--burgundy); margin-right: .25rem; }
+    .nf-title {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .nf-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-soft);
+      line-height: 1.7;
+      margin-bottom: 2.4rem;
+      max-width: 42ch;
+      margin-inline: auto;
+    }
+    .nf-actions {
+      display: inline-flex;
+      gap: .8rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body class="nf-wrap">
+
+<!-- ════ NAV ════ -->
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/assets/img/logo.png" alt="Capiarcos">
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" data-i18n="nav.home">Home</a></li>
+      <li><a href="/empresa" data-i18n="nav.empresa">Empresa e Serviços</a></li>
+      <li><a href="/catalogo" data-i18n="nav.catalogo">Catálogo</a></li>
+      <li><a href="/contactos" data-i18n="nav.contactos">Contactos</a></li>
+    </ul>
+    <div class="lang-group">
+      <button class="lb on" data-lang="pt">PT</button>
+      <button class="lb"    data-lang="en">EN</button>
+      <button class="lb"    data-lang="fr">FR</button>
+    </div>
+    <a href="/contactos" class="nav-cta" data-i18n="nav.quote">Pedir Orçamento</a>
+    <button class="ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mob" id="mob">
+  <button class="mob-close" id="mob-close">✕</button>
+  <a href="/" data-i18n="nav.home">Home</a>
+  <a href="/empresa" data-i18n="nav.empresa">Empresa e Serviços</a>
+  <a href="/catalogo" data-i18n="nav.catalogo">Catálogo</a>
+  <a href="/contactos" data-i18n="nav.contactos">Contactos</a>
+  <div class="mob-lang">
+    <button class="on" data-lang="pt">PT</button>
+    <button data-lang="en">EN</button>
+    <button data-lang="fr">FR</button>
+  </div>
+</div>
+
+<main class="nf-main">
+  <div class="nf-inner">
+    <div class="nf-code">404</div>
+    <span class="nf-tag" data-i18n="nf404.tag">Página não encontrada</span>
+    <h1 class="nf-title" data-i18n="nf404.title">Esta página não existe.</h1>
+    <p class="nf-sub" data-i18n="nf404.sub">O endereço que procura pode ter sido movido ou nunca existiu. Volte à página inicial ou veja os nossos trabalhos.</p>
+    <div class="nf-actions">
+      <a href="/" class="btn btn-primary" data-i18n="nf404.cta_home">Voltar à home</a>
+      <a href="/catalogo" class="btn btn-ghost" data-i18n="nf404.cta_cat">Ver catálogo</a>
+    </div>
+  </div>
+</main>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div class="wrap">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <img src="/assets/img/logo.png" alt="Capiarcos">
+        <p class="ft-tagline" data-i18n="ft.tagline">Carpintaria por medida desde 1998. Fábrica própria em Arcos de Valdevez.</p>
+      </div>
+      <div>
+        <div class="ft-col-t" data-i18n="ft.links">Navegação</div>
+        <ul class="ft-links">
+          <li><a href="/"            data-i18n="nav.home">Home</a></li>
+          <li><a href="/empresa"     data-i18n="nav.empresa">Empresa e Serviços</a></li>
+          <li><a href="/catalogo"    data-i18n="nav.catalogo">Catálogo</a></li>
+          <li><a href="/contactos"   data-i18n="nav.contactos">Contactos</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-t" data-i18n="ft.contacto">Contactos</div>
+        <div class="ft-ci"><span class="ft-ci-l">Morada</span><span class="ft-ci-v">Zona Industrial de Mogueiras – Tabaço<br>4970-685 Arcos de Valdevez</span></div>
+        <div class="ft-ci"><span class="ft-ci-l">Tlf</span><span class="ft-ci-v">258 522 978 <span data-i18n="ft.landline_call">(Chamada para rede fixa nacional)</span></span></div>
+        <div class="ft-ci"><span class="ft-ci-l">Tlm</span><span class="ft-ci-v">935 229 788 <span data-i18n="ft.mobile_call">(Chamada para rede móvel nacional)</span> · 935 229 789 <span data-i18n="ft.mobile_call">(Chamada para rede móvel nacional)</span></span></div>
+        <div class="ft-ci"><span class="ft-ci-l">Email</span><span class="ft-ci-v">patriciacapiarcos@sapo.pt</span></div>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <div class="ft-bot-left">
+        <span class="ft-copy" data-i18n="ft.copy">© 2026 Capiarcos — Todos os direitos reservados.</span>
+      </div>
+      <div class="ft-bot-center">
+        <a href="https://www.livroreclamacoes.pt/" target="_blank" class="ft-bot-link" data-i18n="ft.complaints_book">Livro de Reclamações</a>
+      </div>
+      <div class="ft-bot-right">
+        <div class="ft-lang">
+          <button class="on" data-lang="pt">PT</button>
+          <button data-lang="en">EN</button>
+          <button data-lang="fr">FR</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

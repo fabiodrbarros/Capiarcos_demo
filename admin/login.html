@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capiarcos — Entrar</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/admin.css">
+  <link rel="icon" type="image/png" href="/assets/img/logo.png">
+</head>
+<body class="page-login">
+
+  <main class="login-bg">
+    <form class="login-card" id="login-form" autocomplete="off">
+      <img class="login-logo" src="/assets/img/logo.png" alt="Capiarcos">
+      <h1 class="login-h">Plataforma de gestão</h1>
+      <p class="login-sub">Catálogo de imagens · Capiarcos</p>
+
+      <label class="login-lbl" for="pw">Password</label>
+      <input id="pw" type="password" required autofocus>
+
+      <button type="submit" class="login-btn" id="login-btn">Entrar</button>
+      <p class="login-err" id="login-err" aria-live="polite"></p>
+
+      <a href="/" class="login-back">← Voltar ao site</a>
+    </form>
+  </main>
+
+  <script>
+    /* ── Already authed? Skip to dashboard ─────────── */
+    (async function () {
+      try {
+        const r = await fetch('/api/me');
+        const { authed } = await r.json();
+        if (authed) location.replace('/admin/');
+      } catch {/* server down — stay on login */}
+    })();
+
+    /* ── Login form ───────────────────────────────── */
+    const form = document.getElementById('login-form');
+    const pw   = document.getElementById('pw');
+    const err  = document.getElementById('login-err');
+    const btn  = document.getElementById('login-btn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      err.textContent = '';
+      btn.disabled = true;
+      btn.textContent = 'A entrar…';
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: pw.value }),
+        });
+        if (res.ok) {
+          location.replace('/admin/');
+        } else {
+          err.textContent = 'Password incorrecta.';
+          pw.select();
+        }
+      } catch {
+        err.textContent = 'Não foi possível contactar o servidor.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Entrar';
+      }
+    });
+  </script>
+</body>
+</html>

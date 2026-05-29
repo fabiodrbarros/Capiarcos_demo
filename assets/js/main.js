@@ -117,12 +117,24 @@ const T = {
       ok_t: 'Mensagem enviada!', ok_s: 'Entraremos em contacto consigo brevemente.',
     },
 
+    /* ── 404 ── */
+    nf404: {
+      tag: 'Página não encontrada',
+      title: 'Esta página não existe.',
+      sub: 'O endereço que procura pode ter sido movido ou nunca existiu. Volte à página inicial ou veja os nossos trabalhos.',
+      cta_home: 'Voltar à home',
+      cta_cat: 'Ver catálogo',
+    },
+
     /* ── FOOTER ── */
     ft: {
       tagline: 'Carpintaria por medida desde 1998. Fábrica própria em Arcos de Valdevez.',
       links: 'Navegação',
       contacto: 'Contactos',
       copy: '© 2026 Capiarcos — Todos os direitos reservados.',
+      complaints_book: 'Livro de Reclamações',
+      mobile_call: '(Chamada para rede móvel nacional)',
+      landline_call: '(Chamada para rede fixa nacional)',
       design: 'Design',
     },
   },
@@ -222,10 +234,21 @@ const T = {
       send: 'Send message',
       ok_t: 'Message sent!', ok_s: 'We will be in touch shortly.',
     },
+    nf404: {
+      tag: 'Page not found',
+      title: 'This page doesn\'t exist.',
+      sub: 'The address you\'re looking for may have been moved or never existed. Head back to the home page or explore our work.',
+      cta_home: 'Back to home',
+      cta_cat: 'View portfolio',
+    },
     ft: {
       tagline: 'Custom carpentry since 1998. Own factory in Arcos de Valdevez.',
       links: 'Navigation', contacto: 'Contact',
-      copy: '© 2026 Capiarcos — All rights reserved.', design: 'Design',
+      copy: '© 2026 Capiarcos — All rights reserved.',
+      complaints_book: 'Complaints Book',
+      mobile_call: '(Call to national mobile network)',
+      landline_call: '(Call to national landline)',
+      design: 'Design',
     },
   },
 
@@ -324,10 +347,21 @@ const T = {
       send: 'Envoyer le message',
       ok_t: 'Message envoyé !', ok_s: 'Nous vous recontacterons sous peu.',
     },
+    nf404: {
+      tag: 'Page introuvable',
+      title: 'Cette page n\'existe pas.',
+      sub: 'L\'adresse que vous cherchez a peut-être été déplacée ou n\'a jamais existé. Revenez à l\'accueil ou découvrez nos réalisations.',
+      cta_home: 'Retour à l\'accueil',
+      cta_cat: 'Voir le portfolio',
+    },
     ft: {
       tagline: 'Menuiserie sur mesure depuis 1998. Atelier propre à Arcos de Valdevez.',
       links: 'Navigation', contacto: 'Contact',
-      copy: '© 2026 Capiarcos — Tous droits réservés.', design: 'Design',
+      copy: '© 2026 Capiarcos — Tous droits réservés.',
+      complaints_book: 'Livre de Réclamations',
+      mobile_call: '(Appel vers réseau mobile national)',
+      landline_call: '(Appel vers réseau fixe national)',
+      design: 'Design',
     },
   },
 };

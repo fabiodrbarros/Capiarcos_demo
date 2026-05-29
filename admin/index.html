@@ -11,24 +11,28 @@
   <link rel="stylesheet" href="/assets/css/admin.css">
   <link rel="icon" type="image/png" href="/assets/img/logo.png">
 </head>
-<body>
+<body class="page-admin">
 
-  <!-- ════ LOGIN ════ -->
-  <div class="login-bg" id="login">
-    <form class="login-card" id="login-form" autocomplete="off">
-      <img class="login-logo" src="/assets/img/logo.png" alt="Capiarcos">
-      <h1 class="login-h">Plataforma de gestão</h1>
-      <p class="login-sub">Catálogo de imagens · Capiarcos</p>
-      <label class="login-lbl">Password</label>
-      <input type="password" id="pw" required autofocus>
-      <button type="submit" class="login-btn">Entrar</button>
-      <p class="login-err" id="login-err"></p>
-      <a href="/" class="login-back">← Voltar ao site</a>
-    </form>
-  </div>
+  <!-- Auth gate: redirects to /admin/login.html if not authed.
+       Hide the body until that check resolves so a flash of dashboard
+       is never visible to an unauthenticated visitor. -->
+  <script>
+    document.documentElement.style.visibility = 'hidden';
+    (async function () {
+      try {
+        const r = await fetch('/api/me');
+        const { authed } = await r.json();
+        if (!authed) { location.replace('/admin/login'); return; }
+        document.documentElement.style.visibility = '';
+      } catch {
+        document.documentElement.style.visibility = '';
+        // server down → still show shell so user sees the empty state
+      }
+    })();
+  </script>
 
   <!-- ════ APP ════ -->
-  <div class="app" id="app" hidden>
+  <div class="app">
 
     <!-- TOP BAR -->
     <header class="bar">
@@ -40,7 +44,7 @@
         </div>
       </a>
       <div class="bar-actions">
-        <a href="/catalogo.html" target="_blank" rel="noopener" class="bar-link">
+        <a href="/catalogo" target="_blank" rel="noopener" class="bar-link">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 2h4v4M14 2 8 8M7 3H3v10h10V9"/></svg>
           Ver site
         </a>

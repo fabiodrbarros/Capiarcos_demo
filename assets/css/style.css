@@ -279,6 +279,7 @@ footer {
 }
 .ft-brand img { height: 44px; margin-bottom: 1rem; }
 .ft-tagline {
+  display: none;
   font-size: .88rem; font-weight: 300; color: var(--muted);
   max-width: 30ch; line-height: 1.7;
 }
@@ -293,9 +294,14 @@ footer {
 .ft-ci-l { font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 .ft-ci-v { font-size: .82rem; color: var(--text-soft); line-height: 1.55; }
 .ft-bot {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: center;
   flex-wrap: wrap; gap: 1rem;
 }
+.ft-bot-left { flex: 1; text-align: left; }
+.ft-bot-center { flex: 1; text-align: center; }
+.ft-bot-right { flex: 1; text-align: right; }
+.ft-bot-link { font-size: .7rem; color: var(--burgundy); transition: color .25s; }
+.ft-bot-link:hover { color: var(--burgundy-l); }
 .ft-copy { font-size: .7rem; color: var(--muted); }
 .ft-design { font-size: .7rem; color: var(--muted); }
 .ft-design a { color: var(--burgundy); }

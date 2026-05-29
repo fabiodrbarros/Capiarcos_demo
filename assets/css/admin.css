@@ -29,6 +29,11 @@
 
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
+
+/* The browser default [hidden] { display:none } is the *same* specificity as
+   our class rules, so the later-loaded class rule was winning. Force the
+   attribute to win — fixes the dashboard flashing under the login overlay. */
+[hidden] { display: none !important; }
 body {
   font-family: var(--sans);
   background: var(--cream);

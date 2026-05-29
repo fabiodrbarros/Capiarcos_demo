@@ -16,31 +16,31 @@
 <!-- ════ NAV ════ -->
 <nav id="nav">
   <div class="wrap nav-inner">
-    <a href="index.html" class="nav-logo">
+    <a href="/" class="nav-logo">
       <img src="assets/img/logo.png" alt="Capiarcos">
     </a>
     <ul class="nav-links">
-      <li><a href="index.html"     data-i18n="nav.home">Home</a></li>
-      <li><a href="empresa.html"   data-i18n="nav.empresa">Empresa e Serviços</a></li>
-      <li><a href="catalogo.html"  class="active" data-i18n="nav.catalogo">Catálogo</a></li>
-      <li><a href="contactos.html" data-i18n="nav.contactos">Contactos</a></li>
+      <li><a href="/"     data-i18n="nav.home">Home</a></li>
+      <li><a href="/empresa"   data-i18n="nav.empresa">Empresa e Serviços</a></li>
+      <li><a href="/catalogo"  class="active" data-i18n="nav.catalogo">Catálogo</a></li>
+      <li><a href="/contactos" data-i18n="nav.contactos">Contactos</a></li>
     </ul>
     <div class="lang-group">
       <button class="lb on" data-lang="pt">PT</button>
       <button class="lb"    data-lang="en">EN</button>
       <button class="lb"    data-lang="fr">FR</button>
     </div>
-    <a href="contactos.html" class="nav-cta" data-i18n="nav.quote">Pedir Orçamento</a>
+    <a href="/contactos" class="nav-cta" data-i18n="nav.quote">Pedir Orçamento</a>
     <button class="ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
 <div class="mob" id="mob">
   <button class="mob-close" id="mob-close">✕</button>
-  <a href="index.html" data-i18n="nav.home">Home</a>
-  <a href="empresa.html" data-i18n="nav.empresa">Empresa e Serviços</a>
-  <a href="catalogo.html" class="active" data-i18n="nav.catalogo">Catálogo</a>
-  <a href="contactos.html" data-i18n="nav.contactos">Contactos</a>
+  <a href="/" data-i18n="nav.home">Home</a>
+  <a href="/empresa" data-i18n="nav.empresa">Empresa e Serviços</a>
+  <a href="/catalogo" class="active" data-i18n="nav.catalogo">Catálogo</a>
+  <a href="/contactos" data-i18n="nav.contactos">Contactos</a>
   <div class="mob-lang">
     <button class="on" data-lang="pt">PT</button>
     <button data-lang="en">EN</button>
@@ -53,7 +53,7 @@
   <!-- ════ PAGE HEADER ════ -->
   <header class="page-header">
     <div class="wrap">
-      <div class="page-crumbs"><a href="index.html">Home</a> / <span data-i18n="catalogo.crumb">Catálogo</span></div>
+      <div class="page-crumbs"><a href="/">Home</a> / <span data-i18n="catalogo.crumb">Catálogo</span></div>
       <h1 class="h1" data-i18n="catalogo.page_h1">Catálogo</h1>
       <p class="lead" style="margin-top:.6rem;max-width:50ch" data-i18n="catalogo.page_sub">Uma amostra dos nossos trabalhos.</p>
     </div>
@@ -164,7 +164,7 @@
         <h3 class="cta-strip-t" data-i18n="home.cta_t">Vamos começar o seu projeto?</h3>
         <p class="cta-strip-s" data-i18n="home.cta_s">Conte-nos o que precisa. Respondemos a cada pedido com atenção.</p>
       </div>
-      <a href="contactos.html" class="btn btn-gold" data-i18n="home.cta_btn">Pedir Orçamento</a>
+      <a href="/contactos" class="btn btn-gold" data-i18n="home.cta_btn">Pedir Orçamento</a>
     </div>
   </section>
 
@@ -181,26 +181,33 @@
       <div>
         <div class="ft-col-t" data-i18n="ft.links">Navegação</div>
         <ul class="ft-links">
-          <li><a href="index.html"     data-i18n="nav.home">Home</a></li>
-          <li><a href="empresa.html"   data-i18n="nav.empresa">Empresa e Serviços</a></li>
-          <li><a href="catalogo.html"  data-i18n="nav.catalogo">Catálogo</a></li>
-          <li><a href="contactos.html" data-i18n="nav.contactos">Contactos</a></li>
+          <li><a href="/"     data-i18n="nav.home">Home</a></li>
+          <li><a href="/empresa"   data-i18n="nav.empresa">Empresa e Serviços</a></li>
+          <li><a href="/catalogo"  data-i18n="nav.catalogo">Catálogo</a></li>
+          <li><a href="/contactos" data-i18n="nav.contactos">Contactos</a></li>
         </ul>
       </div>
       <div>
         <div class="ft-col-t" data-i18n="ft.contacto">Contactos</div>
         <div class="ft-ci"><span class="ft-ci-l">Morada</span><span class="ft-ci-v">Zona Industrial de Mogueiras – Tabaço<br>4970-685 Arcos de Valdevez</span></div>
-        <div class="ft-ci"><span class="ft-ci-l">Tlf</span><span class="ft-ci-v">258 522 978</span></div>
-        <div class="ft-ci"><span class="ft-ci-l">Tlm</span><span class="ft-ci-v">935 229 788 · 935 229 789</span></div>
+        <div class="ft-ci"><span class="ft-ci-l">Tlf</span><span class="ft-ci-v">258 522 978 <span data-i18n="ft.landline_call">(Chamada para rede fixa nacional)</span></span></div>
+        <div class="ft-ci"><span class="ft-ci-l">Tlm</span><span class="ft-ci-v">935 229 788 <span data-i18n="ft.mobile_call">(Chamada para rede móvel nacional)</span> · 935 229 789 <span data-i18n="ft.mobile_call">(Chamada para rede móvel nacional)</span></span></div>
         <div class="ft-ci"><span class="ft-ci-l">Email</span><span class="ft-ci-v">patriciacapiarcos@sapo.pt</span></div>
       </div>
     </div>
     <div class="ft-bot">
-      <span class="ft-copy" data-i18n="ft.copy">© 2026 Capiarcos — Todos os direitos reservados.</span>
-      <div class="ft-lang">
-        <button class="on" data-lang="pt">PT</button>
-        <button data-lang="en">EN</button>
-        <button data-lang="fr">FR</button>
+      <div class="ft-bot-left">
+        <span class="ft-copy" data-i18n="ft.copy">© 2026 Capiarcos — Todos os direitos reservados.</span>
+      </div>
+      <div class="ft-bot-center">
+        <a href="https://www.livroreclamacoes.pt/" target="_blank" class="ft-bot-link" data-i18n="ft.complaints_book">Livro de Reclamações</a>
+      </div>
+      <div class="ft-bot-right">
+        <div class="ft-lang">
+          <button class="on" data-lang="pt">PT</button>
+          <button data-lang="en">EN</button>
+          <button data-lang="fr">FR</button>
+        </div>
       </div>
     </div>
   </div>

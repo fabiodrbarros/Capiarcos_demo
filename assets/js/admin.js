@@ -1,5 +1,7 @@
 /* ═══════════════════════════════════════════════════════
-   CAPIARCOS · ADMIN  client
+   CAPIARCOS · ADMIN dashboard
+   Auth gate is in admin/index.html (inline). This script
+   only handles the dashboard once the user is in.
 ═══════════════════════════════════════════════════════ */
 
 const $ = (q, el = document) => el.querySelector(q);
@@ -7,12 +9,6 @@ const state = { current: null, manifest: null };
 
 /* ── API ───────────────────────────────────────────── */
 const API = {
-  me:       () => fetch('/api/me').then(r => r.json()),
-  login:    (password) => fetch('/api/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ password }),
-  }),
   logout:   () => fetch('/api/logout', { method: 'POST' }),
   manifest: () => fetch('/api/manifest', { cache: 'no-store' }).then(r => r.json()),
   delete:   (categoria, file) =>
@@ -26,7 +22,11 @@ const API = {
     xhr.onload = () => {
       if (xhr.status >= 200 && xhr.status < 300) {
         try { resolve(JSON.parse(xhr.responseText)); } catch { resolve({ ok: true }); }
-      } else reject(new Error(`upload-failed-${xhr.status}`));
+      } else if (xhr.status === 401) {
+        location.replace('/admin/login');
+      } else {
+        reject(new Error(`upload-failed-${xhr.status}`));
+      }
     };
     xhr.onerror = () => reject(new Error('network'));
     xhr.send(fd);
@@ -36,42 +36,14 @@ const API = {
 /* ── Boot ──────────────────────────────────────────── */
 init();
 async function init() {
-  try {
-    const { authed } = await API.me();
-    authed ? showApp() : showLogin();
-  } catch {
-    showLogin();
-  }
-}
-
-/* ── Login ─────────────────────────────────────────── */
-$('#login-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const err = $('#login-err'); err.textContent = '';
-  const r = await API.login($('#pw').value);
-  if (r.ok) {
-    showApp();
-  } else {
-    err.textContent = 'Password incorrecta.';
-    $('#pw').focus();
-    $('#pw').select();
-  }
-});
-
-$('#logout').addEventListener('click', async () => {
-  await API.logout();
-  location.reload();
-});
-
-function showLogin() {
-  $('#login').hidden = false;
-  $('#app').hidden = true;
-}
-async function showApp() {
-  $('#login').hidden = true;
-  $('#app').hidden = false;
   await loadManifest(true);
 }
+
+/* ── Logout ────────────────────────────────────────── */
+$('#logout').addEventListener('click', async () => {
+  await API.logout();
+  location.replace('/admin/login');
+});
 
 /* ── Manifest + render ─────────────────────────────── */
 async function loadManifest(autoSelectFirst = false) {
@@ -133,6 +105,8 @@ function renderGrid(items) {
       if (r.ok) {
         await loadManifest();
         toast('Imagem apagada.', 'ok');
+      } else if (r.status === 401) {
+        location.replace('/admin/login');
       } else {
         toast('Não foi possível apagar.', 'err');
       }
@@ -172,7 +146,7 @@ dz.addEventListener('drop', (e) => {
 window.addEventListener('dragover', (e) => { e.preventDefault(); });
 window.addEventListener('drop',     (e) => {
   e.preventDefault();
-  if (e.target.closest('.dz')) return; // dz handler already fires
+  if (e.target.closest('.dz')) return;
   const files = [...(e.dataTransfer?.files || [])].filter(f => /^image\//.test(f.type));
   if (files.length) upload(files);
 });
