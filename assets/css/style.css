@@ -288,7 +288,10 @@ footer {
   text-transform: uppercase; color: var(--burgundy); margin-bottom: 1.3rem;
 }
 .ft-links { display: flex; flex-direction: column; gap: .75rem; }
-.ft-links a { font-size: .85rem; color: var(--text-soft); transition: color .25s; }
+.ft-links a {
+  font-size: .85rem; color: var(--text-soft); transition: color .25s;
+  text-transform: uppercase; letter-spacing: .06em;
+}
 .ft-links a:hover { color: var(--burgundy); }
 .ft-ci { display: flex; flex-direction: column; gap: .15rem; margin-bottom: .85rem; }
 .ft-ci-l { font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
@@ -299,7 +302,7 @@ footer {
 }
 .ft-bot-left { flex: 1; text-align: left; }
 .ft-bot-center { flex: 1; text-align: center; }
-.ft-bot-right { flex: 1; text-align: right; }
+.ft-bot-right { flex: 1; display: flex; justify-content: flex-end; }
 .ft-bot-link { font-size: .7rem; color: var(--burgundy); transition: color .25s; }
 .ft-bot-link:hover { color: var(--burgundy-l); }
 .ft-copy { font-size: .7rem; color: var(--muted); }
