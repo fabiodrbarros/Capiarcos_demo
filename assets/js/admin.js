@@ -23,7 +23,7 @@ const API = {
       if (xhr.status >= 200 && xhr.status < 300) {
         try { resolve(JSON.parse(xhr.responseText)); } catch { resolve({ ok: true }); }
       } else if (xhr.status === 401) {
-        location.replace('/admin/login');
+        location.replace('/capi-gest-admin/login');
       } else {
         reject(new Error(`upload-failed-${xhr.status}`));
       }
@@ -42,7 +42,7 @@ async function init() {
 /* ── Logout ────────────────────────────────────────── */
 $('#logout').addEventListener('click', async () => {
   await API.logout();
-  location.replace('/admin/login');
+  location.replace('/capi-gest-admin/login');
 });
 
 /* ── Manifest + render ─────────────────────────────── */
@@ -106,7 +106,7 @@ function renderGrid(items) {
         await loadManifest();
         toast('Imagem apagada.', 'ok');
       } else if (r.status === 401) {
-        location.replace('/admin/login');
+        location.replace('/capi-gest-admin/login');
       } else {
         toast('Não foi possível apagar.', 'err');
       }
