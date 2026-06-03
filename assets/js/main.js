@@ -413,15 +413,59 @@ window.addEventListener('scroll', () => {
   if (nav) nav.classList.toggle('s', window.scrollY > 40);
 }, { passive: true });
 
-/* ── mobile menu ─────────────────────────────────────── */
-function initMobile() {
-  const mob = document.getElementById('mob');
-  const ham = document.getElementById('ham');
-  const close = document.getElementById('mob-close');
-  if (!mob || !ham) return;
-  ham.addEventListener('click', () => { mob.classList.add('open'); document.body.style.overflow = 'hidden'; });
-  if (close) close.addEventListener('click', () => { mob.classList.remove('open'); document.body.style.overflow = ''; });
-  mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mob.classList.remove('open'); document.body.style.overflow = ''; }));
+/* ── side drawer menu (injected — shared across all pages) ── */
+function initMenu() {
+  if (document.getElementById('site-menu')) return;
+  const links = [
+    ['/',          'nav.home',      'Home'],
+    ['/empresa',   'nav.empresa',   'Empresa e Serviços'],
+    ['/catalogo',  'nav.catalogo',  'Catálogo'],
+    ['/contactos', 'nav.contactos', 'Contactos'],
+  ];
+  const cur = location.pathname.replace(/\/+$/, '') || '/';
+  const navHtml = links.map(([href, key, label]) => {
+    const active = cur === href ? ' class="active"' : '';
+    return `<a href="${href}"${active} data-i18n="${key}">${label}</a>`;
+  }).join('');
+
+  const host = document.createElement('div');
+  host.id = 'site-menu';
+  host.innerHTML = `
+    <button class="menu-toggle" id="menu-toggle" aria-label="Menu" aria-expanded="false">
+      <svg class="roll-ico" viewBox="0 0 40 40" fill="none" stroke="currentColor"
+           stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle class="roll-ring" cx="20" cy="20" r="17" stroke-width="1.3"/>
+        <path class="roll-spiral" d="M20 6 A13 13 0 0 1 20 32 A11 11 0 0 1 20 10 A9 9 0 0 1 20 28 A7 7 0 0 1 20 14 A5 5 0 0 1 20 24 A3 3 0 0 1 20 18"/>
+      </svg>
+    </button>
+    <div class="drawer-bg" id="drawer-bg"></div>
+    <aside class="drawer" id="drawer" aria-label="Menu principal">
+      <a href="/" class="drawer-logo"><img src="/assets/img/logo.png" alt="Capiarcos"></a>
+      <nav class="drawer-nav">${navHtml}</nav>
+      <a href="/contactos" class="btn btn-gold drawer-cta" data-i18n="nav.quote">Pedir Orçamento</a>
+      <div class="drawer-foot">
+        <div class="drawer-lang">
+          <button data-lang="pt">PT</button>
+          <button data-lang="en">EN</button>
+          <button data-lang="fr">FR</button>
+        </div>
+        <div class="drawer-contact">
+          <a href="tel:+351258522978">258 522 978</a>
+          <a href="mailto:patriciacapiarcos@sapo.pt">patriciacapiarcos@sapo.pt</a>
+        </div>
+      </div>
+    </aside>`;
+  document.body.prepend(host);
+
+  const tgl    = host.querySelector('#menu-toggle');
+  const drawer = host.querySelector('#drawer');
+  const bg     = host.querySelector('#drawer-bg');
+  const open   = () => { document.body.classList.add('menu-open');    tgl.setAttribute('aria-expanded', 'true');  };
+  const close  = () => { document.body.classList.remove('menu-open'); tgl.setAttribute('aria-expanded', 'false'); };
+  tgl.addEventListener('click', () => document.body.classList.contains('menu-open') ? close() : open());
+  bg.addEventListener('click', close);
+  drawer.querySelectorAll('a[href]').forEach(a => a.addEventListener('click', close));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 }
 
 /* ── scroll reveal ───────────────────────────────────── */
@@ -506,8 +550,8 @@ function initSmoothScroll() {
 
 /* ── boot ────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
+  initMenu();
   applyLang(lang);
-  initMobile();
   initReveal();
   initTilt();
   initGallery();

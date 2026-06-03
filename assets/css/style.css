@@ -1049,3 +1049,102 @@ textarea.fi { resize: vertical; min-height: 130px; }
 /* — Generous reading measure + smoother body rendering — */
 body { text-rendering: optimizeLegibility; }
 .lead { letter-spacing: .002em; }
+
+/* ═══════════════════════════════════════════════════════
+   SIDE DRAWER MENU  (replaces the top header)
+═══════════════════════════════════════════════════════ */
+body.menu-open { overflow: hidden; }
+
+/* Floating toggle — the wood-roll mark from the logo */
+.menu-toggle {
+  position: fixed; top: 1.15rem; left: 1.15rem; z-index: 130;
+  width: 56px; height: 56px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(255, 255, 255, .82);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  box-shadow: 0 6px 22px rgba(92, 61, 32, .14);
+  color: var(--burgundy);
+  transition: transform .4s var(--ease), box-shadow .4s var(--ease), background .3s;
+}
+.menu-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(92, 61, 32, .22);
+  background: rgba(255, 255, 255, .95);
+}
+.menu-toggle .roll-ico { width: 32px; height: 32px; transition: transform .55s var(--ease); }
+.menu-toggle .roll-spiral { color: var(--gold-d); }
+.menu-toggle .roll-ring   { color: var(--burgundy); opacity: .5; }
+.menu-toggle:hover .roll-ico { transform: rotate(35deg); }
+body.menu-open .menu-toggle { background: var(--white); }
+body.menu-open .menu-toggle .roll-ico { transform: rotate(180deg); }
+
+/* Backdrop */
+.drawer-bg {
+  position: fixed; inset: 0; z-index: 118;
+  background: rgba(40, 28, 18, .42);
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  opacity: 0; pointer-events: none;
+  transition: opacity .45s var(--ease);
+}
+body.menu-open .drawer-bg { opacity: 1; pointer-events: auto; }
+
+/* Drawer panel */
+.drawer {
+  position: fixed; top: 0; left: 0; bottom: 0; z-index: 125;
+  width: min(86vw, 350px);
+  display: flex; flex-direction: column;
+  padding: 5.8rem 2.3rem 2.1rem;
+  background: linear-gradient(165deg, var(--white) 0%, var(--cream) 100%);
+  border-right: 1px solid var(--line);
+  box-shadow: 30px 0 70px rgba(92, 61, 32, .16);
+  transform: translateX(-100%);
+  transition: transform .5s var(--ease);
+  overflow-y: auto;
+}
+body.menu-open .drawer { transform: none; }
+
+.drawer-logo img { height: 40px; width: auto; margin-bottom: 2.6rem; }
+
+.drawer-nav { display: flex; flex-direction: column; gap: .15rem; }
+.drawer-nav a {
+  position: relative;
+  width: max-content;
+  font-family: var(--serif); font-size: 1.7rem; font-weight: 500;
+  color: var(--text);
+  padding: .5rem 0;
+  transition: color .25s var(--ease), padding-left .3s var(--ease);
+}
+.drawer-nav a::before {
+  content: '';
+  position: absolute; left: -.9rem; top: 50%;
+  transform: translateY(-50%) scaleY(0);
+  width: 3px; height: 58%;
+  background: var(--gold);
+  transition: transform .3s var(--ease);
+}
+.drawer-nav a:hover,
+.drawer-nav a.active { color: var(--burgundy); padding-left: .9rem; }
+.drawer-nav a.active { font-style: italic; }
+.drawer-nav a:hover::before,
+.drawer-nav a.active::before { transform: translateY(-50%) scaleY(1); }
+
+.drawer-cta { margin: 2.3rem 0 1.7rem; justify-content: center; }
+
+.drawer-foot { margin-top: auto; padding-top: 1.6rem; border-top: 1px solid var(--line); }
+.drawer-lang { display: flex; gap: .3rem; margin-bottom: 1rem; }
+.drawer-lang button {
+  font-size: .68rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); padding: .35rem .75rem; border-radius: 100px;
+  transition: all .25s;
+}
+.drawer-lang button.on { background: var(--burgundy); color: var(--white); }
+.drawer-lang button:hover:not(.on) { color: var(--burgundy); }
+.drawer-contact { display: flex; flex-direction: column; gap: .35rem; }
+.drawer-contact a { font-size: .82rem; color: var(--text-soft); transition: color .25s; }
+.drawer-contact a:hover { color: var(--burgundy); }
+
+@media (max-width: 768px) {
+  .menu-toggle { width: 50px; height: 50px; top: .9rem; left: .9rem; }
+  .menu-toggle .roll-ico { width: 28px; height: 28px; }
+}
