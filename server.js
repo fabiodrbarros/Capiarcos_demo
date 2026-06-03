@@ -25,7 +25,9 @@ const __dirname   = path.dirname(fileURLToPath(import.meta.url));
 const ROOT        = __dirname;
 const CATALOG_DIR = path.join(ROOT, 'assets', 'img', 'catalogo');
 const PORT        = Number(process.env.PORT) || 3000;
+const ADMIN_USER  = process.env.ADMIN_USER || 'capiarcos';
 const ADMIN_PW    = process.env.ADMIN_PASSWORD || 'capiarcos-admin';
+const ADMIN_URL   = '/capi-gest-admin';
 const COOKIE      = 'cap_admin';
 const SESSION_TTL = 1000 * 60 * 60 * 24 * 7;          // 7 days
 const MAX_UPLOAD  = 100 * 1024 * 1024;                // 100 MB per request
@@ -52,6 +54,12 @@ const newSession = () => {
   sessions.set(t, Date.now() + SESSION_TTL);
   return t;
 };
+function safeEqual(a, b) {
+  const ab = Buffer.from(String(a));
+  const bb = Buffer.from(String(b));
+  if (ab.length !== bb.length) return false;
+  return crypto.timingSafeEqual(ab, bb);
+}
 const isAuthed = (t) => {
   if (!t) return false;
   const exp = sessions.get(t);
@@ -215,6 +223,9 @@ async function serveStatic(req, res, urlPath) {
   // Disallow .. traversal
   if (rel.includes('\0')) return send(res, 400, 'bad path');
 
+  // Hide the real admin folder — only the secret URL serves it.
+  if (rel === '/admin' || /^\/admin[\/.]/i.test(rel)) return send404(res, urlPath);
+
   // Clean-URL policy: redirect /foo.html → /foo (keep /index.html → /).
   // Skip everything under /assets/ (real files like .jpg, .css, etc).
   if (!rel.startsWith('/assets/')) {
@@ -228,8 +239,14 @@ async function serveStatic(req, res, urlPath) {
     }
   }
 
+  // Map the secret admin URL onto the admin/ folder (after the .html redirect
+  // above, so any redirect Location keeps the public /capi-gest-admin prefix).
+  if (rel === ADMIN_URL || rel.startsWith(ADMIN_URL + '/')) {
+    rel = '/admin' + rel.slice(ADMIN_URL.length);
+  }
+
   rel = rel.replace(/^\/+/, '');
-  // Default index for "/" or "/admin/"
+  // Default index for "/" or "/capi-gest-admin/"
   if (rel === '' || rel.endsWith('/')) rel = path.join(rel, 'index.html');
   const abs = path.resolve(ROOT, rel);
   if (!abs.startsWith(ROOT)) return send(res, 400, 'path traversal');
@@ -269,10 +286,13 @@ async function handleLogin(req, res) {
   let body;
   try { body = await readJsonBody(req); }
   catch { return sendJson(res, 400, { error: 'bad-json' }); }
-  const pw = typeof body.password === 'string' ? body.password : '';
-  const a = Buffer.from(pw);
-  const b = Buffer.from(ADMIN_PW);
-  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) {
+  const user = typeof body.user === 'string' ? body.user
+             : typeof body.username === 'string' ? body.username : '';
+  const pw   = typeof body.password === 'string' ? body.password : '';
+  // Compute both (no short-circuit) so timing never reveals which field is wrong
+  const userOk = safeEqual(user, ADMIN_USER);
+  const pwOk   = safeEqual(pw, ADMIN_PW);
+  if (!(userOk && pwOk)) {
     return sendJson(res, 401, { error: 'invalid' });
   }
   const t = newSession();
@@ -383,7 +403,8 @@ server.listen(PORT, () => {
   ✓ Capiarcos site running
 
     Site público →  http://localhost:${PORT}/
-    Admin        →  http://localhost:${PORT}/admin/
+    Admin        →  http://localhost:${PORT}${ADMIN_URL}
+    Utilizador   →  ${ADMIN_USER}
     Password     →  ${ADMIN_PW === 'capiarcos-admin' ? '(default) capiarcos-admin' : '••••• (custom)'}
   `);
 });

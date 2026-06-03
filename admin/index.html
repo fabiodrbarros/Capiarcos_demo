@@ -13,7 +13,7 @@
 </head>
 <body class="page-admin">
 
-  <!-- Auth gate: redirects to /admin/login.html if not authed.
+  <!-- Auth gate: redirects to /capi-gest-admin/login if not authed.
        Hide the body until that check resolves so a flash of dashboard
        is never visible to an unauthenticated visitor. -->
   <script>
@@ -22,7 +22,7 @@
       try {
         const r = await fetch('/api/me');
         const { authed } = await r.json();
-        if (!authed) { location.replace('/admin/login'); return; }
+        if (!authed) { location.replace('/capi-gest-admin/login'); return; }
         document.documentElement.style.visibility = '';
       } catch {
         document.documentElement.style.visibility = '';
@@ -36,7 +36,7 @@
 
     <!-- TOP BAR -->
     <header class="bar">
-      <a href="/admin/" class="bar-brand">
+      <a href="/capi-gest-admin/" class="bar-brand">
         <img src="/assets/img/logo.png" alt="">
         <div>
           <strong>Capiarcos</strong>

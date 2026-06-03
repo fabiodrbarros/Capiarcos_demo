@@ -19,8 +19,11 @@
       <h1 class="login-h">Plataforma de gestão</h1>
       <p class="login-sub">Catálogo de imagens · Capiarcos</p>
 
+      <label class="login-lbl" for="user">Utilizador</label>
+      <input id="user" type="text" autocomplete="username" required autofocus>
+
       <label class="login-lbl" for="pw">Password</label>
-      <input id="pw" type="password" required autofocus>
+      <input id="pw" type="password" autocomplete="current-password" required>
 
       <button type="submit" class="login-btn" id="login-btn">Entrar</button>
       <p class="login-err" id="login-err" aria-live="polite"></p>
@@ -35,12 +38,13 @@
       try {
         const r = await fetch('/api/me');
         const { authed } = await r.json();
-        if (authed) location.replace('/admin/');
+        if (authed) location.replace('/capi-gest-admin/');
       } catch {/* server down — stay on login */}
     })();
 
     /* ── Login form ───────────────────────────────── */
     const form = document.getElementById('login-form');
+    const user = document.getElementById('user');
     const pw   = document.getElementById('pw');
     const err  = document.getElementById('login-err');
     const btn  = document.getElementById('login-btn');
@@ -54,12 +58,12 @@
         const res = await fetch('/api/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password: pw.value }),
+          body: JSON.stringify({ user: user.value, password: pw.value }),
         });
         if (res.ok) {
-          location.replace('/admin/');
+          location.replace('/capi-gest-admin/');
         } else {
-          err.textContent = 'Password incorrecta.';
+          err.textContent = 'Utilizador ou password incorrectos.';
           pw.select();
         }
       } catch {
