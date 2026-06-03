@@ -439,22 +439,20 @@ function initMenu() {
       </svg>
     </button>
     <div class="drawer-bg" id="drawer-bg"></div>
-    <aside class="drawer" id="drawer" aria-label="Menu principal">
-      <a href="/" class="drawer-logo"><img src="/assets/img/logo.png" alt="Capiarcos"></a>
-      <nav class="drawer-nav">${navHtml}</nav>
-      <a href="/contactos" class="btn btn-gold drawer-cta" data-i18n="nav.quote">Pedir Orçamento</a>
-      <div class="drawer-foot">
-        <div class="drawer-lang">
-          <button data-lang="pt">PT</button>
-          <button data-lang="en">EN</button>
-          <button data-lang="fr">FR</button>
-        </div>
-        <div class="drawer-contact">
-          <a href="tel:+351258522978">258 522 978</a>
-          <a href="mailto:patriciacapiarcos@sapo.pt">patriciacapiarcos@sapo.pt</a>
+    <header class="menu-panel" id="drawer" aria-label="Menu principal">
+      <div class="menu-panel-inner">
+        <a href="/" class="drawer-logo"><img src="/assets/img/logo.png" alt="Capiarcos"></a>
+        <nav class="menu-nav">${navHtml}</nav>
+        <div class="menu-right">
+          <div class="drawer-lang">
+            <button data-lang="pt">PT</button>
+            <button data-lang="en">EN</button>
+            <button data-lang="fr">FR</button>
+          </div>
+          <a href="/contactos" class="btn btn-gold menu-cta" data-i18n="nav.quote">Pedir Orçamento</a>
         </div>
       </div>
-    </aside>`;
+    </header>`;
   document.body.prepend(host);
 
   const tgl    = host.querySelector('#menu-toggle');
