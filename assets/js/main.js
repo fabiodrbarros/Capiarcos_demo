@@ -455,6 +455,16 @@ function initMenu() {
     </header>`;
   document.body.prepend(host);
 
+  // Stagger order: items nearest the button (right) reveal first, cascading left
+  const navLinks = [...host.querySelectorAll('.menu-nav a')];
+  const order = [
+    host.querySelector('.menu-cta'),
+    host.querySelector('.drawer-lang'),
+    ...navLinks.reverse(),
+    host.querySelector('.drawer-logo'),
+  ];
+  order.forEach((el, i) => { if (el) el.style.setProperty('--i', i); });
+
   const tgl    = host.querySelector('#menu-toggle');
   const drawer = host.querySelector('#drawer');
   const bg     = host.querySelector('#drawer-bg');

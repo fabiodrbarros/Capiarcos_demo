@@ -1057,7 +1057,7 @@ body.menu-open { overflow: hidden; }
 
 /* Floating toggle — the wood-roll mark from the logo */
 .menu-toggle {
-  position: fixed; top: 1.15rem; left: 1.15rem; z-index: 130;
+  position: fixed; top: 1.15rem; right: 1.15rem; z-index: 130;
   width: 56px; height: 56px; border-radius: 50%;
   display: grid; place-items: center;
   background: rgba(255, 255, 255, .82);
@@ -1096,17 +1096,38 @@ body.menu-open .drawer-bg { opacity: 1; pointer-events: auto; }
   -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
   box-shadow: 0 16px 44px rgba(92, 61, 32, .13);
-  transform: translateY(-100%);
-  transition: transform .5s var(--ease);
+  /* unrolls from the right edge (under the toggle) towards the left */
+  clip-path: inset(0 0 0 100%);
+  pointer-events: none;
+  transition: clip-path .55s var(--ease);
 }
-body.menu-open .menu-panel { transform: none; }
+body.menu-open .menu-panel { clip-path: inset(0 0 0 0); pointer-events: auto; }
 
 .menu-panel-inner {
   width: min(92vw, 1180px);
   margin-inline: auto;
   min-height: 82px;
-  padding-left: 4.9rem;            /* clear the floating wood-roll toggle */
+  padding-right: 4.9rem;           /* clear the floating wood-roll toggle (now on the right) */
   display: flex; align-items: center; gap: 2rem;
+}
+
+/* Staggered reveal — each item slides in from the right, one at a time */
+.menu-panel .drawer-logo,
+.menu-nav a,
+.menu-panel .drawer-lang,
+.menu-panel .menu-cta {
+  opacity: 0;
+  transform: translateX(26px);
+  transition: opacity .5s var(--ease), transform .5s var(--ease);
+  transition-delay: 0s;
+}
+body.menu-open .menu-panel .drawer-logo,
+body.menu-open .menu-nav a,
+body.menu-open .menu-panel .drawer-lang,
+body.menu-open .menu-panel .menu-cta {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(var(--i, 0) * 75ms + 160ms);
 }
 .menu-panel .drawer-logo { display: inline-flex; }
 .menu-panel .drawer-logo img { height: 34px; width: auto; }
