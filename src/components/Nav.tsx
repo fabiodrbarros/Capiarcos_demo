@@ -74,8 +74,11 @@ export default function Nav() {
             <div className="menu-grid">
               {/* Column 1 — brand */}
               <motion.div className="menu-col menu-col--brand" variants={itemV}>
-                <Image className="menu-logo" src="/assets/img/logo.png" alt="Capiarcos" width={200} height={84} style={{ height: 'auto' }} />
-                <p className="menu-tagline">Carpintaria por medida desde 1998. Fábrica própria em Arcos de Valdevez.</p>
+                <div className="menu-brand-top">
+                  <Image className="menu-logo" src="/assets/img/logo.png" alt="Capiarcos" width={200} height={84} style={{ height: 'auto' }} />
+                  <p className="menu-tagline">Carpintaria por medida desde 1998. Fábrica própria em Arcos de Valdevez.</p>
+                </div>
+                <span className="menu-copy">{t.ft.copy}</span>
               </motion.div>
 
               {/* Column 2 — navigation */}

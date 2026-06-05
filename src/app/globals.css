@@ -1282,7 +1282,8 @@ body.menu-open { overflow: hidden; }
   padding: clamp(5.5rem, 12vh, 8.5rem) clamp(1.8rem, 3.4vw, 3.4rem) clamp(2.4rem, 5vh, 3.4rem);
 }
 .menu-col + .menu-col { border-left: 1px solid var(--line); }
-.menu-col--brand { justify-content: flex-end; }
+.menu-col--brand { justify-content: space-between; gap: 2rem; }
+.menu-copy { font-size: .7rem; color: var(--muted); letter-spacing: .01em; line-height: 1.6; }
 .menu-col--nav { justify-content: center; }
 .menu-col--info { justify-content: flex-end; gap: 2.4rem; }
 
