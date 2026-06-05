@@ -1375,8 +1375,8 @@ body.menu-open { overflow: hidden; }
 .about-intro-sec { padding: clamp(8rem, 15vh, 11rem) 0 clamp(2.5rem, 5vw, 4rem); background: var(--white); }
 .about-statement {
   font-family: var(--serif); font-weight: 500;
-  font-size: clamp(2.3rem, 5.4vw, 4.4rem); line-height: 1.06; letter-spacing: -.02em;
-  color: var(--text); max-width: 20ch; margin: 1.2rem 0 1.6rem;
+  font-size: clamp(2.1rem, 3.8vw, 3.4rem); line-height: 1.08; letter-spacing: -.02em;
+  color: var(--text); max-width: 16ch; margin: 1.2rem 0 0;
 }
 .about-statement em { font-style: italic; color: var(--burgundy); }
 .about-lead { font-size: clamp(1rem, 1.4vw, 1.15rem); font-weight: 300; color: var(--text-soft); max-width: 62ch; line-height: 1.85; }

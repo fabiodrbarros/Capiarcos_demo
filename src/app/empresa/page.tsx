@@ -26,12 +26,23 @@ export default function Empresa() {
 
   return (
     <main className="about-page">
-      {/* INTRO — statement */}
+      {/* INTRO + ABOUT (merged) */}
       <section className="about-intro-sec">
         <div className="wrap">
-          <Reveal><span className="ed-index">A Capiarcos</span></Reveal>
-          <Reveal delay={0.06}><Rich as="h1" className="about-statement" html={t.empresa.about_h2} /></Reveal>
-          <Reveal delay={0.14}><p className="about-lead">{t.empresa.about_p1}</p></Reveal>
+          <div className="about-intro">
+            <Reveal x={-24} y={0} className="about-text">
+              <span className="ed-index">A Capiarcos</span>
+              <Rich as="h1" className="about-statement" html={t.empresa.about_h2} />
+              <p className="about-lead" style={{ marginTop: '1.4rem' }}>{t.empresa.about_p1}</p>
+              <p className="about-lead" style={{ marginTop: '1rem' }}>{t.empresa.about_p2}</p>
+              <blockquote className="about-quote"><Rich html={t.home.h1} /></blockquote>
+            </Reveal>
+            <Reveal x={24} y={0}>
+              <figure className="about-visual">
+                <Image src="/assets/img/empresa.png" alt="Capiarcos — Arcos de Valdevez" width={880} height={620} style={{ width: '100%', height: 'auto', borderRadius: 4 }} />
+              </figure>
+            </Reveal>
+          </div>
         </div>
       </section>
 
@@ -42,24 +53,6 @@ export default function Empresa() {
             <Reveal className="stat"><span className="stat-num">1998</span><span className="stat-lbl">{t.empresa.stats.founded}</span></Reveal>
             <Reveal delay={0.08} className="stat"><span className="stat-num"><CountUp to={years} suffix="+" /></span><span className="stat-lbl">{t.empresa.stats.years}</span></Reveal>
             <Reveal delay={0.16} className="stat"><span className="stat-num"><CountUp to={100} suffix="%" /></span><span className="stat-lbl">{t.empresa.stats.custom}</span></Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ABOUT SPLIT */}
-      <section className="about-split-sec">
-        <div className="wrap">
-          <div className="about-intro">
-            <Reveal x={-24} y={0} className="about-text">
-              <span className="tag">{t.empresa.about_tag}</span>
-              <p className="lead" style={{ marginTop: '1.2rem' }}>{t.empresa.about_p2}</p>
-              <blockquote className="about-quote"><Rich html={t.home.h1} /></blockquote>
-            </Reveal>
-            <Reveal x={24} y={0}>
-              <figure className="about-visual">
-                <Image src="/assets/img/empresa.png" alt="Capiarcos — Arcos de Valdevez" width={880} height={620} style={{ width: '100%', height: 'auto', borderRadius: 4 }} />
-              </figure>
-            </Reveal>
           </div>
         </div>
       </section>
