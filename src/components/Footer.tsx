@@ -54,7 +54,8 @@ export default function Footer() {
             <div className="ft-ci">
               <span className="ft-ci-l">Tlm</span>
               <span className="ft-ci-v">
-                935 229 788 <span className="callcost">{t.ft.mobile_call}</span> · 935 229 789 <span className="callcost">{t.ft.mobile_call}</span>
+                935 229 788 <span className="callcost">{t.ft.mobile_call}</span><br />
+                935 229 789 <span className="callcost">{t.ft.mobile_call}</span>
               </span>
             </div>
             <div className="ft-ci">

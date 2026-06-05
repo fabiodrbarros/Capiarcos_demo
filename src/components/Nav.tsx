@@ -109,6 +109,10 @@ export default function Nav() {
                     <a href="tel:+351935229788">935 229 788</a>
                     <small className="callcost">{t.ft.mobile_call}</small>
                   </span>
+                  <span className="menu-tel">
+                    <a href="tel:+351935229789">935 229 789</a>
+                    <small className="callcost">{t.ft.mobile_call}</small>
+                  </span>
                   <a href="mailto:patriciacapiarcos@sapo.pt">patriciacapiarcos@sapo.pt</a>
                   <p className="menu-addr">Zona Industrial de Mogueiras – Tabaço<br />4970-685 Arcos de Valdevez</p>
                 </div>
