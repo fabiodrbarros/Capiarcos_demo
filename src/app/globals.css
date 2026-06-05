@@ -1288,7 +1288,7 @@ body.menu-open { overflow: hidden; }
 .menu-col--info { justify-content: flex-end; gap: 2.4rem; }
 
 .menu-logo { width: clamp(150px, 14vw, 200px); height: auto; margin-bottom: 1.2rem; }
-.menu-tagline { font-size: .9rem; font-weight: 300; color: var(--muted); line-height: 1.7; max-width: 26ch; }
+.menu-tagline { font-size: .9rem; font-weight: 300; color: var(--muted); line-height: 1.7; max-width: 32ch; }
 
 .menu-big { display: flex; flex-direction: column; }
 .menu-big-item { border-top: 1px solid var(--line); }

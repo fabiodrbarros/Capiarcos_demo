@@ -76,7 +76,7 @@ export default function Nav() {
               <motion.div className="menu-col menu-col--brand" variants={itemV}>
                 <div className="menu-brand-top">
                   <Image className="menu-logo" src="/assets/img/logo.png" alt="Capiarcos" width={200} height={84} style={{ height: 'auto' }} />
-                  <p className="menu-tagline">{t.home.h1.replace(/<\/?em>/g, '').replace(/\n/g, ' ')}</p>
+                  <p className="menu-tagline">Cozinhas, roupeiros, escadas, pavimentos e mobiliário interior. Fabricados por nós, do esboço à montagem.</p>
                 </div>
                 <span className="menu-copy">{t.ft.copy}</span>
               </motion.div>
