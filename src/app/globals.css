@@ -1299,7 +1299,7 @@ body.menu-open { overflow: hidden; }
   transition: color .35s var(--ease), padding-left .45s var(--ease);
 }
 .menu-num { font-family: var(--sans); font-size: .72rem; font-weight: 500; letter-spacing: .18em; color: var(--gold-d); opacity: .8; }
-.menu-label { font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.04; letter-spacing: -.01em; }
+.menu-label { font-family: var(--serif); font-weight: 500; font-size: clamp(1.35rem, 2.5vw, 2.1rem); line-height: 1.15; letter-spacing: .03em; text-transform: uppercase; }
 /* active / hover: keep the same typeface — change colour only */
 .menu-big-item a:hover { color: var(--burgundy); padding-left: clamp(.5rem, 1vw, 1rem); }
 .menu-big-item a.active { color: var(--gold-d); }
