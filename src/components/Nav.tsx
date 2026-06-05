@@ -16,27 +16,13 @@ const LINKS = [
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-const panelV: Variants = {
-  hidden: {
-    clipPath: 'inset(0% 0% 0% 100%)',
-    transition: { duration: 0.45, ease: EASE, when: 'afterChildren' },
-  },
-  visible: {
-    clipPath: 'inset(0% 0% 0% 0%)',
-    transition: {
-      duration: 0.5,
-      ease: EASE,
-      when: 'beforeChildren',
-      delayChildren: 0.12,
-      staggerChildren: 0.07,
-      staggerDirection: -1, // rightmost item reveals first
-    },
-  },
+const overlayV: Variants = {
+  hidden: { opacity: 0, transition: { duration: 0.35, ease: EASE, when: 'afterChildren', staggerChildren: 0.04, staggerDirection: -1 } },
+  visible: { opacity: 1, transition: { duration: 0.5, ease: EASE, when: 'beforeChildren', delayChildren: 0.18, staggerChildren: 0.08 } },
 };
-
 const itemV: Variants = {
-  hidden: { opacity: 0, x: 26 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.45, ease: EASE } },
+  hidden: { opacity: 0, y: 34 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: EASE } },
 };
 
 export default function Nav() {
@@ -48,7 +34,6 @@ export default function Nav() {
   const hidden = pathname.startsWith('/capi-gest-admin');
 
   useEffect(() => {
-    // Menu does NOT lock scroll — the site stays interactive while it is open.
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
     const onScroll = () => setScrolled(window.scrollY > 30);
     onScroll();
@@ -60,6 +45,10 @@ export default function Nav() {
     };
   }, []);
 
+  useEffect(() => {
+    document.body.classList.toggle('menu-open', open);
+  }, [open]);
+
   const langs: Lang[] = ['pt', 'en', 'fr'];
 
   if (hidden) return null;
@@ -67,7 +56,7 @@ export default function Nav() {
   return (
     <>
       <button
-        className={`nav-toggle${scrolled || open ? ' solid' : ''}`}
+        className={`nav-toggle${scrolled || open ? ' solid' : ''}${open ? ' is-open' : ''}`}
         aria-label="Menu"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
@@ -75,8 +64,8 @@ export default function Nav() {
         <motion.span
           className="roll-ico"
           aria-hidden
-          animate={{ rotate: open ? 180 : 0 }}
-          whileHover={{ rotate: open ? 180 : 35 }}
+          animate={{ rotate: open ? 135 : 0 }}
+          whileHover={{ rotate: open ? 135 : 30 }}
           transition={{ duration: 0.5, ease: EASE }}
         >
           <Image src="/assets/img/icon.png" alt="" width={42} height={42} priority />
@@ -85,51 +74,37 @@ export default function Nav() {
 
       <AnimatePresence>
         {open && (
-          <motion.header
-            className="nav-panel"
-            variants={panelV}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-          >
-              <div className="nav-inner">
-                <nav className="nav-links">
-                  {LINKS.map((l) => {
-                    const active = pathname === l.href;
-                    return (
-                      <motion.div key={l.href} variants={itemV}>
-                        <Link
-                          href={l.href}
-                          className={`nav-link${active ? ' active' : ''}`}
-                          onClick={() => setOpen(false)}
-                        >
-                          {t.nav[l.key]}
-                        </Link>
-                      </motion.div>
-                    );
-                  })}
-                </nav>
+          <motion.div className="menu-overlay" variants={overlayV} initial="hidden" animate="visible" exit="hidden">
+            <div className="menu-overlay-inner">
+              <motion.span className="menu-kicker" variants={itemV}>Capiarcos — Arcos de Valdevez</motion.span>
 
-                <div className="nav-right">
-                  <motion.div variants={itemV} className="nav-lang">
-                    {langs.map((l) => (
-                      <button
-                        key={l}
-                        className={lang === l ? 'on' : ''}
-                        onClick={() => setLang(l)}
-                      >
-                        {l.toUpperCase()}
-                      </button>
-                    ))}
-                  </motion.div>
-                  <motion.div variants={itemV}>
-                    <Link href="/contactos" className="btn btn-gold nav-cta" onClick={() => setOpen(false)}>
-                      {t.nav.quote}
-                    </Link>
-                  </motion.div>
+              <nav className="menu-big">
+                {LINKS.map((l, i) => {
+                  const active = pathname === l.href;
+                  return (
+                    <motion.div key={l.href} className="menu-big-item" variants={itemV}>
+                      <Link href={l.href} className={active ? 'active' : ''} onClick={() => setOpen(false)}>
+                        <span className="menu-num">{String(i + 1).padStart(2, '0')}</span>
+                        <span className="menu-label">{t.nav[l.key]}</span>
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </nav>
+
+              <motion.div className="menu-foot" variants={itemV}>
+                <div className="menu-lang">
+                  {langs.map((l) => (
+                    <button key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{l.toUpperCase()}</button>
+                  ))}
                 </div>
-              </div>
-          </motion.header>
+                <div className="menu-contact">
+                  <a href="tel:+351258522978">258 522 978</a>
+                  <a href="mailto:patriciacapiarcos@sapo.pt">patriciacapiarcos@sapo.pt</a>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </>
