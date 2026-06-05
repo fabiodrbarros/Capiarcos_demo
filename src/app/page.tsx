@@ -38,6 +38,13 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
+
+        <motion.div className="hero-scroll" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, ease: EASE, delay: 1 }}>
+          <motion.span className="hero-scroll-ico" animate={{ y: [0, 9, 0] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}>
+            <Image src="/assets/img/icon.png" alt="" width={34} height={34} />
+          </motion.span>
+          <span className="hero-scroll-lbl">{t.home.scroll}</span>
+        </motion.div>
       </section>
 
       {/* COMMITMENT */}

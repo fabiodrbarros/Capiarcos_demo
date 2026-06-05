@@ -1224,12 +1224,13 @@ body.nav-open { overflow: hidden; }
 /* serif elegance — the Capiarcos identity */
 .hero-h1 {
   font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(2.9rem, 6.6vw, 5.6rem);
-  line-height: 1.02;
+  font-weight: 500;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: 1.04;
   letter-spacing: -.02em;
   color: var(--text);
   margin: 1.5rem 0 1.6rem;
+  white-space: nowrap;
 }
 .hero-h1 em { font-style: italic; color: var(--burgundy); }
 
@@ -1248,17 +1249,29 @@ body.nav-open { overflow: hidden; }
   padding: 2.4rem;
 }
 .hero-mark-wrap::before {
-  content: ''; position: absolute; inset: 0; border-radius: 50%;
-  background: radial-gradient(circle, rgba(216, 168, 56, .16), rgba(92, 61, 32, .04) 55%, transparent 72%);
+  content: ''; position: absolute; inset: -12%; border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(216, 168, 56, .09) 0%, rgba(216, 168, 56, .045) 36%, transparent 68%);
+  filter: blur(10px);
   z-index: 0;
 }
 .hero-logo { position: relative; z-index: 1; width: 100%; height: auto; }
+
+/* scroll cue — wood-roll icon, gently bobbing */
+.hero-scroll {
+  position: absolute; bottom: 1.8rem; left: 50%; transform: translateX(-50%); z-index: 3;
+  display: flex; flex-direction: column; align-items: center; gap: .55rem;
+  pointer-events: none;
+}
+.hero-scroll-ico { display: block; line-height: 0; }
+.hero-scroll-ico img { width: 34px; height: 34px; display: block; opacity: .92; }
+.hero-scroll-lbl { font-size: .56rem; font-weight: 500; letter-spacing: .32em; text-transform: uppercase; color: var(--muted); }
 
 @media (max-width: 1024px) {
   .hero { min-height: auto; padding: 6.5rem 0 3.5rem; }
   .hero-inner { grid-template-columns: 1fr; }
   .hero-right { display: none; }
-  .hero-h1 { font-size: clamp(2.6rem, 10vw, 4.2rem); }
+  .hero-scroll { display: none; }
+  .hero-h1 { font-size: clamp(2.4rem, 9vw, 3.6rem); }
 }
 
 /* ═══════════════════════════════════════════════════════
