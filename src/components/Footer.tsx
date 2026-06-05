@@ -24,7 +24,8 @@ export default function Footer() {
       <div className="wrap">
         <div className="ft-top">
           <div className="ft-brand">
-            <Image src="/assets/img/logo.png" alt="Capiarcos" width={180} height={44} />
+            <Image src="/assets/img/logo.png" alt="Capiarcos" width={866} height={288} style={{ height: 'auto' }} />
+            <p className="ft-brand-desc">Cozinhas, roupeiros, escadas, pavimentos e mobiliário interior. Fabricados por nós, do esboço à montagem.</p>
           </div>
 
           <div>

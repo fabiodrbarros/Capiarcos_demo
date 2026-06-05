@@ -278,7 +278,8 @@ footer {
   border-bottom: 1px solid var(--line);
   margin-bottom: 1.8rem;
 }
-.ft-brand img { height: 44px; margin-bottom: 1rem; }
+.ft-brand img { width: 180px; height: auto; margin-bottom: 1.2rem; }
+.ft-brand-desc { font-size: .82rem; font-weight: 300; color: var(--muted); line-height: 1.7; max-width: 34ch; }
 .ft-tagline {
   display: none;
   font-size: .88rem; font-weight: 300; color: var(--muted);
