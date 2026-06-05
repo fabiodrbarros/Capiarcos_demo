@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { useLang, type Lang } from '@/lib/i18n';
@@ -18,11 +17,11 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 const overlayV: Variants = {
   hidden: { opacity: 0, transition: { duration: 0.35, ease: EASE, when: 'afterChildren', staggerChildren: 0.04, staggerDirection: -1 } },
-  visible: { opacity: 1, transition: { duration: 0.5, ease: EASE, when: 'beforeChildren', delayChildren: 0.18, staggerChildren: 0.08 } },
+  visible: { opacity: 1, transition: { duration: 0.45, ease: EASE, when: 'beforeChildren', delayChildren: 0.12, staggerChildren: 0.07 } },
 };
 const itemV: Variants = {
-  hidden: { opacity: 0, y: 34 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: EASE } },
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
 };
 
 export default function Nav() {
@@ -56,51 +55,58 @@ export default function Nav() {
   return (
     <>
       <button
-        className={`nav-toggle${scrolled || open ? ' solid' : ''}${open ? ' is-open' : ''}`}
+        className={`nav-toggle${scrolled && !open ? ' solid' : ''}${open ? ' is-open' : ''}`}
         aria-label="Menu"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
-        <motion.span
-          className="roll-ico"
-          aria-hidden
-          animate={{ rotate: open ? 135 : 0 }}
-          whileHover={{ rotate: open ? 135 : 30 }}
-          transition={{ duration: 0.5, ease: EASE }}
-        >
-          <Image src="/assets/img/icon.png" alt="" width={42} height={42} priority />
-        </motion.span>
+        <span className="burger" aria-hidden>
+          <span />
+          <span />
+          <span />
+        </span>
       </button>
 
       <AnimatePresence>
         {open && (
           <motion.div className="menu-overlay" variants={overlayV} initial="hidden" animate="visible" exit="hidden">
-            <div className="menu-overlay-inner">
-              <motion.span className="menu-kicker" variants={itemV}>Capiarcos — Arcos de Valdevez</motion.span>
+            <div className="menu-grid">
+              {/* Column 1 — brand */}
+              <motion.div className="menu-col menu-col--brand" variants={itemV}>
+                <span className="menu-kicker">Capiarcos</span>
+                <p className="menu-tagline">Carpintaria por medida desde 1998. Fábrica própria em Arcos de Valdevez.</p>
+              </motion.div>
 
-              <nav className="menu-big">
-                {LINKS.map((l, i) => {
-                  const active = pathname === l.href;
-                  return (
-                    <motion.div key={l.href} className="menu-big-item" variants={itemV}>
-                      <Link href={l.href} className={active ? 'active' : ''} onClick={() => setOpen(false)}>
-                        <span className="menu-num">{String(i + 1).padStart(2, '0')}</span>
-                        <span className="menu-label">{t.nav[l.key]}</span>
-                      </Link>
-                    </motion.div>
-                  );
-                })}
+              {/* Column 2 — navigation */}
+              <nav className="menu-col menu-col--nav">
+                <div className="menu-big">
+                  {LINKS.map((l, i) => {
+                    const active = pathname === l.href;
+                    return (
+                      <motion.div key={l.href} className="menu-big-item" variants={itemV}>
+                        <Link href={l.href} className={active ? 'active' : ''} onClick={() => setOpen(false)}>
+                          <span className="menu-num">{String(i + 1).padStart(2, '0')}</span>
+                          <span className="menu-label">{t.nav[l.key]}</span>
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
+                </div>
               </nav>
 
-              <motion.div className="menu-foot" variants={itemV}>
+              {/* Column 3 — contacts + language */}
+              <motion.div className="menu-col menu-col--info" variants={itemV}>
+                <div className="menu-info-block">
+                  <span className="menu-info-h">{t.ft.contacto}</span>
+                  <a href="tel:+351258522978">258 522 978</a>
+                  <a href="tel:+351935229788">935 229 788</a>
+                  <a href="mailto:patriciacapiarcos@sapo.pt">patriciacapiarcos@sapo.pt</a>
+                  <p className="menu-addr">Zona Industrial de Mogueiras – Tabaço<br />4970-685 Arcos de Valdevez</p>
+                </div>
                 <div className="menu-lang">
                   {langs.map((l) => (
                     <button key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{l.toUpperCase()}</button>
                   ))}
-                </div>
-                <div className="menu-contact">
-                  <a href="tel:+351258522978">258 522 978</a>
-                  <a href="mailto:patriciacapiarcos@sapo.pt">patriciacapiarcos@sapo.pt</a>
                 </div>
               </motion.div>
             </div>
