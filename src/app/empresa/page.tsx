@@ -73,7 +73,7 @@ export default function Empresa() {
             </Reveal>
             <Reveal x={-24} y={0} className="commit-body">
               <span className="ed-index">(01)</span>
-              <h2 className="h2">{t.empresa.about_quote}</h2>
+              <Rich as="h2" className="h2" html={t.home.h1} />
               <div className="checklist">
                 {t.empresa.diff.slice(0, 4).map((d, i) => (
                   <motion.div
