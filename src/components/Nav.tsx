@@ -81,12 +81,11 @@ export default function Nav() {
               {/* Column 2 — navigation */}
               <nav className="menu-col menu-col--nav">
                 <div className="menu-big">
-                  {LINKS.map((l, i) => {
+                  {LINKS.map((l) => {
                     const active = pathname === l.href;
                     return (
                       <motion.div key={l.href} className="menu-big-item" variants={itemV}>
                         <Link href={l.href} className={active ? 'active' : ''} onClick={() => setOpen(false)}>
-                          <span className="menu-num">{String(i + 1).padStart(2, '0')}</span>
                           <span className="menu-label">{t.nav[l.key]}</span>
                         </Link>
                       </motion.div>

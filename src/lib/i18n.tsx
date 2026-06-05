@@ -8,7 +8,7 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 ═══════════════════════════════════════════════════════ */
 export const dict = {
   pt: {
-    nav: { home: 'Home', empresa: 'Empresa e Serviços', catalogo: 'Catálogo', contactos: 'Contactos', quote: 'Pedir Orçamento' },
+    nav: { home: 'Home', empresa: 'A Capiarcos', catalogo: 'Catálogo', contactos: 'Contactos', quote: 'Pedir Orçamento' },
     home: {
       eyebrow: 'Desde 1998 · Arcos de Valdevez',
       h1: 'Onde a madeira\nganha <em>forma</em>.',
@@ -113,7 +113,7 @@ export const dict = {
   },
 
   en: {
-    nav: { home: 'Home', empresa: 'Company & Services', catalogo: 'Catalogue', contactos: 'Contact', quote: 'Get a Quote' },
+    nav: { home: 'Home', empresa: 'About Capiarcos', catalogo: 'Catalogue', contactos: 'Contact', quote: 'Get a Quote' },
     home: {
       eyebrow: 'Since 1998 · Arcos de Valdevez',
       h1: 'Where wood\ntakes <em>shape</em>.',
@@ -218,7 +218,7 @@ export const dict = {
   },
 
   fr: {
-    nav: { home: 'Accueil', empresa: 'Entreprise & Services', catalogo: 'Catalogue', contactos: 'Contact', quote: 'Demander un devis' },
+    nav: { home: 'Accueil', empresa: 'À propos', catalogo: 'Catalogue', contactos: 'Contact', quote: 'Demander un devis' },
     home: {
       eyebrow: 'Depuis 1998 · Arcos de Valdevez',
       h1: 'Quand le bois\nprend <em>forme</em>.',
