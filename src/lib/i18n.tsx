@@ -11,7 +11,7 @@ export const dict = {
     nav: { home: 'Home', empresa: 'Empresa e Serviços', catalogo: 'Catálogo', contactos: 'Contactos', quote: 'Pedir Orçamento' },
     home: {
       eyebrow: 'Desde 1998 · Arcos de Valdevez',
-      h1: 'Carpintaria\nfeita à <em>medida</em>.',
+      h1: 'Onde a madeira\nganha <em>forma</em>.',
       sub: 'Fábrica própria. Cozinhas, roupeiros, escadas, pavimentos e mobiliário interior — fabricados por nós, do esboço à montagem.',
       cta_quote: 'Pedir Orçamento', cta_more: 'Conhecer a empresa',
       stamp_year: '1998', stamp_label: 'fundada em',
@@ -116,7 +116,7 @@ export const dict = {
     nav: { home: 'Home', empresa: 'Company & Services', catalogo: 'Catalogue', contactos: 'Contact', quote: 'Get a Quote' },
     home: {
       eyebrow: 'Since 1998 · Arcos de Valdevez',
-      h1: 'Carpentry\nmade to <em>measure</em>.',
+      h1: 'Where wood\ntakes <em>shape</em>.',
       sub: 'Our own factory. Kitchens, wardrobes, stairs, flooring and interior furniture — built by us, from sketch to installation.',
       cta_quote: 'Get a Quote', cta_more: 'About the company',
       stamp_year: '1998', stamp_label: 'founded in',
@@ -221,7 +221,7 @@ export const dict = {
     nav: { home: 'Accueil', empresa: 'Entreprise & Services', catalogo: 'Catalogue', contactos: 'Contact', quote: 'Demander un devis' },
     home: {
       eyebrow: 'Depuis 1998 · Arcos de Valdevez',
-      h1: 'Menuiserie\nsur <em>mesure</em>.',
+      h1: 'Quand le bois\nprend <em>forme</em>.',
       sub: 'Atelier propre. Cuisines, dressings, escaliers, parquets et mobilier intérieur — fabriqués par nous, du croquis à la pose.',
       cta_quote: 'Demander un devis', cta_more: 'Notre entreprise',
       stamp_year: '1998', stamp_label: 'fondée en',

@@ -24,7 +24,8 @@
   --muted:         #8A8278;
 
   /* Type */
-  --serif: var(--font-serif), 'Cormorant Garamond', Georgia, serif;
+  /* One typeface across the whole site (the same Inter used for the menu) */
+  --serif: var(--font-sans), 'Inter', system-ui, -apple-system, sans-serif;
   --sans:  var(--font-sans), 'Inter', system-ui, -apple-system, sans-serif;
   --ease:  cubic-bezier(.16,1,.3,1);
 }
@@ -1285,10 +1286,7 @@ body.menu-open { overflow: hidden; }
 .menu-col--nav { justify-content: center; }
 .menu-col--info { justify-content: flex-end; gap: 2.4rem; }
 
-.menu-kicker {
-  font-family: var(--serif); font-size: 1.7rem; font-weight: 500; color: var(--burgundy);
-  margin-bottom: 1rem;
-}
+.menu-logo { width: clamp(150px, 14vw, 200px); height: auto; margin-bottom: 1.2rem; }
 .menu-tagline { font-size: .9rem; font-weight: 300; color: var(--muted); line-height: 1.7; max-width: 26ch; }
 
 .menu-big { display: flex; flex-direction: column; }

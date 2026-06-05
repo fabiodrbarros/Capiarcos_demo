@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { useLang, type Lang } from '@/lib/i18n';
@@ -73,7 +74,7 @@ export default function Nav() {
             <div className="menu-grid">
               {/* Column 1 — brand */}
               <motion.div className="menu-col menu-col--brand" variants={itemV}>
-                <span className="menu-kicker">Capiarcos</span>
+                <Image className="menu-logo" src="/assets/img/logo.png" alt="Capiarcos" width={200} height={84} style={{ height: 'auto' }} />
                 <p className="menu-tagline">Carpintaria por medida desde 1998. Fábrica própria em Arcos de Valdevez.</p>
               </motion.div>
 
