@@ -49,7 +49,7 @@ export default function Contactos() {
                 <PhoneIcon />
                 <div>
                   <div className="c-lbl">{t.contactos.phone}</div>
-                  <div className="c-val"><a href="tel:+351258522978">258 522 978</a> <span>{t.ft.landline_call}</span></div>
+                  <div className="c-val"><a href="tel:+351258522978">258 522 978</a> <span className="callcost">{t.ft.landline_call}</span></div>
                 </div>
               </div>
 
@@ -58,8 +58,8 @@ export default function Contactos() {
                 <div>
                   <div className="c-lbl">{t.contactos.mobile}</div>
                   <div className="c-val">
-                    <a href="tel:+351935229788">935 229 788</a> <span>{t.ft.mobile_call}</span><br />
-                    <a href="tel:+351935229789">935 229 789</a> <span>{t.ft.mobile_call}</span>
+                    <a href="tel:+351935229788">935 229 788</a> <span className="callcost">{t.ft.mobile_call}</span><br />
+                    <a href="tel:+351935229789">935 229 789</a> <span className="callcost">{t.ft.mobile_call}</span>
                   </div>
                 </div>
               </div>

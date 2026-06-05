@@ -101,8 +101,14 @@ export default function Nav() {
               <motion.div className="menu-col menu-col--info" variants={itemV}>
                 <div className="menu-info-block">
                   <span className="menu-info-h">{t.ft.contacto}</span>
-                  <a href="tel:+351258522978">258 522 978</a>
-                  <a href="tel:+351935229788">935 229 788</a>
+                  <span className="menu-tel">
+                    <a href="tel:+351258522978">258 522 978</a>
+                    <small className="callcost">{t.ft.landline_call}</small>
+                  </span>
+                  <span className="menu-tel">
+                    <a href="tel:+351935229788">935 229 788</a>
+                    <small className="callcost">{t.ft.mobile_call}</small>
+                  </span>
                   <a href="mailto:patriciacapiarcos@sapo.pt">patriciacapiarcos@sapo.pt</a>
                   <p className="menu-addr">Zona Industrial de Mogueiras – Tabaço<br />4970-685 Arcos de Valdevez</p>
                 </div>

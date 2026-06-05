@@ -1310,6 +1310,10 @@ body.menu-open { overflow: hidden; }
 .menu-info-block a { font-size: .92rem; color: var(--text-soft); transition: color .25s; }
 .menu-info-block a:hover { color: var(--burgundy); }
 .menu-addr { font-size: .82rem; font-weight: 300; color: var(--muted); line-height: 1.6; margin-top: .6rem; }
+.menu-tel { display: flex; flex-direction: column; gap: .1rem; }
+
+/* call-cost disclaimer — always smaller and lighter than the number itself */
+.callcost { font-size: .78em; font-weight: 300; color: var(--muted); opacity: .85; }
 
 .menu-lang { display: flex; gap: .3rem; }
 .menu-lang button {
