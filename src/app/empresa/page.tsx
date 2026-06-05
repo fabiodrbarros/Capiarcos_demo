@@ -53,7 +53,7 @@ export default function Empresa() {
             <Reveal x={-24} y={0} className="about-text">
               <span className="tag">{t.empresa.about_tag}</span>
               <p className="lead" style={{ marginTop: '1.2rem' }}>{t.empresa.about_p2}</p>
-              <blockquote className="about-quote">{t.empresa.about_quote}</blockquote>
+              <blockquote className="about-quote"><Rich html={t.home.h1} /></blockquote>
             </Reveal>
             <Reveal x={24} y={0}>
               <figure className="about-visual">
@@ -73,7 +73,7 @@ export default function Empresa() {
             </Reveal>
             <Reveal x={-24} y={0} className="commit-body">
               <span className="ed-index">(01)</span>
-              <Rich as="h2" className="h2" html={t.home.h1} />
+              <h2 className="h2">{t.empresa.about_quote}</h2>
               <div className="checklist">
                 {t.empresa.diff.slice(0, 4).map((d, i) => (
                   <motion.div
