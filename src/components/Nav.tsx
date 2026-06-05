@@ -41,6 +41,7 @@ const itemV: Variants = {
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname() || '/';
   const { t, lang, setLang } = useLang();
 
@@ -49,8 +50,14 @@ export default function Nav() {
   useEffect(() => {
     // Menu does NOT lock scroll — the site stays interactive while it is open.
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    const onScroll = () => setScrolled(window.scrollY > 30);
+    onScroll();
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('scroll', onScroll);
+    };
   }, []);
 
   const langs: Lang[] = ['pt', 'en', 'fr'];
@@ -60,7 +67,7 @@ export default function Nav() {
   return (
     <>
       <button
-        className="nav-toggle"
+        className={`nav-toggle${scrolled || open ? ' solid' : ''}`}
         aria-label="Menu"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}

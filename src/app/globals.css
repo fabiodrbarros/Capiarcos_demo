@@ -1060,11 +1060,18 @@ body.nav-open { overflow: hidden; }
   position: fixed; top: 1.15rem; right: 1.15rem; z-index: 130;
   width: 56px; height: 56px; border-radius: 50%;
   display: grid; place-items: center;
-  background: rgba(255, 255, 255, .82);
-  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
-  border: 1px solid var(--line);
-  box-shadow: 0 6px 22px rgba(92, 61, 32, .14);
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
   color: var(--burgundy);
+  transition: background .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+}
+/* gains a backdrop only once the page is scrolled (or the menu is open) */
+.nav-toggle.solid {
+  background: rgba(255, 255, 255, .85);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border-color: var(--line);
+  box-shadow: 0 6px 22px rgba(92, 61, 32, .14);
 }
 .nav-toggle .roll-ico { display: block; line-height: 0; }
 .nav-toggle .roll-ico img { display: block; width: 42px; height: 42px; object-fit: contain; }
@@ -1173,111 +1180,72 @@ body.nav-open { overflow: hidden; }
 .nf-actions { display: inline-flex; gap: .8rem; flex-wrap: wrap; justify-content: center; }
 
 /* ═══════════════════════════════════════════════════════
-   HERO — technical / architectural redesign (overrides above)
+   HERO — Capiarcos (warm, editorial; not the reference)
 ═══════════════════════════════════════════════════════ */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 92vh;
   display: flex; align-items: center;
-  padding: 7rem 0 5rem;
-  background: #fdfdfb;
+  padding: 8rem 0 4rem;
+  background: linear-gradient(165deg, var(--white) 0%, var(--cream) 55%, var(--beige) 100%);
   overflow: hidden;
 }
-/* faint technical grid, fading out at the edges */
+/* soft warm glow, no technical grid */
 .hero::before {
-  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background-image:
-    linear-gradient(to right, rgba(92, 61, 32, .05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(92, 61, 32, .05) 1px, transparent 1px);
-  background-size: 88px 88px;
-  -webkit-mask-image: radial-gradient(ellipse 85% 80% at 58% 45%, #000 35%, transparent 92%);
-  mask-image: radial-gradient(ellipse 85% 80% at 58% 45%, #000 35%, transparent 92%);
+  content: ''; position: absolute; top: -16%; right: -8%;
+  width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(216, 168, 56, .14), transparent 65%);
+  pointer-events: none; z-index: 0;
 }
 .hero::after { content: ''; background: none; }
 
-.hero-inner { position: relative; z-index: 2; grid-template-columns: 1.05fr .95fr; }
+.hero-inner { position: relative; z-index: 2; grid-template-columns: 1.05fr .95fr; align-items: center; }
 .hero-left { position: relative; z-index: 2; }
 .hero-right { position: relative; z-index: 1; display: flex; justify-content: center; align-items: center; }
 
-/* defer all entrance motion to Framer Motion */
+/* entrance handled by Framer Motion */
 .hero-eyebrow, .hero-h1, .hero-sub, .hero-btns { animation: none !important; }
 .hero-h1 { opacity: 1; }
 
 .hero-eyebrow { color: var(--gold-d); margin-bottom: 0; }
 .hero-eyebrow span { background: var(--gold-d); }
 
+/* serif elegance — the Capiarcos identity */
 .hero-h1 {
-  font-family: var(--sans);
-  font-weight: 600;
-  font-size: clamp(2.9rem, 7.2vw, 6.1rem);
-  line-height: .97;
-  letter-spacing: -.035em;
-  color: #201b16;
-  margin: 1.5rem 0 2.3rem;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.9rem, 6.6vw, 5.6rem);
+  line-height: 1.02;
+  letter-spacing: -.02em;
+  color: var(--text);
+  margin: 1.5rem 0 1.6rem;
 }
-.hero-h1 em { font-style: normal; color: var(--gold-d); }
+.hero-h1 em { font-style: italic; color: var(--burgundy); }
 
-.hero-btns { margin-top: 0; }
-
-/* corner coordinates */
-.hero-coords {
-  position: absolute; top: 2.1rem; left: clamp(1.2rem, 4vw, 4rem); z-index: 3;
-  display: flex; flex-direction: column; gap: .25rem;
-  font-family: ui-monospace, 'SF Mono', 'SFMono-Regular', Menlo, monospace;
-  font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
+.hero-sub {
+  font-size: clamp(.98rem, 1.3vw, 1.1rem);
+  font-weight: 300; color: var(--text-soft); max-width: 44ch;
+  margin-bottom: 2.4rem; line-height: 1.8;
 }
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
 
-/* scattered crosshairs */
-.hero-plus {
-  position: absolute; z-index: 1; color: var(--gold); opacity: .45;
-  font-size: 1.1rem; font-weight: 300; line-height: 1;
-  pointer-events: none; user-select: none;
-}
-
-/* concentric rings + brand mark on the right */
-.hero-rings {
+/* brand mark on the right, on a warm halo */
+.hero-mark-wrap {
   position: relative;
-  width: min(42vw, 540px);
-  aspect-ratio: 1 / 1;
+  width: min(40vw, 460px);
   display: grid; place-items: center;
+  padding: 2.4rem;
 }
-.hero-rings .ring {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  border-radius: 50%; border: 1px solid var(--line);
+.hero-mark-wrap::before {
+  content: ''; position: absolute; inset: 0; border-radius: 50%;
+  background: radial-gradient(circle, rgba(216, 168, 56, .16), rgba(92, 61, 32, .04) 55%, transparent 72%);
+  z-index: 0;
 }
-.hero-rings .ring-1 { width: 100%; height: 100%; opacity: .55; }
-.hero-rings .ring-2 { width: 76%; height: 76%; border-color: var(--beige-d); }
-.hero-rings .ring-3 { width: 52%; height: 52%; opacity: .6; }
-.hero-rings .ring-4 { width: 30%; height: 30%; border-color: var(--gold); opacity: .5; }
-.hero-rings .hero-mark { position: relative; z-index: 2; width: 64%; height: auto; }
-
-/* pillar tags, bottom-left */
-.hero-tags {
-  position: absolute; bottom: 2.2rem; left: clamp(1.2rem, 4vw, 4rem); z-index: 3;
-  display: flex; gap: 1.9rem; flex-wrap: wrap;
-}
-.hero-tag {
-  display: inline-flex; align-items: center; gap: .55rem;
-  font-size: .66rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--text-soft);
-}
-.hero-tag .hdot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold-d); }
-.hero-tag .hdot.dark { background: var(--burgundy-d); }
-
-/* scroll cue, bottom-center */
-.hero-scroll {
-  position: absolute; bottom: 1.8rem; left: 50%; transform: translateX(-50%); z-index: 3;
-  display: flex; flex-direction: column; align-items: center; gap: .6rem;
-  font-size: .58rem; letter-spacing: .32em; text-transform: uppercase; color: var(--muted);
-}
-.hero-scroll-line { width: 1px; height: 44px; background: linear-gradient(var(--gold-d), transparent); }
+.hero-logo { position: relative; z-index: 1; width: 100%; height: auto; }
 
 @media (max-width: 1024px) {
-  .hero { min-height: auto; padding: 6.5rem 0 3rem; }
+  .hero { min-height: auto; padding: 6.5rem 0 3.5rem; }
   .hero-inner { grid-template-columns: 1fr; }
   .hero-right { display: none; }
-  .hero-coords, .hero-scroll { display: none; }
-  .hero-tags { position: static; margin-top: 2.4rem; justify-content: flex-start; }
-  .hero-h1 { font-size: clamp(2.6rem, 11vw, 4.4rem); }
+  .hero-h1 { font-size: clamp(2.6rem, 10vw, 4.2rem); }
 }
-
