@@ -12,7 +12,7 @@ export const dict = {
     home: {
       eyebrow: 'Desde 1998 · Arcos de Valdevez',
       h1: 'Onde a madeira\nganha <em>forma</em>.',
-      sub: 'Fábrica própria. Cozinhas, roupeiros, escadas, pavimentos e mobiliário interior — fabricados por nós, do esboço à montagem.',
+      sub: 'Cozinhas, roupeiros, escadas, pavimentos e mobiliário interior. Fabricados por nós, do esboço à montagem.',
       cta_quote: 'Pedir Orçamento', cta_more: 'Conhecer a empresa',
       stamp_year: '1998', stamp_label: 'fundada em',
       commit_tag: 'O nosso compromisso',
@@ -118,7 +118,7 @@ export const dict = {
     home: {
       eyebrow: 'Since 1998 · Arcos de Valdevez',
       h1: 'Where wood\ntakes <em>shape</em>.',
-      sub: 'Our own factory. Kitchens, wardrobes, stairs, flooring and interior furniture — built by us, from sketch to installation.',
+      sub: 'Kitchens, wardrobes, stairs, flooring and interior furniture. Built by us, from sketch to installation.',
       cta_quote: 'Get a Quote', cta_more: 'About the company',
       stamp_year: '1998', stamp_label: 'founded in',
       commit_tag: 'Our commitment',
@@ -224,7 +224,7 @@ export const dict = {
     home: {
       eyebrow: 'Depuis 1998 · Arcos de Valdevez',
       h1: 'Quand le bois\nprend <em>forme</em>.',
-      sub: 'Atelier propre. Cuisines, dressings, escaliers, parquets et mobilier intérieur — fabriqués par nous, du croquis à la pose.',
+      sub: 'Cuisines, dressings, escaliers, parquets et mobilier intérieur. Fabriqués par nous, du croquis à la pose.',
       cta_quote: 'Demander un devis', cta_more: 'Notre entreprise',
       stamp_year: '1998', stamp_label: 'fondée en',
       commit_tag: 'Notre engagement',
