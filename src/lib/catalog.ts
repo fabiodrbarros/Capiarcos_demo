@@ -27,12 +27,40 @@ export function ensureDirs() {
   }
 }
 
-export type ManifestItem = { file: string; url: string; mtime: number };
+export type ManifestItem = { file: string; url: string; mtime: number; title: string };
 export type Manifest = { categories: Category[]; items: Record<string, ManifestItem[]> };
 
 const IMG_RE = /\.(jpe?g|png|webp|gif|avif)$/i;
+const TITLES_FILE = path.join(CATALOG_DIR, 'titles.json');
+
+/** title store: { "slug/filename.jpg": "Title" } */
+export async function readTitles(): Promise<Record<string, string>> {
+  try {
+    return JSON.parse(await fs.readFile(TITLES_FILE, 'utf8'));
+  } catch {
+    return {};
+  }
+}
+
+export async function writeTitles(map: Record<string, string>): Promise<void> {
+  ensureDirs();
+  await fs.writeFile(TITLES_FILE, JSON.stringify(map, null, 2), 'utf8');
+}
+
+export async function setTitle(slug: string, file: string, title: string): Promise<void> {
+  const map = await readTitles();
+  map[`${slug}/${file}`] = title;
+  await writeTitles(map);
+}
+
+export async function removeTitle(slug: string, file: string): Promise<void> {
+  const map = await readTitles();
+  delete map[`${slug}/${file}`];
+  await writeTitles(map);
+}
 
 export async function readManifest(): Promise<Manifest> {
+  const titles = await readTitles();
   const items: Record<string, ManifestItem[]> = {};
   for (const c of CATEGORIES) {
     const dir = path.join(CATALOG_DIR, c.slug);
@@ -45,6 +73,7 @@ export async function readManifest(): Promise<Manifest> {
             file: f,
             url: `/assets/img/catalogo/${c.slug}/${encodeURIComponent(f)}`,
             mtime: st.mtimeMs,
+            title: titles[`${c.slug}/${f}`] || '',
           };
         }),
       );

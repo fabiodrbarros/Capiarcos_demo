@@ -7,7 +7,7 @@ import { useLang } from '@/lib/i18n';
 import { EASE } from '@/components/Reveal';
 
 type Category = { slug: string; label: string; label_en: string; label_fr: string };
-type Item = { file: string; url: string; mtime: number };
+type Item = { file: string; url: string; mtime: number; title?: string };
 type Manifest = { categories: Category[]; items: Record<string, Item[]> };
 
 export default function Catalogo() {
@@ -76,8 +76,11 @@ export default function Catalogo() {
                   transition={{ duration: 0.4, ease: EASE, delay: (i % 6) * 0.04 }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img className="img" src={item.url} alt={label} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                  <div className="gi-ov"><span className="gi-cat">{label}</span></div>
+                  <img className="img" src={item.url} alt={item.title || label} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <div className="gi-ov">
+                    <span className="gi-cat">{label}</span>
+                    {item.title && <span className="gi-title">{item.title}</span>}
+                  </div>
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -88,17 +91,6 @@ export default function Catalogo() {
               {t.catalogo.empty}
             </p>
           )}
-        </div>
-      </section>
-
-      {/* CTA STRIP */}
-      <section className="cta-strip">
-        <div className="wrap">
-          <div className="cta-strip-text">
-            <h3 className="cta-strip-t">{t.home.cta_t}</h3>
-            <p className="cta-strip-s">{t.home.cta_s}</p>
-          </div>
-          <Link href="/contactos" className="btn btn-gold">{t.home.cta_btn}</Link>
         </div>
       </section>
     </main>

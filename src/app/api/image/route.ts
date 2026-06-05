@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { isAuthed } from '@/lib/auth';
-import { CATALOG_DIR, CATEGORY_SLUGS } from '@/lib/catalog';
+import { CATALOG_DIR, CATEGORY_SLUGS, removeTitle } from '@/lib/catalog';
 
 export async function DELETE(req: Request) {
   if (!(await isAuthed())) {
@@ -27,6 +27,7 @@ export async function DELETE(req: Request) {
 
   try {
     await fs.unlink(fp);
+    await removeTitle(slug, file);
     return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json({ error: 'not-found' }, { status: 404 });

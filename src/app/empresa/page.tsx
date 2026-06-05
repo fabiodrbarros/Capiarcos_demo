@@ -6,11 +6,11 @@ import { motion } from 'framer-motion';
 import { useLang, Rich } from '@/lib/i18n';
 import { Reveal, EASE } from '@/components/Reveal';
 import { CountUp } from '@/components/CountUp';
-import { DiffSlider } from '@/components/DiffSlider';
 
-const Chevron = () => (
-  <svg className="svc-row-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
-    <path d="M9 6 L21 18 L9 30" /><path d="M20 6 L27 18 L20 30" opacity="0.45" />
+const Check = () => (
+  <svg className="check-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" opacity="0.35" />
+    <path d="M8 12.5l2.5 2.5 5.5-6" />
   </svg>
 );
 
@@ -28,12 +28,11 @@ export default function Empresa() {
               <span className="ed-index">A Capiarcos</span>
               <Rich as="h1" className="about-statement" html={t.empresa.about_h2} />
               <p className="about-lead" style={{ marginTop: '1.4rem' }}>{t.empresa.about_p1}</p>
-              <p className="about-lead" style={{ marginTop: '1rem' }}>{t.empresa.about_p2}</p>
-              <blockquote className="about-quote"><Rich html={t.home.h1} /></blockquote>
+              <blockquote className="about-quote"><Rich html={t.home.h1.replace(/\n/g, ' ')} /></blockquote>
             </Reveal>
             <Reveal x={24} y={0}>
-              <figure className="about-visual">
-                <Image src="/assets/img/empresa.png" alt="Capiarcos — Arcos de Valdevez" width={880} height={620} style={{ width: '100%', height: 'auto', borderRadius: 4 }} />
+              <figure className="about-visual about-visual--logo">
+                <Image src="/assets/img/logo.png" alt="Capiarcos" width={460} height={153} style={{ width: '100%', height: 'auto' }} />
               </figure>
             </Reveal>
           </div>
@@ -51,16 +50,39 @@ export default function Empresa() {
         </div>
       </section>
 
-      {/* DIFERENCIAIS — slider of cards */}
+      {/* DIFERENCIAIS — image + checklist */}
       <section className="diff-section">
         <div className="wrap">
-          <Reveal className="ed-head">
-            <span className="ed-index">(01)</span>
-            <h2 className="h2">{t.empresa.diff_h2}</h2>
-            <p className="lead" style={{ marginTop: '.6rem', maxWidth: '46ch' }}>{t.empresa.about_quote}</p>
-          </Reveal>
+          <div className="about-intro diff-intro">
+            <Reveal x={-24} y={0} className="diff-visual-col">
+              <figure className="diff-visual">
+                <Image src="/assets/img/wood.png" alt="Capiarcos — trabalho em madeira" width={941} height={1672} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </figure>
+            </Reveal>
+            <Reveal x={24} y={0} className="about-text">
+              <span className="ed-index">(01)</span>
+              <h2 className="h2">{t.empresa.diff_h2}</h2>
+              <div className="checklist" style={{ marginTop: '1.6rem' }}>
+                {t.empresa.diff.slice(0, 5).map((d, i) => (
+                  <motion.div
+                    key={d.t}
+                    className="check-item"
+                    initial={{ opacity: 0, x: 16 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: '0px 0px -40px 0px' }}
+                    transition={{ duration: 0.45, ease: EASE, delay: i * 0.06 }}
+                  >
+                    <Check />
+                    <div>
+                      <div className="check-t">{d.t}</div>
+                      <div className="check-d">{d.d}</div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
         </div>
-        <DiffSlider items={t.empresa.diff} />
       </section>
 
       {/* ÁREAS DE FABRICAÇÃO */}
@@ -68,24 +90,26 @@ export default function Empresa() {
         <div className="wrap">
           <Reveal className="ed-head">
             <span className="ed-index">(02)</span>
-            <h2 className="h2">{t.empresa.svc_h2}</h2>
-            <p className="lead" style={{ marginTop: '.6rem', maxWidth: '46ch' }}>{t.empresa.svc_sub}</p>
+            <h2 className="h2 fab-heading">{t.empresa.svc_sub}</h2>
           </Reveal>
-          <div className="svc-list">
+          <div className="fab-grid">
             {t.empresa.svc.map((s, i) => (
               <motion.div
                 key={s.t}
-                className="svc-row"
-                initial={{ opacity: 0, y: 18 }}
+                className="fab-item"
+                initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '0px 0px -40px 0px' }}
-                transition={{ duration: 0.5, ease: EASE, delay: (i % 2) * 0.08 }}
+                viewport={{ once: true, margin: '0px 0px -30px 0px' }}
+                transition={{ duration: 0.4, ease: EASE, delay: (i % 3) * 0.05 }}
               >
-                <Chevron />
-                <div className="svc-row-name">{s.t} <span className="svc-row-sub">{s.s}</span></div>
+                <span className="fab-num">{String(i + 1).padStart(2, '0')}</span>
+                <span className="fab-name">{s.t}</span>
               </motion.div>
             ))}
           </div>
+          <Reveal className="fab-cta">
+            <Link href="/catalogo" className="btn btn-primary">{t.empresa.svc_cta} →</Link>
+          </Reveal>
         </div>
       </section>
 
@@ -94,9 +118,9 @@ export default function Empresa() {
         <div className="wrap">
           <div className="intl-grid">
             <Reveal x={-24} y={0}>
-              <span className="tag">{t.empresa.intl_tag}</span>
-              <Rich as="h2" className="h2" html={t.empresa.intl_h2} />
-              <p className="lead" style={{ marginTop: '1.2rem' }}>{t.empresa.intl_p}</p>
+              <span className="ed-index">(03)</span>
+              <Rich as="h2" className="h2 intl-h" html={t.empresa.intl_h2} />
+              <p className="intl-secondary">{t.empresa.intl_p}</p>
             </Reveal>
             <Reveal x={24} y={0} className="intl-flags">
               <div className="flag-box"><div className="flag-ring">🇵🇹</div><span className="flag-lbl">Portugal</span></div>
@@ -118,7 +142,7 @@ export default function Empresa() {
             <h3 className="cta-strip-t">{t.home.cta_t}</h3>
             <p className="cta-strip-s">{t.home.cta_s}</p>
           </div>
-          <Link href="/contactos" className="btn btn-gold">{t.home.cta_btn}</Link>
+          <Link href="/contactos" className="btn btn-primary">{t.home.cta_btn}</Link>
         </div>
       </section>
     </main>

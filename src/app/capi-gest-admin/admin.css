@@ -408,3 +408,18 @@ img { display: block; max-width: 100%; }
   .side-head, .side-foot { display: none; }
   .pane { padding: 1.4rem 1rem; }
 }
+
+/* image title input (upload) */
+.dz-title { margin-bottom: 1rem; }
+.dz-title label {
+  display: block; font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: .5rem;
+}
+.dz-title input {
+  width: 100%; padding: .8rem 1rem;
+  border: 1px solid var(--line); border-radius: 8px;
+  background: var(--white); color: var(--text); font-size: .95rem;
+  transition: border-color .25s;
+}
+.dz-title input:focus { outline: none; border-color: var(--burgundy); }
+.cell-title { font-weight: 600; color: var(--text); }

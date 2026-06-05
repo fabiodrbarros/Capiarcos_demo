@@ -28,8 +28,8 @@ export function DiffSlider({ items }: { items: { t: string; d: string }[] }) {
             viewport={{ once: true, margin: '0px 0px -40px 0px' }}
             transition={{ duration: 0.5, ease: EASE, delay: Math.min(i, 4) * 0.06 }}
           >
-            <span className="slide-num">{String(i + 1).padStart(2, '0')}</span>
-            <div>
+            <span className="slide-num">{String(i + 1).padStart(2, '0')} <i>/ {String(items.length).padStart(2, '0')}</i></span>
+            <div className="slide-body">
               <h3 className="slide-t">{d.t}</h3>
               <p className="slide-d">{d.d}</p>
             </div>

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useLang, Rich } from '@/lib/i18n';
 import { Reveal, EASE } from '@/components/Reveal';
+import { DiffSlider } from '@/components/DiffSlider';
 
 
 export default function Home() {
@@ -40,50 +41,49 @@ export default function Home() {
         </div>
 
         <motion.div className="hero-scroll" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, ease: EASE, delay: 1 }}>
-          <motion.span className="hero-scroll-ico" animate={{ y: [0, 9, 0] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}>
-            <Image src="/assets/img/icon.png" alt="" width={34} height={34} />
-          </motion.span>
           <span className="hero-scroll-lbl">{t.home.scroll}</span>
+          <span className="hero-scroll-line">
+            <motion.span className="hero-scroll-dot" animate={{ y: [-12, 50] }} transition={{ duration: 1.7, repeat: Infinity, ease: 'easeInOut' }} />
+          </span>
         </motion.div>
       </section>
 
-      {/* COMMITMENT */}
-      <section className="commitment">
+      {/* DIFERENCIAIS — full-width slider */}
+      <section className="diff-section">
         <div className="wrap">
-          <Reveal><span className="ed-index">(01)</span></Reveal>
-          <Reveal delay={0.06}><span className="tag commit-tag">{t.home.commit_tag}</span></Reveal>
-          <Reveal delay={0.12}><h2 className="commit-title">{t.home.commit_t}</h2></Reveal>
-          <Reveal delay={0.18}><p className="commit-sub">{t.home.commit_s}</p></Reveal>
+          <Reveal className="ed-head">
+            <h2 className="h2">{t.home.commit_t}</h2>
+            <p className="lead" style={{ marginTop: '.6rem', maxWidth: '46ch' }}>{t.home.commit_tag}</p>
+          </Reveal>
         </div>
+        <DiffSlider items={[t.empresa.diff[2], t.empresa.diff[1], t.empresa.diff[3], t.empresa.diff[4]]} />
       </section>
 
       {/* AREAS — editorial numbered list */}
       <section className="areas">
         <div className="wrap">
           <Reveal className="ed-head">
-            <span className="ed-index">(02)</span>
+
             <h2 className="h2">{t.home.areas_h2}</h2>
-            <p className="lead" style={{ marginTop: '.7rem', maxWidth: '46ch' }}>{t.home.areas_sub}</p>
           </Reveal>
-          <div className="ed-list">
-            {t.home.areas.map((a, i) => (
+          <div className="fab-grid">
+            {t.empresa.svc.map((s, i) => (
               <motion.div
-                key={a.name}
-                className="ed-row"
-                initial={{ opacity: 0, y: 18 }}
+                key={s.t}
+                className="fab-item"
+                initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '0px 0px -40px 0px' }}
-                transition={{ duration: 0.55, ease: EASE, delay: (i % 3) * 0.06 }}
+                viewport={{ once: true, margin: '0px 0px -30px 0px' }}
+                transition={{ duration: 0.4, ease: EASE, delay: (i % 3) * 0.05 }}
               >
-                <Link href="/empresa">
-                  <span className="ed-num">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="ed-name">{a.name}</span>
-                  <span className="ed-desc">{a.desc}</span>
-                  <span className="ed-arr">→</span>
-                </Link>
+                <span className="fab-num">{String(i + 1).padStart(2, '0')}</span>
+                <span className="fab-name">{s.t}</span>
               </motion.div>
             ))}
           </div>
+          <Reveal className="fab-cta">
+            <Link href="/catalogo" className="btn btn-primary">{t.empresa.svc_cta} →</Link>
+          </Reveal>
         </div>
       </section>
 
@@ -92,8 +92,8 @@ export default function Home() {
         <div className="wrap">
           <div className="intl-grid intl-grid-rev">
             <Reveal x={-24} y={0}>
-              <span className="tag">{t.home.intl_tag}</span>
-              <Rich as="h2" className="h2" html={t.home.intl_h} />
+              <Rich as="h2" className="h2 intl-h" html={t.empresa.intl_h2} />
+              <p className="intl-secondary">{t.empresa.intl_p}</p>
             </Reveal>
             <Reveal x={24} y={0} className="intl-flags">
               <div className="flag-box"><div className="flag-ring">🇵🇹</div><span className="flag-lbl">Portugal</span></div>
@@ -108,16 +108,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA STRIP */}
-      <section className="cta-strip">
-        <div className="wrap">
-          <div className="cta-strip-text">
-            <h3 className="cta-strip-t">{t.home.cta_t}</h3>
-            <p className="cta-strip-s">{t.home.cta_s}</p>
-          </div>
-          <Link href="/contactos" className="btn btn-gold">{t.home.cta_btn}</Link>
-        </div>
-      </section>
     </main>
   );
 }

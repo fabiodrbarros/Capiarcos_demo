@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { isAuthed } from '@/lib/auth';
-import { CATALOG_DIR, CATEGORY_SLUGS, ensureDirs } from '@/lib/catalog';
+import { CATALOG_DIR, CATEGORY_SLUGS, ensureDirs, readTitles, writeTitles } from '@/lib/catalog';
 
 const MAX_FILE = 25 * 1024 * 1024; // 25 MB
 
@@ -36,8 +36,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'bad-form' }, { status: 400 });
   }
 
+  const title = (form.get('titulo') as string | null)?.trim() || '';
   const files = form.getAll('files').filter((f): f is File => f instanceof File);
   const saved: { file: string; url: string; size: number }[] = [];
+  const titles = await readTitles();
 
   for (const f of files) {
     if (!/^image\//i.test(f.type)) continue;
@@ -47,8 +49,11 @@ export async function POST(req: Request) {
     if (!path.resolve(dest).startsWith(path.resolve(CATALOG_DIR))) continue;
     const buf = Buffer.from(await f.arrayBuffer());
     await fs.writeFile(dest, buf);
+    if (title) titles[`${slug}/${name}`] = title;
     saved.push({ file: name, url: `/assets/img/catalogo/${slug}/${encodeURIComponent(name)}`, size: f.size });
   }
+
+  if (title) await writeTitles(titles);
 
   return NextResponse.json({ ok: true, files: saved });
 }

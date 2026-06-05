@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 type Category = { slug: string; label: string };
-type Item = { file: string; url: string; mtime: number };
+type Item = { file: string; url: string; mtime: number; title?: string };
 type Manifest = { categories: Category[]; items: Record<string, Item[]> };
 
 export default function AdminDashboard() {
@@ -16,6 +16,7 @@ export default function AdminDashboard() {
   const [progress, setProgress] = useState<number | null>(null);
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  const [titleInput, setTitleInput] = useState('');
   const fileInput = useRef<HTMLInputElement>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -51,6 +52,7 @@ export default function AdminDashboard() {
     if (!files.length || !current) return;
     const fd = new FormData();
     for (const f of files) fd.append('files', f);
+    fd.append('titulo', titleInput.trim());
     setProgress(0);
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `/api/upload?categoria=${encodeURIComponent(current)}`);
@@ -59,6 +61,7 @@ export default function AdminDashboard() {
       setProgress(null);
       if (xhr.status >= 200 && xhr.status < 300) {
         showToast(`${files.length} imagem${files.length === 1 ? '' : 's'} carregada${files.length === 1 ? '' : 's'}.`, 'ok');
+        setTitleInput('');
         await loadManifest();
       } else if (xhr.status === 401) {
         router.replace('/capi-gest-admin/login');
@@ -68,7 +71,7 @@ export default function AdminDashboard() {
     };
     xhr.onerror = () => { setProgress(null); showToast('Erro de rede no upload.', 'err'); };
     xhr.send(fd);
-  }, [current, loadManifest, router, showToast]);
+  }, [current, loadManifest, router, showToast, titleInput]);
 
   const remove = useCallback(async (file: string) => {
     if (!confirm(`Apagar "${file}" definitivamente?`)) return;
@@ -125,6 +128,17 @@ export default function AdminDashboard() {
             <span className="pane-count">{items.length === 1 ? '1 imagem' : `${items.length} imagens`}</span>
           </div>
 
+          <div className="dz-title">
+            <label htmlFor="img-title">Título da imagem</label>
+            <input
+              id="img-title"
+              type="text"
+              placeholder="Ex.: Cozinha lacada a branco"
+              value={titleInput}
+              onChange={(e) => setTitleInput(e.target.value)}
+            />
+          </div>
+
           <div
             className={`dz${dragOver ? ' over' : ''}`}
             onClick={(e) => { if (!(e.target as HTMLElement).closest('.dz-prog')) fileInput.current?.click(); }}
@@ -170,7 +184,7 @@ export default function AdminDashboard() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={it.url} alt={it.file} loading="lazy" />
                   <button className="del" title="Apagar" aria-label={`Apagar ${it.file}`} onClick={(e) => { e.stopPropagation(); remove(it.file); }}>×</button>
-                  <div className="cell-name">{it.file}</div>
+                  <div className="cell-name">{it.title ? <span className="cell-title">{it.title}</span> : it.file}</div>
                 </div>
               ))
             )}
