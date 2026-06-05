@@ -6,13 +6,7 @@ import { motion } from 'framer-motion';
 import { useLang, Rich } from '@/lib/i18n';
 import { Reveal, EASE } from '@/components/Reveal';
 import { CountUp } from '@/components/CountUp';
-
-const Check = () => (
-  <svg className="check-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10" opacity="0.35" />
-    <path d="M8 12.5l2.5 2.5 5.5-6" />
-  </svg>
-);
+import { DiffSlider } from '@/components/DiffSlider';
 
 const Chevron = () => (
   <svg className="svc-row-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
@@ -57,70 +51,23 @@ export default function Empresa() {
         </div>
       </section>
 
-      {/* COMPROMISSO — checklist + image */}
-      <section className="commit-sec">
-        <div className="wrap">
-          <div className="commit-split">
-            <Reveal x={24} y={0} className="commit-img">
-              <Image src="/assets/img/areas/cozinha.jpg" alt="Trabalho Capiarcos" width={760} height={900} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 4 }} />
-            </Reveal>
-            <Reveal x={-24} y={0} className="commit-body">
-              <span className="ed-index">(01)</span>
-              <h2 className="h2">{t.empresa.about_quote}</h2>
-              <div className="checklist">
-                {t.empresa.diff.slice(0, 4).map((d, i) => (
-                  <motion.div
-                    key={d.t}
-                    className="check-item"
-                    initial={{ opacity: 0, x: 16 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: '0px 0px -40px 0px' }}
-                    transition={{ duration: 0.5, ease: EASE, delay: i * 0.08 }}
-                  >
-                    <Check />
-                    <div>
-                      <div className="check-t">{d.t}</div>
-                      <div className="check-d">{d.d}</div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* DIFERENCIAIS — editorial grid */}
+      {/* DIFERENCIAIS — slider of cards */}
       <section className="diff-section">
         <div className="wrap">
           <Reveal className="ed-head">
-            <span className="ed-index">(02)</span>
+            <span className="ed-index">(01)</span>
             <h2 className="h2">{t.empresa.diff_h2}</h2>
+            <p className="lead" style={{ marginTop: '.6rem', maxWidth: '46ch' }}>{t.empresa.about_quote}</p>
           </Reveal>
-          <div className="diff-grid">
-            {t.empresa.diff.map((d, i) => (
-              <motion.div
-                key={d.t}
-                className="diff-card"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '0px 0px -40px 0px' }}
-                transition={{ duration: 0.55, ease: EASE, delay: (i % 4) * 0.06 }}
-              >
-                <div className="diff-num">{String(i + 1).padStart(2, '0')}</div>
-                <h3 className="diff-t">{d.t}</h3>
-                <p className="diff-d">{d.d}</p>
-              </motion.div>
-            ))}
-          </div>
         </div>
+        <DiffSlider items={t.empresa.diff} />
       </section>
 
       {/* ÁREAS DE FABRICAÇÃO */}
       <section className="svc-section">
         <div className="wrap">
           <Reveal className="ed-head">
-            <span className="ed-index">(03)</span>
+            <span className="ed-index">(02)</span>
             <h2 className="h2">{t.empresa.svc_h2}</h2>
             <p className="lead" style={{ marginTop: '.6rem', maxWidth: '46ch' }}>{t.empresa.svc_sub}</p>
           </Reveal>
