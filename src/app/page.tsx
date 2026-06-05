@@ -57,36 +57,51 @@ export default function Home() {
 
   return (
     <main>
-      {/* HERO */}
+      {/* HERO — technical / architectural */}
       <section className="hero">
+        <span className="hero-plus" style={{ top: '13%', left: '9%' }}>+</span>
+        <span className="hero-plus" style={{ top: '24%', left: '47%' }}>+</span>
+        <span className="hero-plus" style={{ top: '64%', left: '31%' }}>+</span>
+        <span className="hero-plus" style={{ top: '22%', right: '9%' }}>+</span>
+
+        <div className="hero-coords">
+          <span>41°50′N · 8°25′W</span>
+          <span>{t.home.coords_place}</span>
+        </div>
+
         <div className="hero-inner">
           <div className="hero-left">
             <motion.div className="hero-eyebrow" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE, delay: 0.15 }}>
               <span />
               <em>{t.home.eyebrow}</em>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE, delay: 0.3 }}>
+            <motion.div initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE, delay: 0.28 }}>
               <Rich as="h1" className="hero-h1" html={t.home.h1} />
             </motion.div>
-            <motion.p className="hero-sub" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE, delay: 0.45 }}>
-              {t.home.sub}
-            </motion.p>
-            <motion.div className="hero-btns" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE, delay: 0.6 }}>
-              <Link href="/contactos" className="btn btn-primary">{t.home.cta_quote}</Link>
+            <motion.div className="hero-btns" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE, delay: 0.5 }}>
+              <Link href="/contactos" className="btn btn-primary">{t.home.cta_quote} →</Link>
               <Link href="/empresa" className="btn btn-ghost">{t.home.cta_more}</Link>
             </motion.div>
           </div>
 
           <div className="hero-right">
-            <motion.div className="hero-visual" initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, ease: EASE, delay: 0.35 }}>
-              <Image className="hero-img" src="/assets/img/areas/hero.jpg" alt="Trabalho Capiarcos" fill sizes="(max-width: 1024px) 0px, 460px" priority />
-              <div className="hero-stamp">
-                <span>{t.home.stamp_year}</span>
-                <small>{t.home.stamp_label}</small>
-              </div>
+            <motion.div className="hero-rings" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.1, ease: EASE, delay: 0.3 }}>
+              <span className="ring ring-1" />
+              <span className="ring ring-2" />
+              <span className="ring ring-3" />
+              <span className="ring ring-4" />
+              <Image className="hero-mark" src="/assets/img/logo.png" alt="Capiarcos" width={360} height={150} style={{ height: 'auto' }} priority />
             </motion.div>
           </div>
         </div>
+
+        <motion.div className="hero-tags" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE, delay: 0.7 }}>
+          {t.home.pillars.map((p, i) => (
+            <span key={p} className="hero-tag"><i className={`hdot${i === 1 ? ' dark' : ''}`} />{p}</span>
+          ))}
+        </motion.div>
+
+        <div className="hero-scroll"><span className="hero-scroll-line" />{t.home.scroll}</div>
       </section>
 
       {/* COMMITMENT */}

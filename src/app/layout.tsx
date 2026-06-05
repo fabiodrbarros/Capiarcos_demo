@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   title: 'Capiarcos — Carpintaria por medida',
   description:
     'Capiarcos — Carpintaria com fábrica própria desde 1998. Cozinhas, roupeiros, pavimentos e mobiliário por medida em Arcos de Valdevez.',
-  icons: { icon: '/assets/img/logo.png' },
+  icons: { icon: '/assets/img/icon.png' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

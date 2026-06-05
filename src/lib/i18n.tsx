@@ -35,6 +35,9 @@ export const dict = {
       cta_t: 'Vamos começar o seu projeto?',
       cta_s: 'Conte-nos o que precisa. Respondemos a cada pedido com atenção.',
       cta_btn: 'Pedir Orçamento',
+      pillars: ['Fábrica própria', 'Por medida', 'Exportação'],
+      coords_place: 'Arcos de Valdevez · PT',
+      scroll: 'Scroll',
     },
     empresa: {
       crumb: 'Empresa',
@@ -137,6 +140,9 @@ export const dict = {
       cta_t: 'Shall we start your project?',
       cta_s: 'Tell us what you need. Every enquiry gets our full attention.',
       cta_btn: 'Get a Quote',
+      pillars: ['Own factory', 'Made to measure', 'Export'],
+      coords_place: 'Arcos de Valdevez · PT',
+      scroll: 'Scroll',
     },
     empresa: {
       crumb: 'Company',
@@ -239,6 +245,9 @@ export const dict = {
       cta_t: 'On commence votre projet ?',
       cta_s: 'Parlez-nous de votre besoin. Chaque demande reçoit toute notre attention.',
       cta_btn: 'Demander un devis',
+      pillars: ['Atelier propre', 'Sur mesure', 'Export'],
+      coords_place: 'Arcos de Valdevez · PT',
+      scroll: 'Scroll',
     },
     empresa: {
       crumb: 'Entreprise',

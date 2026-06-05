@@ -47,11 +47,11 @@ export default function Nav() {
   const hidden = pathname.startsWith('/capi-gest-admin');
 
   useEffect(() => {
-    document.body.classList.toggle('nav-open', open);
+    // Menu does NOT lock scroll — the site stays interactive while it is open.
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [open]);
+  }, []);
 
   const langs: Lang[] = ['pt', 'en', 'fr'];
 
@@ -65,52 +65,27 @@ export default function Nav() {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
-        <motion.svg
+        <motion.span
           className="roll-ico"
-          viewBox="0 0 40 40"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2.6}
-          strokeLinecap="round"
-          strokeLinejoin="round"
           aria-hidden
           animate={{ rotate: open ? 180 : 0 }}
           whileHover={{ rotate: open ? 180 : 35 }}
           transition={{ duration: 0.5, ease: EASE }}
         >
-          <circle className="roll-ring" cx="20" cy="20" r="17" strokeWidth={1.3} />
-          <path
-            className="roll-spiral"
-            d="M20 6 A13 13 0 0 1 20 32 A11 11 0 0 1 20 10 A9 9 0 0 1 20 28 A7 7 0 0 1 20 14 A5 5 0 0 1 20 24 A3 3 0 0 1 20 18"
-          />
-        </motion.svg>
+          <Image src="/assets/img/icon.png" alt="" width={42} height={42} priority />
+        </motion.span>
       </button>
 
       <AnimatePresence>
         {open && (
-          <>
-            <motion.div
-              className="nav-backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: EASE }}
-              onClick={() => setOpen(false)}
-            />
-            <motion.header
-              className="nav-panel"
-              variants={panelV}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-            >
+          <motion.header
+            className="nav-panel"
+            variants={panelV}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+          >
               <div className="nav-inner">
-                <motion.div variants={itemV} className="nav-logo">
-                  <Link href="/" onClick={() => setOpen(false)}>
-                    <Image src="/assets/img/logo.png" alt="Capiarcos" width={150} height={34} priority />
-                  </Link>
-                </motion.div>
-
                 <nav className="nav-links">
                   {LINKS.map((l) => {
                     const active = pathname === l.href;
@@ -147,8 +122,7 @@ export default function Nav() {
                   </motion.div>
                 </div>
               </div>
-            </motion.header>
-          </>
+          </motion.header>
         )}
       </AnimatePresence>
     </>
