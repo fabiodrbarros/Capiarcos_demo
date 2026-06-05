@@ -46,6 +46,7 @@ export const dict = {
       about_p1: 'Capiarcos – Sociedade Unipessoal de Carpintaria, Lda, fundada em 4 de Maio de 1998, é uma empresa dinâmica, direccionada para o ramo de carpintaria, com fábrica própria.',
       about_p2: 'Somos uma empresa que fabrica tudo por medida e com vários designers, o que possibilita ao cliente escolher qualquer tipo de pormenor, cor, madeira, utensílios, etc.',
       about_quote: 'Profissionalismo e qualidade — o nosso compromisso.',
+      stats: { founded: 'Fundada em', years: 'Anos de experiência', custom: 'Feito por medida' },
       diff_tag: 'Diferenciais',
       diff_h2: 'O que nos distingue',
       diff: [
@@ -151,6 +152,7 @@ export const dict = {
       about_p1: 'Capiarcos – Sociedade Unipessoal de Carpintaria, Lda, founded on 4 May 1998, is a dynamic carpentry company with its own factory.',
       about_p2: 'We manufacture everything to measure, working with several designers — letting the client choose every detail: colour, wood, fittings and more.',
       about_quote: 'Professionalism and quality — our commitment.',
+      stats: { founded: 'Founded in', years: 'Years of experience', custom: 'Made to measure' },
       diff_tag: 'What we stand for',
       diff_h2: 'What sets us apart',
       diff: [
@@ -256,6 +258,7 @@ export const dict = {
       about_p1: 'Capiarcos – Sociedade Unipessoal de Carpintaria, Lda, fondée le 4 mai 1998, est une entreprise dynamique de menuiserie avec son propre atelier.',
       about_p2: 'Nous fabriquons tout sur mesure, avec plusieurs designers — permettant au client de choisir chaque détail : couleur, bois, accessoires, etc.',
       about_quote: 'Professionnalisme et qualité — notre engagement.',
+      stats: { founded: 'Fondée en', years: "Années d'expérience", custom: 'Sur mesure' },
       diff_tag: 'Nos valeurs',
       diff_h2: 'Ce qui nous distingue',
       diff: [
