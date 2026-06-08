@@ -212,11 +212,18 @@ export default function AdminDashboard() {
               <div className="empty">Sem imagens nesta categoria. Arrasta algumas para começar.</div>
             ) : (
               items.map((it) => (
-                <div key={it.file} className="cell" onClick={(e) => { if (!(e.target as HTMLElement).closest('.del')) window.open(it.url, '_blank'); }}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={it.url} alt={it.file} loading="lazy" />
-                  <button className="del" title="Apagar" aria-label={`Apagar ${it.file}`} onClick={(e) => { e.stopPropagation(); remove(it.file); }}>×</button>
-                  <div className="cell-name">{it.title ? <span className="cell-title">{it.title}</span> : it.file}</div>
+                <div key={it.file} className="cell">
+                  <div className="cell-thumb" onClick={(e) => { if (!(e.target as HTMLElement).closest('.del')) window.open(it.url, '_blank'); }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={it.url} alt={it.title || it.file} loading="lazy" />
+                    <button className="del" title="Apagar" aria-label={`Apagar ${it.file}`} onClick={(e) => { e.stopPropagation(); remove(it.file); }}>×</button>
+                  </div>
+                  <div className="cell-cap">
+                    {it.title
+                      ? <span className="cell-title">{it.title}</span>
+                      : <span className="cell-untitled">Sem título</span>}
+                    <span className="cell-file">{it.file}</span>
+                  </div>
                 </div>
               ))
             )}
