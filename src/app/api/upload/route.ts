@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     const buf = Buffer.from(await f.arrayBuffer());
     await fs.writeFile(dest, buf);
     if (title) titles[`${slug}/${name}`] = title;
-    saved.push({ file: name, url: `/assets/img/catalogo/${slug}/${encodeURIComponent(name)}`, size: f.size });
+    saved.push({ file: name, url: `/api/image?categoria=${slug}&file=${encodeURIComponent(name)}`, size: f.size });
   }
 
   if (title) await writeTitles(titles);

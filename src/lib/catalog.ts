@@ -71,7 +71,7 @@ export async function readManifest(): Promise<Manifest> {
           const st = await fs.stat(path.join(dir, f));
           return {
             file: f,
-            url: `/assets/img/catalogo/${c.slug}/${encodeURIComponent(f)}`,
+            url: `/api/image?categoria=${c.slug}&file=${encodeURIComponent(f)}`,
             mtime: st.mtimeMs,
             title: titles[`${c.slug}/${f}`] || '',
           };
