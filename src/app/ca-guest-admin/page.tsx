@@ -17,6 +17,8 @@ export default function AdminDashboard() {
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [titleInput, setTitleInput] = useState('');
+  const [pendingFiles, setPendingFiles] = useState<File[]>([]);
+  const [modalOpen, setModalOpen] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -39,11 +41,11 @@ export default function AdminDashboard() {
     (async () => {
       try {
         const { authed } = await fetch('/api/me').then((r) => r.json());
-        if (!authed) { router.replace('/capi-gest-admin/login'); return; }
+        if (!authed) { router.replace('/ca-guest-admin/login'); return; }
         await loadManifest(true);
         setReady(true);
       } catch {
-        router.replace('/capi-gest-admin/login');
+        router.replace('/ca-guest-admin/login');
       }
     })();
   }, [router, loadManifest]);
@@ -62,9 +64,11 @@ export default function AdminDashboard() {
       if (xhr.status >= 200 && xhr.status < 300) {
         showToast(`${files.length} imagem${files.length === 1 ? '' : 's'} carregada${files.length === 1 ? '' : 's'}.`, 'ok');
         setTitleInput('');
+        setPendingFiles([]);
+        setModalOpen(false);
         await loadManifest();
       } else if (xhr.status === 401) {
-        router.replace('/capi-gest-admin/login');
+        router.replace('/ca-guest-admin/login');
       } else {
         showToast('Erro no upload. Verifica o tamanho/formato.', 'err');
       }
@@ -77,7 +81,7 @@ export default function AdminDashboard() {
     if (!confirm(`Apagar "${file}" definitivamente?`)) return;
     const r = await fetch(`/api/image?categoria=${encodeURIComponent(current)}&file=${encodeURIComponent(file)}`, { method: 'DELETE' });
     if (r.ok) { await loadManifest(); showToast('Imagem apagada.', 'ok'); }
-    else if (r.status === 401) router.replace('/capi-gest-admin/login');
+    else if (r.status === 401) router.replace('/ca-guest-admin/login');
     else showToast('Não foi possível apagar.', 'err');
   }, [current, loadManifest, router, showToast]);
 
@@ -90,7 +94,7 @@ export default function AdminDashboard() {
   return (
     <div className="app">
       <header className="bar">
-        <a href="/capi-gest-admin" className="bar-brand">
+        <a href="/ca-guest-admin" className="bar-brand">
           <Image src="/assets/img/logo.png" alt="" width={120} height={30} />
           <div><strong>Capiarcos</strong><span>Admin · Catálogo</span></div>
         </a>
@@ -99,7 +103,7 @@ export default function AdminDashboard() {
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round"><path d="M10 2h4v4M14 2 8 8M7 3H3v10h10V9" /></svg>
             Ver site
           </a>
-          <button className="bar-link" onClick={async () => { await fetch('/api/logout', { method: 'POST' }); router.replace('/capi-gest-admin/login'); }}>Sair</button>
+          <button className="bar-link" onClick={async () => { await fetch('/api/logout', { method: 'POST' }); router.replace('/ca-guest-admin/login'); }}>Sair</button>
         </div>
       </header>
 
@@ -125,54 +129,10 @@ export default function AdminDashboard() {
               <div className="pane-tag">Categoria selecionada</div>
               <h2 className="pane-title">{cat?.label || '—'}</h2>
             </div>
-            <span className="pane-count">{items.length === 1 ? '1 imagem' : `${items.length} imagens`}</span>
-          </div>
-
-          <div className="dz-title">
-            <label htmlFor="img-title">Título da imagem</label>
-            <input
-              id="img-title"
-              type="text"
-              placeholder="Ex.: Cozinha lacada a branco"
-              value={titleInput}
-              onChange={(e) => setTitleInput(e.target.value)}
-            />
-          </div>
-
-          <div
-            className={`dz${dragOver ? ' over' : ''}`}
-            onClick={(e) => { if (!(e.target as HTMLElement).closest('.dz-prog')) fileInput.current?.click(); }}
-            onDragEnter={(e) => { e.preventDefault(); setDragOver(true); }}
-            onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-            onDragLeave={(e) => { e.preventDefault(); setDragOver(false); }}
-            onDrop={(e) => {
-              e.preventDefault();
-              setDragOver(false);
-              const files = [...(e.dataTransfer?.files || [])].filter((f) => /^image\//.test(f.type));
-              if (files.length) upload(files);
-            }}
-          >
-            <input
-              ref={fileInput}
-              type="file"
-              hidden
-              multiple
-              accept="image/*"
-              onChange={(e) => { const fs = [...(e.target.files || [])]; if (fs.length) upload(fs); e.target.value = ''; }}
-            />
-            <div className="dz-cta">
-              <svg className="dz-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.3} strokeLinecap="round"><path d="M18 4v22M9 13l9-9 9 9M4 30h28" /></svg>
-              <div>
-                <strong>Arrasta imagens para aqui</strong>
-                <span>ou <em>clica</em> para escolher do computador</span>
-              </div>
+            <div className="pane-head-r">
+              <span className="pane-count">{items.length === 1 ? '1 imagem' : `${items.length} imagens`}</span>
+              <button className="pane-add" onClick={() => setModalOpen(true)}>+ Adicionar imagens</button>
             </div>
-            {progress !== null && (
-              <div className="dz-prog">
-                <div className="dz-bar"><div style={{ width: `${(progress * 100).toFixed(1)}%` }} /></div>
-                <div className="dz-lbl">A carregar… {(progress * 100).toFixed(0)}%</div>
-              </div>
-            )}
           </div>
 
           <div className="grid">
@@ -191,6 +151,85 @@ export default function AdminDashboard() {
           </div>
         </section>
       </main>
+
+      {modalOpen && (
+        <div className="admin-modal-bg" onClick={() => progress === null && setModalOpen(false)}>
+          <div className="admin-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="admin-modal-head">
+              <div>
+                <span className="admin-modal-tag">Adicionar ao catálogo</span>
+                <h3 className="admin-modal-title">{cat?.label}</h3>
+              </div>
+              <button className="admin-modal-close" aria-label="Fechar" onClick={() => setModalOpen(false)}>×</button>
+            </div>
+
+            <div className="dz-title">
+              <label htmlFor="img-title">Título da imagem</label>
+              <input
+                id="img-title"
+                type="text"
+                placeholder="Ex.: Cozinha lacada a branco"
+                value={titleInput}
+                onChange={(e) => setTitleInput(e.target.value)}
+              />
+            </div>
+
+            <div
+              className={`dz${dragOver ? ' over' : ''}`}
+              onClick={(e) => { if (!(e.target as HTMLElement).closest('.dz-clear')) fileInput.current?.click(); }}
+              onDragEnter={(e) => { e.preventDefault(); setDragOver(true); }}
+              onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+              onDragLeave={(e) => { e.preventDefault(); setDragOver(false); }}
+              onDrop={(e) => {
+                e.preventDefault();
+                setDragOver(false);
+                const files = [...(e.dataTransfer?.files || [])].filter((f) => /^image\//.test(f.type));
+                if (files.length) setPendingFiles((prev) => [...prev, ...files]);
+              }}
+            >
+              <input
+                ref={fileInput}
+                type="file"
+                hidden
+                multiple
+                accept="image/*"
+                onChange={(e) => { const fs = [...(e.target.files || [])].filter((f) => /^image\//.test(f.type)); if (fs.length) setPendingFiles((prev) => [...prev, ...fs]); e.target.value = ''; }}
+              />
+              {pendingFiles.length === 0 ? (
+                <div className="dz-cta">
+                  <svg className="dz-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.3} strokeLinecap="round"><path d="M18 4v22M9 13l9-9 9 9M4 30h28" /></svg>
+                  <div>
+                    <strong>Arrasta imagens para aqui</strong>
+                    <span>ou <em>clica</em> para escolher do computador</span>
+                  </div>
+                </div>
+              ) : (
+                <ul className="dz-files">
+                  {pendingFiles.map((f, idx) => (
+                    <li key={`${f.name}-${idx}`}>
+                      <span>{f.name}</span>
+                      <button className="dz-clear" aria-label="Remover" onClick={(e) => { e.stopPropagation(); setPendingFiles((prev) => prev.filter((_, k) => k !== idx)); }}>×</button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            <div className="admin-modal-actions">
+              <button className="btn-cancel" onClick={() => { setModalOpen(false); }}>Cancelar</button>
+              <button
+                className="dz-submit"
+                disabled={!pendingFiles.length || progress !== null}
+                onClick={() => upload(pendingFiles)}
+              >
+                {progress !== null
+                  ? `A carregar… ${(progress * 100).toFixed(0)}%`
+                  : `Adicionar${pendingFiles.length ? ` ${pendingFiles.length}` : ''}`}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {toast && <div className={`toast ${toast.type}`} style={{ display: 'block' }}>{toast.msg}</div>}
     </div>

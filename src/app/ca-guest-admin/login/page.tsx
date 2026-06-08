@@ -15,7 +15,7 @@ export default function AdminLogin() {
   useEffect(() => {
     fetch('/api/me')
       .then((r) => r.json())
-      .then(({ authed }) => { if (authed) router.replace('/capi-gest-admin'); })
+      .then(({ authed }) => { if (authed) router.replace('/ca-guest-admin'); })
       .catch(() => {});
   }, [router]);
 
@@ -29,7 +29,7 @@ export default function AdminLogin() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user, password: pw }),
       });
-      if (res.ok) router.replace('/capi-gest-admin');
+      if (res.ok) router.replace('/ca-guest-admin');
       else setErr('Utilizador ou password incorrectos.');
     } catch {
       setErr('Não foi possível contactar o servidor.');

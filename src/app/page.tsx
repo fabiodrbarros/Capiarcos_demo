@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useLang, Rich } from '@/lib/i18n';
 import { Reveal, EASE } from '@/components/Reveal';
-import { DiffSlider } from '@/components/DiffSlider';
+import { MethodSlider } from '@/components/MethodSlider';
 
 
 export default function Home() {
@@ -48,15 +48,9 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* DIFERENCIAIS — full-width slider */}
-      <section className="diff-section">
-        <div className="wrap">
-          <Reveal className="ed-head">
-            <h2 className="h2">{t.home.commit_t}</h2>
-            <p className="lead" style={{ marginTop: '.6rem', maxWidth: '46ch' }}>{t.home.commit_tag}</p>
-          </Reveal>
-        </div>
-        <DiffSlider items={[t.empresa.diff[2], t.empresa.diff[1], t.empresa.diff[3], t.empresa.diff[4]]} />
+      {/* COMPROMISSO — método-style two-column slider */}
+      <section className="method">
+        <MethodSlider eyebrow={t.home.commit_tag} title={t.home.commit_t} cards={t.home.method_cards} />
       </section>
 
       {/* AREAS — editorial numbered list */}

@@ -31,7 +31,7 @@ export default function Nav() {
   const pathname = usePathname() || '/';
   const { t, lang, setLang } = useLang();
 
-  const hidden = pathname.startsWith('/capi-gest-admin');
+  const hidden = pathname.startsWith('/ca-guest-admin');
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);

@@ -4,6 +4,7 @@ import './globals.css';
 import { LanguageProvider } from '@/lib/i18n';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
+import CursorFollower from '@/components/CursorFollower';
 
 const serif = Cormorant_Garamond({
   subsets: ['latin'],
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="pt" className={`${serif.variable} ${sans.variable}`}>
       <body>
         <LanguageProvider>
+          <CursorFollower />
           <Nav />
           {children}
           <Footer />

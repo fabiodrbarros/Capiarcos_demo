@@ -17,7 +17,7 @@ export default function Footer() {
   const pathname = usePathname() || '/';
   const langs: Lang[] = ['pt', 'en', 'fr'];
 
-  if (pathname.startsWith('/capi-gest-admin')) return null;
+  if (pathname.startsWith('/ca-guest-admin')) return null;
 
   return (
     <footer>
