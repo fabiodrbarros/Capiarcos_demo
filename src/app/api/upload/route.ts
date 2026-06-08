@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { isAuthed } from '@/lib/auth';
-import { CATALOG_DIR, CATEGORY_SLUGS, ensureDirs, readTitles, writeTitles } from '@/lib/catalog';
+import { CATALOG_DIR, isValidSlug, ensureDirs, readTitles, writeTitles } from '@/lib/catalog';
 
 const MAX_FILE = 25 * 1024 * 1024; // 25 MB
 
@@ -23,11 +23,11 @@ export async function POST(req: Request) {
 
   const { searchParams } = new URL(req.url);
   const slug = searchParams.get('categoria') || '';
-  if (!CATEGORY_SLUGS.has(slug)) {
+  if (!(await isValidSlug(slug))) {
     return NextResponse.json({ error: 'invalid-category' }, { status: 400 });
   }
 
-  ensureDirs();
+  await ensureDirs();
 
   let form: FormData;
   try {

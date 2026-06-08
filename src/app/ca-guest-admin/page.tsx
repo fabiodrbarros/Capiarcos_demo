@@ -4,9 +4,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-type Category = { slug: string; label: string };
+type Category = { slug: string; label: string; label_en: string; label_fr: string };
 type Item = { file: string; url: string; mtime: number; title?: string };
 type Manifest = { categories: Category[]; items: Record<string, Item[]> };
+type CatModal = { mode: 'new' } | { mode: 'edit'; slug: string } | null;
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -19,6 +20,11 @@ export default function AdminDashboard() {
   const [titleInput, setTitleInput] = useState('');
   const [pendingFiles, setPendingFiles] = useState<File[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [catModal, setCatModal] = useState<CatModal>(null);
+  const [catPt, setCatPt] = useState('');
+  const [catEn, setCatEn] = useState('');
+  const [catFr, setCatFr] = useState('');
+  const [catBusy, setCatBusy] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -85,6 +91,59 @@ export default function AdminDashboard() {
     else showToast('Não foi possível apagar.', 'err');
   }, [current, loadManifest, router, showToast]);
 
+  const openNewCat = useCallback(() => {
+    setCatPt(''); setCatEn(''); setCatFr('');
+    setCatModal({ mode: 'new' });
+  }, []);
+
+  const openEditCat = useCallback((c: Category) => {
+    setCatPt(c.label); setCatEn(c.label_en); setCatFr(c.label_fr);
+    setCatModal({ mode: 'edit', slug: c.slug });
+  }, []);
+
+  const submitCat = useCallback(async () => {
+    if (!catPt.trim() || !catModal) return;
+    setCatBusy(true);
+    try {
+      const isEdit = catModal.mode === 'edit';
+      const r = await fetch('/api/categories', {
+        method: isEdit ? 'PATCH' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...(isEdit ? { slug: catModal.slug } : {}),
+          label: catPt.trim(),
+          label_en: catEn.trim(),
+          label_fr: catFr.trim(),
+        }),
+      });
+      if (r.status === 401) { router.replace('/ca-guest-admin/login'); return; }
+      if (!r.ok) { showToast('Não foi possível guardar a categoria.', 'err'); return; }
+      const data = await r.json();
+      setCatModal(null);
+      await loadManifest();
+      if (!isEdit && data?.category?.slug) setCurrent(data.category.slug);
+      showToast(isEdit ? 'Categoria atualizada.' : 'Categoria criada.', 'ok');
+    } catch {
+      showToast('Erro de rede.', 'err');
+    } finally {
+      setCatBusy(false);
+    }
+  }, [catPt, catEn, catFr, catModal, loadManifest, router, showToast]);
+
+  const deleteCat = useCallback(async (c: Category) => {
+    const n = manifest.items[c.slug]?.length || 0;
+    const warn = n > 0
+      ? `Apagar a categoria "${c.label}" e as suas ${n} imagem${n === 1 ? '' : 's'} definitivamente?`
+      : `Apagar a categoria "${c.label}"?`;
+    if (!confirm(warn)) return;
+    const r = await fetch(`/api/categories?slug=${encodeURIComponent(c.slug)}`, { method: 'DELETE' });
+    if (r.status === 401) { router.replace('/ca-guest-admin/login'); return; }
+    if (!r.ok) { showToast('Não foi possível apagar.', 'err'); return; }
+    setCurrent((cur) => (cur === c.slug ? '' : cur));
+    await loadManifest(true);
+    showToast('Categoria apagada.', 'ok');
+  }, [manifest, loadManifest, router, showToast]);
+
   if (!ready) return <div style={{ minHeight: '100vh' }} />;
 
   const cat = manifest.categories.find((c) => c.slug === current);
@@ -109,14 +168,27 @@ export default function AdminDashboard() {
 
       <main className="layout">
         <nav className="side">
-          <div className="side-head">Categorias</div>
+          <div className="side-head">
+            <span>Categorias</span>
+            <button className="side-add" onClick={openNewCat} title="Nova categoria" aria-label="Nova categoria">+</button>
+          </div>
           <div className="side-list">
             {manifest.categories.map((c) => {
               const n = manifest.items[c.slug]?.length || 0;
               return (
-                <button key={c.slug} className={`cat-btn${current === c.slug ? ' on' : ''}`} onClick={() => setCurrent(c.slug)}>
-                  <span>{c.label}</span><span className="num">{n}</span>
-                </button>
+                <div key={c.slug} className={`cat-row${current === c.slug ? ' on' : ''}`}>
+                  <button className="cat-btn" onClick={() => setCurrent(c.slug)}>
+                    <span>{c.label}</span><span className="num">{n}</span>
+                  </button>
+                  <div className="cat-row-acts">
+                    <button className="cat-act" title="Editar" aria-label={`Editar ${c.label}`} onClick={() => openEditCat(c)}>
+                      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round"><path d="M11.5 2.5l2 2L6 12l-2.5.5L4 10z" /></svg>
+                    </button>
+                    <button className="cat-act cat-act-del" title="Apagar" aria-label={`Apagar ${c.label}`} onClick={() => deleteCat(c)}>
+                      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round"><path d="M3 4h10M6 4V2.5h4V4M5 4l.5 9h5L11 4" /></svg>
+                    </button>
+                  </div>
+                </div>
               );
             })}
           </div>
@@ -225,6 +297,57 @@ export default function AdminDashboard() {
                 {progress !== null
                   ? `A carregar… ${(progress * 100).toFixed(0)}%`
                   : `Adicionar${pendingFiles.length ? ` ${pendingFiles.length}` : ''}`}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {catModal && (
+        <div className="admin-modal-bg" onClick={() => !catBusy && setCatModal(null)}>
+          <div className="admin-modal admin-modal--cat" onClick={(e) => e.stopPropagation()}>
+            <div className="admin-modal-head">
+              <div>
+                <span className="admin-modal-tag">{catModal.mode === 'edit' ? 'Editar categoria' : 'Nova categoria'}</span>
+                <h3 className="admin-modal-title">{catModal.mode === 'edit' ? catPt || '—' : 'Adicionar categoria'}</h3>
+              </div>
+              <button className="admin-modal-close" aria-label="Fechar" onClick={() => setCatModal(null)}>×</button>
+            </div>
+
+            <div className="dz-title">
+              <label htmlFor="cat-pt">Nome (Português)</label>
+              <input
+                id="cat-pt"
+                type="text"
+                placeholder="Ex.: Móveis de escritório"
+                value={catPt}
+                autoFocus
+                onChange={(e) => setCatPt(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') submitCat(); }}
+              />
+            </div>
+
+            <p className="cat-hint">
+              {catModal.mode === 'edit'
+                ? 'Podes ajustar as traduções abaixo. Se deixares vazias, é usado o nome em português.'
+                : 'As traduções (EN/FR) são geradas automaticamente. Podes preenchê-las à mão para forçar um valor.'}
+            </p>
+
+            <div className="cat-tr-grid">
+              <div className="dz-title">
+                <label htmlFor="cat-en">Inglês <span className="opt">(opcional)</span></label>
+                <input id="cat-en" type="text" placeholder="auto" value={catEn} onChange={(e) => setCatEn(e.target.value)} />
+              </div>
+              <div className="dz-title">
+                <label htmlFor="cat-fr">Francês <span className="opt">(opcional)</span></label>
+                <input id="cat-fr" type="text" placeholder="auto" value={catFr} onChange={(e) => setCatFr(e.target.value)} />
+              </div>
+            </div>
+
+            <div className="admin-modal-actions">
+              <button className="btn-cancel" onClick={() => setCatModal(null)}>Cancelar</button>
+              <button className="dz-submit" disabled={!catPt.trim() || catBusy} onClick={submitCat}>
+                {catBusy ? 'A guardar…' : catModal.mode === 'edit' ? 'Guardar' : 'Criar categoria'}
               </button>
             </div>
           </div>

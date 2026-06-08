@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# runtime catalog data (generated; lives in the docker volume in prod)
+/public/assets/img/catalogo/categories.json
+
 # vercel
 .vercel
 

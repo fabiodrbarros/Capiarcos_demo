@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { isAuthed } from '@/lib/auth';
-import { CATALOG_DIR, CATEGORY_SLUGS, removeTitle } from '@/lib/catalog';
+import { CATALOG_DIR, isValidSlug, removeTitle } from '@/lib/catalog';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,7 +21,7 @@ export async function GET(req: Request) {
   const slug = searchParams.get('categoria') || '';
   const file = searchParams.get('file') || '';
 
-  if (!CATEGORY_SLUGS.has(slug)) {
+  if (!(await isValidSlug(slug))) {
     return NextResponse.json({ error: 'invalid-category' }, { status: 400 });
   }
   if (!/^[\w.\-]+$/.test(file) || file.includes('..')) {
@@ -56,7 +56,7 @@ export async function DELETE(req: Request) {
   const slug = searchParams.get('categoria') || '';
   const file = searchParams.get('file') || '';
 
-  if (!CATEGORY_SLUGS.has(slug)) {
+  if (!(await isValidSlug(slug))) {
     return NextResponse.json({ error: 'invalid-category' }, { status: 400 });
   }
   if (!/^[\w.\-]+$/.test(file) || file.includes('..')) {
