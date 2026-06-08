@@ -1662,3 +1662,32 @@ body.menu-open { overflow: hidden; }
 }
 .slider-nav button:hover { background: var(--burgundy); color: var(--white); border-color: var(--burgundy); }
 .slider-nav svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE / RESPONSIVE FIXES  (placed last → wins the cascade)
+═══════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  /* the brand logo was hidden on tablet/phone — bring it back, centered */
+  .hero-right { display: flex !important; }
+  .hero-inner { gap: clamp(2rem, 6vw, 3rem); }
+  .hero-mark-wrap { width: min(58vw, 300px); padding: 1.4rem; }
+  .hero-left { text-align: center; }
+  .hero-eyebrow { justify-content: center; }
+  .hero-sub { margin-inline: auto; }
+  .hero-btns { justify-content: center; }
+}
+
+@media (max-width: 768px) {
+  /* the reversed intl grid kept 2 columns on mobile (higher specificity),
+     squeezing the flags and cutting off the France flag → force 1 column */
+  .intl-grid,
+  .intl-grid.intl-grid-rev { grid-template-columns: 1fr !important; }
+  .intl-flags { flex-wrap: wrap; gap: 1rem 1.4rem; }
+}
+
+@media (max-width: 480px) {
+  .hero-h1 { white-space: normal; }
+  .hero-mark-wrap { width: min(72vw, 250px); }
+  .flag-ring { width: 64px; height: 64px; font-size: 1.7rem; }
+  .intl-flags { gap: .8rem 1.1rem; }
+}
