@@ -18,6 +18,9 @@ services:
     volumes:
       # persiste as imagens carregadas no admin + titles.json entre rebuilds
       - capiarcos-catalogo:/app/public/assets/img/catalogo
+    networks:
+      # rede partilhada com o cloudflared (Cloudflare Tunnel)
+      - web
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:3000/"]
       interval: 30s
@@ -27,3 +30,7 @@ services:
 
 volumes:
   capiarcos-catalogo:
+
+networks:
+  web:
+    external: true
