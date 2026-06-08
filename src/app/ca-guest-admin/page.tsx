@@ -176,11 +176,11 @@ export default function AdminDashboard() {
             {manifest.categories.map((c) => {
               const n = manifest.items[c.slug]?.length || 0;
               return (
-                <div key={c.slug} className={`cat-row${current === c.slug ? ' on' : ''}`}>
+                <div key={c.slug} className={`cat-item${current === c.slug ? ' on' : ''}`}>
                   <button className="cat-btn" onClick={() => setCurrent(c.slug)}>
                     <span>{c.label}</span><span className="num">{n}</span>
                   </button>
-                  <div className="cat-row-acts">
+                  <div className="cat-item-acts">
                     <button className="cat-act" title="Editar" aria-label={`Editar ${c.label}`} onClick={() => openEditCat(c)}>
                       <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round"><path d="M11.5 2.5l2 2L6 12l-2.5.5L4 10z" /></svg>
                     </button>
