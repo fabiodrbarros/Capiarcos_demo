@@ -1479,12 +1479,20 @@ body.menu-open { overflow: hidden; }
   border-top: 1px solid var(--line);
 }
 .fab-item {
-  display: flex; align-items: baseline; gap: .9rem;
+  display: flex; align-items: center; gap: .85rem;
   padding: 1.05rem 0;
   border-bottom: 1px solid var(--line);
   transition: padding-left .35s var(--ease);
 }
 .fab-num { font-family: var(--sans); font-size: .66rem; font-weight: 600; letter-spacing: .14em; color: var(--gold-d); opacity: .8; }
+.fab-ico {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--gold-d);
+  transition: color .3s, transform .35s var(--ease);
+}
+.fab-ico svg { width: 22px; height: 22px; display: block; }
+.fab-item:hover .fab-ico { color: var(--burgundy); transform: scale(1.08); }
 .fab-name { font-family: var(--serif); font-size: clamp(1.05rem, 1.5vw, 1.3rem); font-weight: 500; color: var(--text); transition: color .3s; }
 .fab-item:hover { padding-left: .5rem; }
 .fab-item:hover .fab-name { color: var(--burgundy); }

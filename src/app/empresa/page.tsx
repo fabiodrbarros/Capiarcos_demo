@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { useLang, Rich } from '@/lib/i18n';
 import { Reveal, EASE } from '@/components/Reveal';
 import { CountUp } from '@/components/CountUp';
+import { ServiceIcon } from '@/components/ServiceIcons';
 
 const Check = () => (
   <svg className="check-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
@@ -102,7 +103,7 @@ export default function Empresa() {
                 viewport={{ once: true, margin: '0px 0px -30px 0px' }}
                 transition={{ duration: 0.4, ease: EASE, delay: (i % 3) * 0.05 }}
               >
-                <span className="fab-num">{String(i + 1).padStart(2, '0')}</span>
+                <span className="fab-ico"><ServiceIcon i={i} /></span>
                 <span className="fab-name">{s.t}</span>
               </motion.div>
             ))}
