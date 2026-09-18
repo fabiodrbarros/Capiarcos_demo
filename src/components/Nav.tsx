@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
-import { useLang, type Lang } from '@/lib/i18n';
+import { useLang, Rich, type Lang } from '@/lib/i18n';
 
 const LINKS = [
   { href: '/', key: 'home' },
@@ -76,7 +76,7 @@ export default function Nav() {
               <motion.div className="menu-col menu-col--brand" variants={itemV}>
                 <div className="menu-brand-top">
                   <Image className="menu-logo" src="/assets/img/logo.png" alt="Capiarcos" width={200} height={84} style={{ height: 'auto' }} />
-                  <p className="menu-tagline">Cozinhas, roupeiros, escadas, pavimentos e mobiliário interior. Fabricados por nós, do esboço à montagem.</p>
+                  <Rich as="p" className="menu-tagline" html={t.home.h1} />
                 </div>
                 <span className="menu-copy">{t.ft.copy}</span>
               </motion.div>

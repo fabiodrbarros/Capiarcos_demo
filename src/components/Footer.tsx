@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useLang, type Lang } from '@/lib/i18n';
+import { useLang, Rich, type Lang } from '@/lib/i18n';
 
 const LINKS = [
   { href: '/', key: 'home' },
@@ -25,7 +25,7 @@ export default function Footer() {
         <div className="ft-top">
           <div className="ft-brand">
             <Image src="/assets/img/logo.png" alt="Capiarcos" width={866} height={288} style={{ height: 'auto' }} />
-            <p className="ft-brand-desc">Cozinhas, roupeiros, escadas, pavimentos e mobiliário interior. Fabricados por nós, do esboço à montagem.</p>
+            <Rich as="p" className="ft-brand-desc" html={t.home.h1.replace(/\n/g, ' ')} />
           </div>
 
           <div>
