@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { useLang } from '@/lib/i18n';
 import { Reveal } from '@/components/Reveal';
 
@@ -14,9 +13,6 @@ const PhoneIcon = () => (
 const MobileIcon = () => (
   <svg className="c-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.3} strokeLinecap="round"><rect x="9" y="3" width="18" height="30" rx="3" /><circle cx="18" cy="28" r="1.5" fill="currentColor" /></svg>
 );
-const FaxIcon = () => (
-  <svg className="c-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.3} strokeLinecap="round"><rect x="6" y="6" width="24" height="24" rx="2" /><line x1="6" y1="14" x2="30" y2="14" /><line x1="10" y1="20" x2="22" y2="20" /><line x1="10" y1="24" x2="22" y2="24" /></svg>
-);
 const MailIcon = () => (
   <svg className="c-ico" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.3} strokeLinecap="round"><rect x="3" y="8" width="30" height="20" rx="3" /><polyline points="3,8 18,20 33,8" /></svg>
 );
@@ -26,30 +22,22 @@ export default function Contactos() {
   const [sent, setSent] = useState(false);
 
   return (
-    <main>
-      <header className="page-header page-header--compact">
+    <main className="contact-page">
+      {/* ONE SECTION: details + form, map band underneath, then the footer */}
+      <section className="contact-sec">
         <div className="wrap">
-          <div className="page-crumbs"><Link href="/">Home</Link> / <span>{t.contactos.crumb}</span></div>
-        </div>
-      </header>
+          <Reveal className="contact-head">
+            <span className="ed-index">{t.contactos.crumb}</span>
+            <h1 className="contact-h">{t.contactos.form_t}</h1>
+          </Reveal>
 
-      <section style={{ background: 'var(--white)', paddingTop: '3rem' }}>
-        <div className="wrap">
           <div className="contact-grid">
-            <Reveal x={-24} y={0}>
+            <Reveal x={-24} y={0} className="contact-info">
               <div className="c-detail">
                 <PinIcon />
                 <div>
                   <div className="c-lbl">{t.contactos.addr}</div>
                   <div className="c-val">Zona Industrial de Mogueiras – Tabaço<br />4970-685 Arcos de Valdevez<br />Viana do Castelo, Portugal</div>
-                </div>
-              </div>
-
-              <div className="c-detail">
-                <PhoneIcon />
-                <div>
-                  <div className="c-lbl">{t.contactos.phone}</div>
-                  <div className="c-val"><a href="tel:+351258522978">258 522 978</a> <span className="callcost">{t.ft.landline_call}</span></div>
                 </div>
               </div>
 
@@ -65,10 +53,10 @@ export default function Contactos() {
               </div>
 
               <div className="c-detail">
-                <FaxIcon />
+                <PhoneIcon />
                 <div>
-                  <div className="c-lbl">{t.contactos.fax}</div>
-                  <div className="c-val">258 522 978</div>
+                  <div className="c-lbl">{t.contactos.phone}</div>
+                  <div className="c-val"><a href="tel:+351258522978">258 522 978</a> <span className="callcost">{t.ft.landline_call}</span></div>
                 </div>
               </div>
 
@@ -87,19 +75,18 @@ export default function Contactos() {
               </div>
             </Reveal>
 
-            <Reveal x={24} y={0}>
-              <div className="cf-form">
+            <Reveal x={24} y={0} className="contact-col">
+              <div className="cf-form cf-form--compact">
                 {!sent ? (
                   <>
-                    <h3 className="h3" style={{ marginBottom: '.4rem' }}>{t.contactos.form_t}</h3>
-                    <p style={{ fontSize: '.88rem', color: 'var(--muted)', marginBottom: '1.6rem', fontWeight: 300 }}>{t.contactos.form_s}</p>
+                    <span className="cf-form-lbl">{t.contactos.send}</span>
                     <form onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
                       <div className="fg">
                         <div className="fgr"><label className="flbl">{t.contactos.fn}</label><input className="fi" type="text" required placeholder={t.contactos.fn_ph} /></div>
                         <div className="fgr"><label className="flbl">{t.contactos.fe}</label><input className="fi" type="email" required placeholder={t.contactos.fe_ph} /></div>
                         <div className="fgr"><label className="flbl">{t.contactos.fp}</label><input className="fi" type="tel" placeholder={t.contactos.fp_ph} /></div>
                         <div className="fgr"><label className="flbl">{t.contactos.fs}</label><input className="fi" type="text" required placeholder={t.contactos.fs_ph} /></div>
-                        <div className="fgr full"><label className="flbl">{t.contactos.fm}</label><textarea className="fi" rows={5} required placeholder={t.contactos.fm_ph} /></div>
+                        <div className="fgr full"><label className="flbl">{t.contactos.fm}</label><textarea className="fi" rows={3} required placeholder={t.contactos.fm_ph} /></div>
                       </div>
                       <button type="submit" className="btn-sub">{t.contactos.send}</button>
                     </form>
@@ -112,22 +99,19 @@ export default function Contactos() {
                   </div>
                 )}
               </div>
+
+              {/* map — right under the form, in the same column */}
+              <div className="map-band">
+                <iframe
+                  src="https://maps.google.com/maps?cid=1880678143440046317&hl=pt&output=embed"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                  title="Mapa Capiarcos"
+                />
+              </div>
             </Reveal>
           </div>
-        </div>
-      </section>
-
-      <section className="map-section" style={{ background: 'var(--white)' }}>
-        <div className="wrap">
-          <Reveal className="map-wrap">
-            <iframe
-              src="https://maps.google.com/maps?cid=1880678143440046317&hl=pt&output=embed"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-              title="Mapa Capiarcos"
-            />
-          </Reveal>
         </div>
       </section>
     </main>
