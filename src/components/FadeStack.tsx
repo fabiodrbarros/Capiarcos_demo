@@ -18,6 +18,25 @@ export function fadeStackIn(n: number) {
   return (1 / n) * 0.3;
 }
 
+/** How wide card `i`'s fade is, either side of its boundary. */
+function halfOf(i: number, n: number) {
+  return (1 / n) * (i === 0 ? 0.3 : 0.16);
+}
+
+/** Every crossing between two cards, as [from, to] in this section's own
+    progress: from the moment the card leaving starts to go to the moment
+    it is gone and the next one is in. A crossing is one move, so it is
+    jumped rather than scrubbed — half of it is two half-cards. */
+export function fadeStackCrossings(n: number): [number, number][] {
+  const out: [number, number][] = [];
+  for (let i = 0; i < n - 1; i++) {
+    const half = halfOf(i, n);
+    const end = (i + 1) / n;
+    out.push([end - half, end + half]);
+  }
+  return out;
+}
+
 function Card({
   i,
   n,
@@ -37,7 +56,7 @@ function Card({
   /* half a fade either side of the boundary, so the card leaving and the
      card arriving cross at the same moment instead of leaving a gap */
   /* the first card opens wider, so it crosses with the section above */
-  const half = w * (i === 0 ? 0.3 : 0.16);
+  const half = halfOf(i, n);
   const last = i === n - 1;
 
   const ref = useRef<HTMLDivElement>(null);

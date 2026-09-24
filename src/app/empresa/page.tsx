@@ -7,7 +7,7 @@ import { useLang } from '@/lib/i18n';
 import { ServiceIcon } from '@/components/ServiceIcons';
 import { GlobeLink } from '@/components/GlobeLink';
 import { AboutStory, STORY_LANDING, STORY_HAND_OVER, type Chapter } from '@/components/AboutStory';
-import { FadeStack, fadeStackIn } from '@/components/FadeStack';
+import { FadeStack, fadeStackCrossings, fadeStackIn } from '@/components/FadeStack';
 import { atProgress, useScrollJump, type Segment } from '@/lib/scrollJump';
 
 export default function Empresa() {
@@ -31,12 +31,15 @@ export default function Empresa() {
     { k: keys[4], t: mc[1].name, d: t.empresa.story[3], proofs: [proof(1, mc[1].name), proof(2, mc[1].name)] },
   ];
 
-  /* The two hand-overs are one move each, so they are jumped rather than
-     scrolled through (see lib/scrollJump): the first gesture takes the
-     mark from the middle of the screen to the first chapter on the
-     circle, and, once the circle has been read, the next one carries the
-     story out and the first card in. The chapters in between scroll
-     normally — there is something to read there. */
+  /* Every hand-over on this page is one move, so each is jumped rather
+     than scrolled through (see lib/scrollJump): the first gesture takes
+     the mark from the middle of the screen to the first chapter, with the
+     route already well round the circle; once the circle has been read,
+     the next one carries the story out and the first card in; and from
+     there each crossing between two cards goes the whole way at once,
+     instead of stopping half-way with two half-cards on screen. What is
+     left over is the reading — the chapters and the cards themselves —
+     and that scrolls as usual. */
   const storyRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
   const segments = useCallback((): Segment[] => {
@@ -45,16 +48,19 @@ export default function Empresa() {
     if (!story) return [];
     const top = story.getBoundingClientRect().top + window.scrollY;
     const end = top + Math.max(0, story.offsetHeight - window.innerHeight);
-    /* below the breakpoint the cards leave their stage and simply stack,
-       so the second jump lands where they start */
     const n = cards?.querySelectorAll('.fs-card').length ?? 0;
-    const cardsIn =
-      window.innerWidth < 860 || !n
-        ? end
-        : atProgress(cards, fadeStackIn(n));
+    /* below the breakpoint the cards leave their stage and simply stack,
+       so the story hands over to where they start and there are no
+       crossings to jump */
+    const stacked = window.innerWidth < 860 || !n;
     return [
       [top, atProgress(story, STORY_LANDING)],
-      [atProgress(story, STORY_HAND_OVER), cardsIn],
+      [atProgress(story, STORY_HAND_OVER), stacked ? end : atProgress(cards, fadeStackIn(n))],
+      ...(stacked
+        ? []
+        : fadeStackCrossings(n).map(
+            ([a, b]): Segment => [atProgress(cards, a), atProgress(cards, b)],
+          )),
     ];
   }, []);
   useScrollJump(segments, 1800);
