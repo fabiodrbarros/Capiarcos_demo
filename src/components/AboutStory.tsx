@@ -118,11 +118,18 @@ export function AboutStory({ chapters, scrollLabel }: { chapters: Chapter[]; scr
   /* one screen for the mark, then one per chapter. The circle has to be
      closed — and read for a moment — before the stage hands over to the
      cards, so the drawing ends well before the fade starts. */
+  /* One step at a time, each waiting for the one before it:
+       1. the cue goes                    [0.00 → 0.04]
+       2. the mark parks in the corner    [0.06 → 0.17]
+       3. the faint guide appears         [0.18 → 0.22]
+       4. the circle draws, chapter by
+          chapter, ring by ring           [0.26 → 0.72]
+       5. it is read, complete            [0.72 → 0.93]
+       6. the stage hands over            [0.93 → 1.00] */
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  const bloom = 1 / (n + 1);
-  const DRAW_START = bloom - 0.05;
-  const DRAW_END = 0.84;   /* the circle closes here */
-  const FADE_START = 0.93; /* and only then does the stage fade out */
+  const DRAW_START = 0.26;
+  const DRAW_END = 0.72;   /* the circle closes here, with room to spare */
+  const FADE_START = 0.93; /* and is read for a good while before the fade */
   const span = (DRAW_END - DRAW_START) / n;
   /* station i sits at quarter i of the circle */
   const arr = (i: number) => DRAW_START + i * span;
@@ -132,9 +139,9 @@ export function AboutStory({ chapters, scrollLabel }: { chapters: Chapter[]; scr
      any viewport */
   const [corner, setCorner] = useState({ dx: -420, dy: -340 });
   const markScale = 0.34;
-  const markX = useTransform(scrollYProgress, [0, bloom * 0.9], [0, corner.dx]);
-  const markY = useTransform(scrollYProgress, [0, bloom * 0.9], [0, corner.dy]);
-  const markS = useTransform(scrollYProgress, [0, bloom * 0.9], [1, markScale]);
+  const markX = useTransform(scrollYProgress, [0.06, 0.17], [0, corner.dx]);
+  const markY = useTransform(scrollYProgress, [0.06, 0.17], [0, corner.dy]);
+  const markS = useTransform(scrollYProgress, [0.06, 0.17], [1, markScale]);
   const markBox = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const measure = () => {
@@ -159,11 +166,11 @@ export function AboutStory({ chapters, scrollLabel }: { chapters: Chapter[]; scr
   const draw = useTransform(scrollYProgress, [DRAW_START, DRAW_END], [0, 1]);
   /* the faint guide only shows up once the mark starts moving, so the
      first screen really is the logo and nothing else */
-  const guideRef = useLinkedOpacity<SVGPathElement>(scrollYProgress, [bloom * 0.2, bloom * 0.9], [0, 1]);
+  const guideRef = useLinkedOpacity<SVGPathElement>(scrollYProgress, [0.18, 0.22], [0, 1]);
   /* and the whole stage fades only after the circle is closed */
   const stageRef = useLinkedOpacity<HTMLDivElement>(scrollYProgress, [FADE_START, 1], [1, 0]);
   /* the cue that tells you the mark is waiting for a scroll */
-  const cueRef = useLinkedOpacity<HTMLDivElement>(scrollYProgress, [0, bloom * 0.25, bloom * 0.6], [1, 1, 0]);
+  const cueRef = useLinkedOpacity<HTMLDivElement>(scrollYProgress, [0, 0.02, 0.04], [1, 1, 0]);
 
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
     /* the chapter speaks once its ring has been reached */

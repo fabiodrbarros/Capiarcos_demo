@@ -147,13 +147,11 @@ export function ProcessLine({ eyebrow, steps }: { eyebrow: string; steps: Step[]
      as the continuation of the line the hero collapsed into */
   const draw = useTransform(scrollYProgress, [START, END], [0.2, 1]);
   const bend = useTransform(scrollYProgress, [0, 0.09], [0, 1]);
-  /* the card fades and rises in while the section is still on its way up,
-     crossing with the hero above; the card itself fades out at the end */
-  /* it only shows once the panel above has covered the screen, so no part
-     of it flickers through the opening */
-  const wrapRef = useLinkedOpacity<HTMLDivElement>(enter, [0.84, 0.95], [0, 1]);
+  /* step 6 of the hand-over: the card only comes in once the panel above
+     has finished opening, and it is in place before the panel goes */
+  const wrapRef = useLinkedOpacity<HTMLDivElement>(enter, [0.88, 0.96], [0, 1]);
   const cardRef = useLinkedOpacity<HTMLDivElement>(scrollYProgress, [0.93, 1], [1, 0]);
-  const cardY = useTransform(enter, [0.84, 0.98], [26, 0]);
+  const cardY = useTransform(enter, [0.88, 0.98], [20, 0]);
 
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
     let i = 0;
