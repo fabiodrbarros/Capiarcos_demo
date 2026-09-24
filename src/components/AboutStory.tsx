@@ -142,11 +142,18 @@ export function AboutStory({ chapters, scrollLabel }: { chapters: Chapter[]; scr
      left off. */
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
   const DRAW_START = 0.2;
-  const DRAW_END = 0.78;   /* the circle closes here */
+  const PACE_END = 0.78;   /* the pace the first quarters are drawn at */
   const FADE_START = STORY_HAND_OVER;  /* read for a moment, then hand over */
-  const span = (DRAW_END - DRAW_START) / n;
+  const span = (PACE_END - DRAW_START) / n;
   /* station i sits at quarter i of the circle */
   const arr = (i: number) => DRAW_START + i * span;
+  /* The last chapter is read with the circle closed, not while it is still
+     closing: once the route reaches the last station it runs the quarter
+     back up to twelve o'clock at twice the pace, and the chapter only
+     speaks when the circle is whole. */
+  const CLOSE = arr(n - 1) + span * 0.45;
+  /* when chapter k takes over */
+  const speaks = (k: number) => (k === n - 1 ? CLOSE : arr(k) + span * 0.12);
 
   /* the mark rises into the top-left corner and stays there as the page's
      own badge; the offset is measured so it lands on the same margin at
@@ -177,7 +184,11 @@ export function AboutStory({ chapters, scrollLabel }: { chapters: Chapter[]; scr
   }, []);
 
   /* the route draws itself across the four chapters and closes the circle */
-  const draw = useTransform(scrollYProgress, [DRAW_START, DRAW_END], [0, 1]);
+  const draw = useTransform(
+    scrollYProgress,
+    [DRAW_START, arr(n - 1), CLOSE],
+    [0, (n - 1) / n, 1],
+  );
   /* the faint guide only shows up once the mark starts moving, so the
      first screen really is the logo and nothing else */
   const guideRef = useLinkedOpacity<SVGPathElement>(scrollYProgress, [0.15, 0.19], [0, 1]);
@@ -189,7 +200,7 @@ export function AboutStory({ chapters, scrollLabel }: { chapters: Chapter[]; scr
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
     /* the chapter speaks once its ring has been reached */
     let i = -1;
-    for (let k = 0; k < n; k++) if (v >= arr(k) + span * 0.12) i = k;
+    for (let k = 0; k < n; k++) if (v >= speaks(k)) i = k;
     if (i !== active) setActive(i);
   });
 
