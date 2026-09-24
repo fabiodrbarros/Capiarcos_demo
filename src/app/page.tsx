@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -9,6 +9,7 @@ import { EASE } from '@/components/Reveal';
 import { ProcessLine } from '@/components/ProcessLine';
 import { FadeStack } from '@/components/FadeStack';
 import { useLinkedOpacity } from '@/lib/linkedOpacity';
+import { useScrollJump } from '@/lib/scrollJump';
 
 export default function Home() {
   const { t } = useLang();
@@ -79,6 +80,18 @@ export default function Home() {
   const lineScale = useTransform(p, [0.17, 0.26], [0, 1]);
   const open = useTransform(p, [0.26, 0.35], [50, 0]);
   const clip = useTransform(open, (v) => `inset(${v}% 0% ${v}% 0%)`);
+
+  /* There is nothing to read on the way down, so the hand-over is not
+     something you crawl through: the first wheel notch or swipe takes over
+     and drives the scroll from the hero to the pinned process card in one
+     1.8s move. The steps above are scroll-linked, so they all play out
+     inside it — and nothing in between can be stopped on. */
+  const jumpTarget = useCallback(() => {
+    const el = procRef.current;
+    if (!el) return 0;
+    return el.getBoundingClientRect().top + window.scrollY;
+  }, []);
+  useScrollJump(jumpTarget, 1800);
 
   return (
     <main>
