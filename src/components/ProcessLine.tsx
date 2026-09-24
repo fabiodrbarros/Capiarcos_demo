@@ -128,10 +128,11 @@ export function ProcessLine({ eyebrow, steps }: { eyebrow: string; steps: Step[]
      still rising into the screen: that is when the card arrives */
   const { scrollYProgress: enter } = useScroll({ target: ref, offset: ['start end', 'start start'] });
 
-  /* the line starts drawing once the section has settled and is finished
-     well before the end: the last drawing has to be complete — and read —
-     before the card begins to fade out at 0.93 */
-  const START = 0.1;
+  /* The section is already underway when it arrives: one scroll of the hero
+     lands here with the wave formed, the first drawing complete and the
+     first stage named. Hence the negative start — the schedule begins
+     before the section pins. */
+  const START = -0.1;
   const END = 0.72;
   const at = (i: number) => START + (i / (n - 1)) * (END - START);
   const dwell = (END - START) / (n - 1);
@@ -145,8 +146,10 @@ export function ProcessLine({ eyebrow, steps }: { eyebrow: string; steps: Step[]
 
   /* the first stretch is already drawn when the card arrives, so it reads
      as the continuation of the line the hero collapsed into */
-  const draw = useTransform(scrollYProgress, [START, END], [0.2, 1]);
-  const bend = useTransform(scrollYProgress, [0, 0.09], [0, 1]);
+  const draw = useTransform(scrollYProgress, [START, END], [0.12, 1]);
+  /* and the straight line has already bent into its wave by the time the
+     section takes the screen */
+  const bend = useTransform(enter, [0.85, 1], [0, 1]);
   /* step 6 of the hand-over: the card only comes in once the panel above
      has finished opening, and it is in place before the panel goes */
   const wrapRef = useLinkedOpacity<HTMLDivElement>(enter, [0.8, 0.9], [0, 1]);
