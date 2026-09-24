@@ -13,7 +13,7 @@ import { useEffect, useRef } from 'react';
    Nothing else on the page is touched: past the target, scrolling is
    ordinary again. */
 
-const DURATION = 1800;
+const DURATION = 3600;
 
 function easeInOutCubic(t: number) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;

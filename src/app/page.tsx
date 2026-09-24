@@ -84,14 +84,14 @@ export default function Home() {
   /* There is nothing to read on the way down, so the hand-over is not
      something you crawl through: the first wheel notch or swipe takes over
      and drives the scroll from the hero to the pinned process card in one
-     1.8s move. The steps above are scroll-linked, so they all play out
+     3.6s move. The steps above are scroll-linked, so they all play out
      inside it — and nothing in between can be stopped on. */
   const jumpTarget = useCallback(() => {
     const el = procRef.current;
     if (!el) return 0;
     return el.getBoundingClientRect().top + window.scrollY;
   }, []);
-  useScrollJump(jumpTarget, 1800);
+  useScrollJump(jumpTarget, 3600);
 
   return (
     <main>
