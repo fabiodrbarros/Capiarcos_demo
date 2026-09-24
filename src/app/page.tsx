@@ -57,25 +57,27 @@ export default function Home() {
     return () => window.removeEventListener('resize', measure);
   }, []);
 
-  /* Three stops, not seven — the hand-over goes straight to the line:
-       1. the words and the cue go        [0.00 → 0.16]
-       2. the mark travels to the centre
-          and collapses into the line     [0.16 → 0.56]
-       3. the line opens the panel, and
-          the mark slips to the corner
-          on the way                      [0.56 → 0.80]
-       then the card arrives [0.80 → 0.90] and the layer goes [0.90 → 1]. */
-  const textRef = useLinkedOpacity<HTMLDivElement>(p, [0.02, 0.16], [1, 0]);
-  const cueRef = useLinkedOpacity<HTMLDivElement>(p, [0, 0.04, 0.14], [1, 1, 0]);
+  /* The whole hand-over fits in one swipe (~390px of a 860px screen), and
+     the next section is already rising underneath it:
+       1. words and cue out         [0.00 → 0.05]   (0 → 40px)
+       2. mark to the centre        [0.05 → 0.17]   (40 → 150px)
+       3. it collapses into a line  [0.17 → 0.26]   (150 → 220px)
+       4. the line opens the panel,
+          the mark goes to the
+          corner on the way         [0.26 → 0.35]   (220 → 300px)
+       5. the card arrives          (in ProcessLine)
+       6. panel and line hand over  [0.41 → 0.45]   (350 → 390px) */
+  const textRef = useLinkedOpacity<HTMLDivElement>(p, [0.01, 0.05], [1, 0]);
+  const cueRef = useLinkedOpacity<HTMLDivElement>(p, [0, 0.02, 0.05], [1, 1, 0]);
   const badgeRef = useLinkedOpacity<HTMLDivElement>(proc, [0.9, 0.99], [1, 0]);
-  const lineRef = useLinkedOpacity<HTMLDivElement>(p, [0.4, 0.45, 0.9, 1], [0, 1, 1, 0]);
-  const layerRef = useLinkedOpacity<HTMLDivElement>(p, [0.9, 1], [1, 0]);
+  const lineRef = useLinkedOpacity<HTMLDivElement>(p, [0.16, 0.2, 0.41, 0.45], [0, 1, 1, 0]);
+  const layerRef = useLinkedOpacity<HTMLDivElement>(p, [0.41, 0.45], [1, 0]);
 
-  const markX = useTransform(p, [0.16, 0.42, 0.58, 0.78], [0, mark.dx, mark.dx, mark.cx]);
-  const markY = useTransform(p, [0.16, 0.42, 0.58, 0.78], [0, mark.dy, mark.dy, mark.cy]);
-  const markScale = useTransform(p, [0.16, 0.42, 0.58, 0.78], [1, CENTRE_S, CENTRE_S, CORNER_S]);
-  const lineScale = useTransform(p, [0.42, 0.56], [0, 1]);
-  const open = useTransform(p, [0.56, 0.8], [50, 0]);
+  const markX = useTransform(p, [0.05, 0.17, 0.26, 0.35], [0, mark.dx, mark.dx, mark.cx]);
+  const markY = useTransform(p, [0.05, 0.17, 0.26, 0.35], [0, mark.dy, mark.dy, mark.cy]);
+  const markScale = useTransform(p, [0.05, 0.17, 0.26, 0.35], [1, CENTRE_S, CENTRE_S, CORNER_S]);
+  const lineScale = useTransform(p, [0.17, 0.26], [0, 1]);
+  const open = useTransform(p, [0.26, 0.35], [50, 0]);
   const clip = useTransform(open, (v) => `inset(${v}% 0% ${v}% 0%)`);
 
   return (

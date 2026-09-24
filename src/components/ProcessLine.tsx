@@ -149,12 +149,12 @@ export function ProcessLine({ eyebrow, steps }: { eyebrow: string; steps: Step[]
   const draw = useTransform(scrollYProgress, [START, END], [0.12, 1]);
   /* and the straight line has already bent into its wave by the time the
      section takes the screen */
-  const bend = useTransform(enter, [0.85, 1], [0, 1]);
+  const bend = useTransform(enter, [0.88, 0.96], [0, 1]);
   /* step 6 of the hand-over: the card only comes in once the panel above
      has finished opening, and it is in place before the panel goes */
-  const wrapRef = useLinkedOpacity<HTMLDivElement>(enter, [0.8, 0.9], [0, 1]);
+  const wrapRef = useLinkedOpacity<HTMLDivElement>(enter, [0.9, 0.96], [0, 1]);
   const cardRef = useLinkedOpacity<HTMLDivElement>(scrollYProgress, [0.93, 1], [1, 0]);
-  const cardY = useTransform(enter, [0.8, 0.94], [20, 0]);
+  const cardY = useTransform(enter, [0.9, 0.98], [16, 0]);
 
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
     let i = 0;

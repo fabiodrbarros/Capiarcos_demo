@@ -1757,12 +1757,14 @@ body.menu-open { overflow: hidden; }
 /* ═══════════════════════════════════════════════════════
    PROCESSO — one drawn line, from the log to the house
 ═══════════════════════════════════════════════════════ */
-.pl { position: relative; background: var(--white); }
+/* it starts rising while the hero is still on screen, so one swipe is
+   enough to land on the wave. It is invisible until its card fades in,
+   hence the transparent stage. */
+.pl { position: relative; margin-top: -55vh; }
 .pl-sticky {
   position: sticky; top: 0;
   height: 100vh; height: 100svh;
   display: grid; place-items: stretch;
-  background: var(--white);
   overflow: hidden;
 }
 /* the section arrives as a card, like the ones on the About page */
