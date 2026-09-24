@@ -12,6 +12,12 @@ import { piecewise } from '@/lib/linkedOpacity';
    Below the breakpoint the stage is switched off in CSS and the cards
    simply stack down the page.                                          */
 
+/** Where the first card is fully in, as this section's own progress: the
+    stretch before it is a hand-over, jumped rather than scrubbed. */
+export function fadeStackIn(n: number) {
+  return (1 / n) * 0.3;
+}
+
 function Card({
   i,
   n,

@@ -1,12 +1,14 @@
 'use client';
 
+import { useCallback, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLang } from '@/lib/i18n';
 import { ServiceIcon } from '@/components/ServiceIcons';
 import { GlobeLink } from '@/components/GlobeLink';
-import { AboutStory, type Chapter } from '@/components/AboutStory';
-import { FadeStack } from '@/components/FadeStack';
+import { AboutStory, STORY_FIRST_CHAPTER, STORY_HAND_OVER, type Chapter } from '@/components/AboutStory';
+import { FadeStack, fadeStackIn } from '@/components/FadeStack';
+import { atProgress, useScrollJump, type Segment } from '@/lib/scrollJump';
 
 export default function Empresa() {
   const { t, lang } = useLang();
@@ -29,12 +31,43 @@ export default function Empresa() {
     { k: keys[4], t: mc[1].name, d: t.empresa.story[3], proofs: [proof(1, mc[1].name), proof(2, mc[1].name)] },
   ];
 
+  /* The two hand-overs are one move each, so they are jumped rather than
+     scrolled through (see lib/scrollJump): the first gesture takes the
+     mark from the middle of the screen to the first chapter on the
+     circle, and, once the circle has been read, the next one carries the
+     story out and the first card in. The chapters in between scroll
+     normally — there is something to read there. */
+  const storyRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const segments = useCallback((): Segment[] => {
+    const story = storyRef.current;
+    const cards = cardsRef.current;
+    if (!story) return [];
+    const top = story.getBoundingClientRect().top + window.scrollY;
+    const end = top + Math.max(0, story.offsetHeight - window.innerHeight);
+    /* below the breakpoint the cards leave their stage and simply stack,
+       so the second jump lands where they start */
+    const n = cards?.querySelectorAll('.fs-card').length ?? 0;
+    const cardsIn =
+      window.innerWidth < 860 || !n
+        ? end
+        : atProgress(cards, fadeStackIn(n));
+    return [
+      [top, atProgress(story, STORY_FIRST_CHAPTER)],
+      [atProgress(story, STORY_HAND_OVER), cardsIn],
+    ];
+  }, []);
+  useScrollJump(segments, 1800);
+
   return (
     <main className="about-page">
       {/* THE MARK → RINGS → ONE LINE PER CHAPTER */}
-      <AboutStory chapters={chapters} scrollLabel={t.home.scroll} />
+      <div ref={storyRef}>
+        <AboutStory chapters={chapters} scrollLabel={t.home.scroll} />
+      </div>
 
       {/* THE THREE CARDS — one stage, cross-fading with the scroll */}
+      <div ref={cardsRef}>
       <FadeStack
         items={[
           <div className="mk-card" key="areas">
@@ -75,6 +108,7 @@ export default function Empresa() {
           </div>,
         ]}
       />
+      </div>
 
     </main>
   );

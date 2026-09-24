@@ -15,6 +15,13 @@ import { useLinkedOpacity } from '@/lib/linkedOpacity';
 
 export type Chapter = { k: string; t: string; d: string; proofs: string[] };
 
+/* The two stretches of this section that are a hand-over and not a read,
+   given as the section's own scroll progress. Both are jumped rather than
+   scrubbed (see lib/scrollJump): the opening, from the mark alone to the
+   first chapter on the circle, and the exit to the cards below. */
+export const STORY_FIRST_CHAPTER = 0.23;
+export const STORY_HAND_OVER = 0.9;
+
 type Geo = {
   viewBox: string;
   c: number;   /* centre (the viewBox is square) */
@@ -131,7 +138,7 @@ export function AboutStory({ chapters, scrollLabel }: { chapters: Chapter[]; scr
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
   const DRAW_START = 0.2;
   const DRAW_END = 0.78;   /* the circle closes here */
-  const FADE_START = 0.9;  /* read for a moment, then hand over */
+  const FADE_START = STORY_HAND_OVER;  /* read for a moment, then hand over */
   const span = (DRAW_END - DRAW_START) / n;
   /* station i sits at quarter i of the circle */
   const arr = (i: number) => DRAW_START + i * span;

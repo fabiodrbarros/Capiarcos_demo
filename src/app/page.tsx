@@ -9,7 +9,7 @@ import { EASE } from '@/components/Reveal';
 import { ProcessLine } from '@/components/ProcessLine';
 import { FadeStack } from '@/components/FadeStack';
 import { useLinkedOpacity } from '@/lib/linkedOpacity';
-import { useScrollJump } from '@/lib/scrollJump';
+import { useScrollJump, type Segment } from '@/lib/scrollJump';
 
 export default function Home() {
   const { t } = useLang();
@@ -83,12 +83,12 @@ export default function Home() {
      and drives the scroll from the hero to the pinned process card in one
      3.6s move. The steps above are scroll-linked, so they all play out
      inside it — and nothing in between can be stopped on. */
-  const jumpTarget = useCallback(() => {
+  const segments = useCallback((): Segment[] => {
     const el = procRef.current;
-    if (!el) return 0;
-    return el.getBoundingClientRect().top + window.scrollY;
+    if (!el) return [];
+    return [[0, el.getBoundingClientRect().top + window.scrollY]];
   }, []);
-  useScrollJump(jumpTarget, 3600);
+  useScrollJump(segments, 3600);
 
   return (
     <main>
