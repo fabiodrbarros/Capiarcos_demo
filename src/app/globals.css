@@ -1742,16 +1742,6 @@ body.menu-open { overflow: hidden; }
 .tx-mark { position: absolute; will-change: transform, opacity; }
 .tx-mark > div { width: 100%; }
 .tx-mark img { width: 100%; height: auto; display: block; }
-.tx-line {
-  position: absolute; top: 50%; left: 50%;
-  /* the same span the route covers (x 52 → 948 of its 1000-wide box).
-     The offset has to be calc(width / -2): min() of two negatives picks the
-     more negative one and throws the line off to the left. */
-  width: min(82.4vw, 1057px); margin-left: calc(min(82.4vw, 1057px) / -2);
-  height: 3px; margin-top: -1.5px;
-  background: linear-gradient(90deg, rgba(184, 138, 40, 0) 0%, var(--gold-d) 14%, var(--gold-d) 86%, rgba(184, 138, 40, 0) 100%);
-  transform-origin: center;
-}
 .tx-panel { position: absolute; inset: 0; background: var(--cream); }
 
 /* ═══════════════════════════════════════════════════════

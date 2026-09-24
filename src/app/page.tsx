@@ -16,8 +16,8 @@ export default function Home() {
 
   /* The hero hands over to the next section in one continuous move: the
      words fade, the mark leaves its place and glides to the centre of the
-     screen, shrinks and collapses into a single line — and that line opens
-     into the panel the process section is made of.
+     screen, shrinks — and the panel the process section is made of opens
+     out of it, from the middle.
 
      The moving parts live in a layer pinned to the viewport, so the mark
      stays where the eye left it while the hero scrolls away underneath. */
@@ -62,23 +62,20 @@ export default function Home() {
      the next section is already rising underneath it:
        1. words and cue out         [0.00 → 0.05]   (0 → 40px)
        2. mark to the centre        [0.05 → 0.17]   (40 → 150px)
-       3. it collapses into a line  [0.17 → 0.26]   (150 → 220px)
-       4. the line opens the panel,
-          the mark goes to the
-          corner on the way         [0.26 → 0.35]   (220 → 300px)
-       5. the card arrives          (in ProcessLine)
-       6. panel and line hand over  [0.41 → 0.45]   (350 → 390px) */
+       3. the panel opens from
+          there, the mark going to
+          the corner on the way     [0.17 → 0.33]   (150 → 285px)
+       4. the card arrives          (in ProcessLine)
+       5. the panel hands over      [0.41 → 0.45]   (350 → 390px) */
   const textRef = useLinkedOpacity<HTMLDivElement>(p, [0.01, 0.05], [1, 0]);
   const cueRef = useLinkedOpacity<HTMLDivElement>(p, [0, 0.02, 0.05], [1, 1, 0]);
   const badgeRef = useLinkedOpacity<HTMLDivElement>(proc, [0.9, 0.99], [1, 0]);
-  const lineRef = useLinkedOpacity<HTMLDivElement>(p, [0.16, 0.2, 0.41, 0.45], [0, 1, 1, 0]);
   const layerRef = useLinkedOpacity<HTMLDivElement>(p, [0.41, 0.45], [1, 0]);
 
-  const markX = useTransform(p, [0.05, 0.17, 0.26, 0.35], [0, mark.dx, mark.dx, mark.cx]);
-  const markY = useTransform(p, [0.05, 0.17, 0.26, 0.35], [0, mark.dy, mark.dy, mark.cy]);
-  const markScale = useTransform(p, [0.05, 0.17, 0.26, 0.35], [1, CENTRE_S, CENTRE_S, CORNER_S]);
-  const lineScale = useTransform(p, [0.17, 0.26], [0, 1]);
-  const open = useTransform(p, [0.26, 0.35], [50, 0]);
+  const markX = useTransform(p, [0.05, 0.17, 0.2, 0.33], [0, mark.dx, mark.dx, mark.cx]);
+  const markY = useTransform(p, [0.05, 0.17, 0.2, 0.33], [0, mark.dy, mark.dy, mark.cy]);
+  const markScale = useTransform(p, [0.05, 0.17, 0.2, 0.33], [1, CENTRE_S, CENTRE_S, CORNER_S]);
+  const open = useTransform(p, [0.17, 0.32], [50, 0]);
   const clip = useTransform(open, (v) => `inset(${v}% 0% ${v}% 0%)`);
 
   /* There is nothing to read on the way down, so the hand-over is not
@@ -117,10 +114,8 @@ export default function Home() {
       </div>
 
       <div className="tx" ref={layerRef} aria-hidden>
-        {/* the panel opens first, the line stays on top of it: it is the same
-            line the next section starts from */}
+        {/* the panel opens out of the middle of the screen, where the mark is */}
         <motion.div className="tx-panel" style={{ clipPath: clip }} />
-        <motion.div ref={lineRef} className="tx-line" style={{ scaleX: lineScale }} />
       </div>
 
       {/* HERO — the words on the left, the mark on the right */}
