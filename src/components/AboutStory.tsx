@@ -17,9 +17,14 @@ export type Chapter = { k: string; t: string; d: string; proofs: string[] };
 
 /* The two stretches of this section that are a hand-over and not a read,
    given as the section's own scroll progress. Both are jumped rather than
-   scrubbed (see lib/scrollJump): the opening, from the mark alone to the
-   first chapter on the circle, and the exit to the cards below. */
-export const STORY_FIRST_CHAPTER = 0.23;
+   scrubbed (see lib/scrollJump): the opening and the exit to the cards
+   below.
+
+   The opening lands with the first chapter open, its year on the circle
+   and the route already well on its way round — close enough to the
+   second station that the next ring is blooming. Anything less and the
+   jump ends on a circle that has barely started. */
+export const STORY_LANDING = 0.32;
 export const STORY_HAND_OVER = 0.9;
 
 type Geo = {

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useLang } from '@/lib/i18n';
 import { ServiceIcon } from '@/components/ServiceIcons';
 import { GlobeLink } from '@/components/GlobeLink';
-import { AboutStory, STORY_FIRST_CHAPTER, STORY_HAND_OVER, type Chapter } from '@/components/AboutStory';
+import { AboutStory, STORY_LANDING, STORY_HAND_OVER, type Chapter } from '@/components/AboutStory';
 import { FadeStack, fadeStackIn } from '@/components/FadeStack';
 import { atProgress, useScrollJump, type Segment } from '@/lib/scrollJump';
 
@@ -53,7 +53,7 @@ export default function Empresa() {
         ? end
         : atProgress(cards, fadeStackIn(n));
     return [
-      [top, atProgress(story, STORY_FIRST_CHAPTER)],
+      [top, atProgress(story, STORY_LANDING)],
       [atProgress(story, STORY_HAND_OVER), cardsIn],
     ];
   }, []);
