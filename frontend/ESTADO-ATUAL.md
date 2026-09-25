@@ -76,3 +76,7 @@ Os 12 quadros móveis cabem numa secção sem scroll interno. O pin OpenStreetMa
 ## Painel de catálogo — atualização em 25/09/2026
 
 Foi acrescentado o backend Node e o painel /admin/ para um administrador, por pedido do utilizador. Categorias, títulos, descrições, ordem, publicação e retirada/recuperação de imagens são geridos no painel. Catálogo público renderizado com os mesmos componentes visuais. Ver ADMIN.md na raiz; esta atualização substitui as notas históricas de inexistência de backend/CMS. Formulário permanece mailto.
+
+## Identidade e ícone — 25/09/2026
+Assinatura atualizada para CAPIARCOS - Rigor · Autenticidade · Proximidade nos títulos, menu e rodapés. Favicon SVG derivado dos contornos existentes de logo-shapes.json, isolando o rolo com C, com cópia PNG 64 px. Logo completo e originais preservados. Build validado e título/menu confirmados no browser local.
+
