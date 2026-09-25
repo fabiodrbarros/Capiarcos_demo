@@ -36,7 +36,7 @@ Volume Docker novo: `capiarcos-admin-data`, montado em `/app/data`. O volume do 
 - `admin.json`: utilizador e hash da palavra-passe; sem acesso público.
 - `backups/`: cópia do catálogo anterior a cada alteração.
 
-«Exportar dados JSON» inclui os metadados, não fotografias nem credenciais. O script `deploy/update.sh` guarda o volume completo em `~/capiarcos-backups/` antes de atualizar, pausando brevemente o container para evitar alterações durante a cópia. Não usar `docker compose down -v`, que apagaria volumes. Monitorizar o espaço utilizado: originais, fotografias retiradas e backups não são apagados automaticamente.
+O script `deploy/update.sh` guarda o volume completo em `~/capiarcos-backups/` antes de atualizar, pausando brevemente o container para evitar alterações durante a cópia. Não usar `docker compose down -v`, que apagaria volumes. Monitorizar o espaço utilizado: originais, fotografias retiradas e backups não são apagados automaticamente.
 
 Para uma cópia manual consistente:
 

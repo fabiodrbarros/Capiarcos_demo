@@ -60,7 +60,6 @@ const server=http.createServer(async(req,res)=>{
    if(method!=='GET'){checkOrigin(req);if(req.headers['x-csrf-token']!==s.csrf)fail(403,'Pedido não autorizado. Recarregue a página.');}
    if(p==='/api/logout'&&method==='POST'){logout(req);res.setHeader('Set-Cookie',cookie('',true));return json(res,200,{ok:true});}
    if(p==='/api/admin/catalogue'&&method==='GET')return json(res,200,snapshot());
-   if(p==='/api/admin/export'&&method==='GET'){res.setHeader('Content-Disposition','attachment; filename="capiarcos-catalogo.json"');return json(res,200,snapshot());}
    if(p==='/api/admin/upload'&&method==='POST'){
     const b=await body(req,15*1024*1024);text(b.title);text(b.alt,300);
     if(typeof b.image!=='string'||!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(b.image))fail(400,'Escolha uma imagem JPEG, PNG ou WebP.');
