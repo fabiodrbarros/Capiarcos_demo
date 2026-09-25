@@ -107,3 +107,7 @@ npm test: teste integrado passou, incluindo acesso não autenticado, origem inv�
 Browser: acesso local configurado com os dados fornecidos pelo utilizador, fora do Git. Verificados início de sessão, criação de categoria, upload da fotografia existente, rascunho, edição/publicação, filtro público, imagem ampliada, retirada e recuperação como rascunho. Painel observado em desktop e mobile (390×844); não testado em dispositivo físico. Os dados de validação ficam apenas em data-preview, ignorado pelo Git.
 
 O Docker local passou o build, mas tentativas de criar o container de teste ficaram pendentes sem produzir container nem erro; não foi confirmada a execução/saúde com volume no Docker Desktop. Não foi reiniciado/reinstalado o Docker. Persistência validada pelo servidor Node local após reinício. Nenhuma publicação na VPS nesta sessão.
+
+## Contactos em portátil — 25/09/2026
+Espaçamentos compactos acima de 1000 px de largura e até 820 px de altura. Confirmado no browser: secção de 768 px em 1366×768 e de 640 px em 1280×640, com todo o conteúdo visível e footer imediatamente depois. Removido o botão sobreposto Abrir no OpenStreetMap; mapa, pin, atribuição e link Ver no mapa preservados. Build validado.
+
