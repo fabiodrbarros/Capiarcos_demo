@@ -55,7 +55,7 @@
 }
 
 /* Reference: numbered horizontal categories and portrait frames. */
-.room-catalogo .room-main{margin-left:4%;margin-right:4%}
+.room-catalogo .room-main{margin-left:18%;margin-right:12%}
 .room-catalogo .catalogue-layout{grid-template-columns:minmax(0,1fr);gap:clamp(2.5rem,6vw,5rem)}
 .room-catalogo .catalogue-filters{counter-reset:catalogue-category;width:max-content;max-width:100%;display:flex;flex-direction:row;flex-wrap:nowrap;gap:0;padding:0;border-block:1px solid #68272530;overflow-x:auto}
 .room-catalogo .catalogue-filters button{counter-increment:catalogue-category;position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;flex:0 0 auto;gap:.3rem;min-width:8rem;min-height:4rem;padding:.65rem 1.25rem 1rem;border:0;border-left:1px solid #68272590;color:#682725;font-size:.75rem;text-transform:uppercase}
