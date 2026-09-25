@@ -54,9 +54,11 @@ test('admin: authentication, drafts, publication, validation, conflicts and pers
   assert.equal((await call('/api/admin/categories/'+category,'DELETE',{revision:data.revision})).status,409);
   data=await (await call('/api/admin/items/'+item.id,'PATCH',{...item,revision:data.revision,published:false,deleted:true})).json();
   assert.equal((await (await call('/api/catalogue')).json()).items.some(i=>i.id===item.id),false);
+  const direct=await call('/api/admin/upload','POST',{revision:data.revision,category,title:'Publicação direta',alt:'Imagem de teste',published:true,image:'data:image/png;base64,'+png.toString('base64')});assert.equal(direct.status,201);data=await direct.json();const newest=data.items.at(-1);
+  assert.equal(newest.published,true);assert.equal((await (await call('/api/catalogue')).json()).items[0].id,newest.id);assert.equal((await call(newest.url,'GET',undefined,{Cookie:''})).status,200);
   await stop();await start();cookie='';assert.equal((await call('/api/admin/catalogue')).status,401);
   const again=await call('/api/login','POST',{user:'test-admin',password});cookie=again.headers.get('set-cookie').split(';')[0];csrf=(await again.json()).csrf;
-  const restored=await (await call('/api/admin/catalogue')).json();assert.equal(restored.items.at(-1).deleted,true);assert.equal(restored.revision,data.revision);
+  const restored=await (await call('/api/admin/catalogue')).json();assert.equal(restored.items.find(i=>i.id===item.id).deleted,true);assert.equal(restored.revision,data.revision);
   await call('/api/logout','POST',{});assert.equal((await call('/api/admin/catalogue')).status,401);
  }finally{await stop();await rm(dir,{recursive:true,force:true});}
 });

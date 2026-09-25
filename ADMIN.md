@@ -83,3 +83,6 @@ Persistência JSON com escrita atómica, adequada a este catálogo e a uma inst�
 ## Atualização — fotografias e ordem dos itens
 Os itens aparecem do último inserido para o primeiro, tanto na gestão como no catálogo público. Editar ou substituir uma fotografia não altera a posição do item. O campo de ordem manual foi retirado dos itens.
 Para trocar a imagem: **Editar item → Substituir fotografia → Guardar alterações**. A imagem escolhida tem pré-visualização e passa pela mesma validação e otimização dos novos uploads. O item conserva a identidade e o estado de publicação. As imagens anteriores permanecem nos dados privados para recuperação por backup.
+
+Na criação, Publicar no catálogo vem selecionado: Criar e publicar disponibiliza o item imediatamente. Desmarcar permite guardar rascunho. Não é necessário abrir o editor após criar para publicar.
+

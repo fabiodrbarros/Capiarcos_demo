@@ -71,13 +71,13 @@ const server=http.createServer(async(req,res)=>{
    if(p==='/api/logout'&&method==='POST'){logout(req);res.setHeader('Set-Cookie',cookie('',true));return json(res,200,{ok:true});}
    if(p==='/api/admin/catalogue'&&method==='GET')return json(res,200,snapshot());
    if(p==='/api/admin/upload'&&method==='POST'){
-    const b=await body(req,15*1024*1024);text(b.title);text(b.alt,300);
+    const b=await body(req,15*1024*1024);text(b.title);text(b.alt,300);if(b.published!==undefined&&typeof b.published!=='boolean')fail(400,'Estado inválido.');
     const result=await mutate(b.revision,async data=>{
      if(!data.categories.some(c=>c.id===b.category))fail(400,'Selecione uma categoria.');
      if(data.items.length>=3000)fail(400,'Limite de imagens atingido.');
      const {url,width,height}=await saveImage(b.image);
      const id=randomUUID();
-     data.items.push({id,category:b.category,title:text(b.title),alt:text(b.alt,300),url,width,height,order:data.items.length,published:false,deleted:false});
+     data.items.push({id,category:b.category,title:text(b.title),alt:text(b.alt,300),url,width,height,order:data.items.length,published:b.published===true,deleted:false});
     });return json(res,201,result);
    }
    if(p==='/api/admin/categories'&&method==='POST'){
