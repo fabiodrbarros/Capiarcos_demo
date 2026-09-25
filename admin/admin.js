@@ -1,5 +1,5 @@
 const $=s=>document.querySelector(s);
-let state,csrf='',selected='all',editing=null,busy=false;
+let state,csrf='',selected='all',editing=null,busy=false,view='active';
 const message=(text,error=false)=>{$('#message').textContent=text;$('#message').classList.toggle('error',error);};
 const element=(tag,props={},text)=>{const e=document.createElement(tag);Object.assign(e,props);if(text!==undefined)e.textContent=text;return e;};
 async function api(url,method='GET',data){
@@ -18,8 +18,9 @@ function render(){
  $('#summary').textContent=`${active.length} ${active.length===1?'fotografia':'fotografias'}`;
  const nav=$('#categories');nav.replaceChildren();
  if(selected!=='all'&&!state.categories.some(c=>c.id===selected))selected='all';
- for(const c of [{id:'all',name:'Todas'},...state.categories.slice().sort((a,b)=>a.order-b.order)]){const b=element('button',{type:'button'},c.name);b.setAttribute('aria-pressed',String(selected===c.id));b.onclick=()=>{selected=c.id;render();};nav.append(b);}
- const view=$('#view').value;
+ for(const c of [{id:'all',name:'Todas'},...state.categories.slice().sort((a,b)=>a.order-b.order)]){const b=element('button',{type:'button'},c.name);b.setAttribute('aria-pressed',String(selected===c.id));b.onclick=()=>{selected=c.id;view='active';render();};nav.append(b);}
+ $('#show-retired').hidden=!state.items.some(i=>i.deleted);
+ $('#show-retired').textContent=view==='trash'?'Voltar às fotografias':'Retiradas';
  const list=state.items.filter(i=>(selected==='all'||i.category===selected)&&(view==='trash'?i.deleted:!i.deleted&&(view==='active'||(view==='published'?i.published:!i.published)))).sort((a,b)=>a.order-b.order);
  $('#empty').hidden=list.length>0;$('#items').replaceChildren();
  for(const i of list){const card=element('article',{className:'card'}),image=element('img',{src:i.url,alt:i.alt,loading:'lazy'}),content=element('div',{className:'card-body'});content.append(element('span',{className:'badge'+(i.published&&!i.deleted?' published':'')},i.deleted?'Retirada':i.published?'Publicada':'Rascunho'),element('h3',{},i.title),element('p',{className:'meta'},state.categories.find(c=>c.id===i.category)?.name||'Sem categoria'));const button=element('button',{type:'button'},i.deleted?'Recuperar':'Editar');button.onclick=()=>edit(i);content.append(button);const frame=element('div',{className:'catalogue-frame'}),mat=element('div',{className:'catalogue-mat'});mat.append(image);frame.append(mat);card.append(frame,content);$('#items').append(card);}
@@ -32,12 +33,11 @@ async function run(form,action){
 }
 $('#login-form').onsubmit=e=>{e.preventDefault();const f=e.currentTarget;run(f,async()=>{const result=await api('/api/login','POST',{user:f.elements.user.value,password:f.elements.password.value});csrf=result.csrf;f.reset();apply(await api('/api/admin/catalogue'));message('');});};
 $('#logout').onclick=async()=>{try{await api('/api/logout','POST',{});csrf='';state=null;showLogin(true);message('Sessão terminada.');}catch(e){message(e.message,true);}};
-$('#refresh').onclick=async()=>{try{apply(await api('/api/admin/catalogue'));message('Catálogo atualizado.');}catch(e){message(e.message,true);}};
-$('#view').onchange=render;
+$('#show-retired').onclick=()=>{view=view==='trash'?'active':'trash';render();};
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>{if(!busy)b.closest('dialog').close();});
 document.querySelectorAll('dialog').forEach(d=>d.addEventListener('cancel',e=>{if(busy)e.preventDefault();}));
 $('#add-image').onclick=()=>{const f=$('#upload-form');f.reset();options(f.elements.category,selected==='all'?null:selected);open($('#upload-dialog'));};
-$('#upload-form').onsubmit=e=>{e.preventDefault();const f=e.currentTarget;run(f,async()=>{const file=f.elements.file.files[0];if(!file||file.size>10*1024*1024)throw Error('Escolha uma imagem até 10 MB.');const image=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(Error('Não foi possível ler o ficheiro.'));reader.readAsDataURL(file);});apply(await api('/api/admin/upload','POST',{revision:state.revision,title:f.elements.title.value,alt:f.elements.alt.value,category:f.elements.category.value,image}));$('#view').value='active';selected='all';render();$('#upload-dialog').close();message('Rascunho guardado.');});};
+$('#upload-form').onsubmit=e=>{e.preventDefault();const f=e.currentTarget;run(f,async()=>{const file=f.elements.file.files[0];if(!file||file.size>10*1024*1024)throw Error('Escolha uma imagem até 10 MB.');const image=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(Error('Não foi possível ler o ficheiro.'));reader.readAsDataURL(file);});apply(await api('/api/admin/upload','POST',{revision:state.revision,title:f.elements.title.value,alt:f.elements.alt.value,category:f.elements.category.value,image}));view='active';selected='all';render();$('#upload-dialog').close();message('Rascunho guardado.');});};
 function edit(item){editing=item.id;const f=$('#edit-form');f.elements.title.value=item.title;f.elements.alt.value=item.alt;f.elements.order.value=item.order;options(f.elements.category,item.category);f.elements.published.checked=item.published&&!item.deleted;$('#edit-preview').src=item.url;$('#edit-preview').alt=item.alt;$('#remove-item').hidden=item.deleted;$('#edit-title').textContent=item.deleted?'Recuperar fotografia':'Editar fotografia';open($('#edit-dialog'));}
 function editData(deleted=false){const f=$('#edit-form');return {revision:state.revision,title:f.elements.title.value,alt:f.elements.alt.value,category:f.elements.category.value,order:Number(f.elements.order.value),published:deleted?false:f.elements.published.checked,deleted};}
 $('#edit-form').onsubmit=e=>{e.preventDefault();run(e.currentTarget,async()=>{apply(await api('/api/admin/items/'+editing,'PATCH',editData()));$('#edit-dialog').close();message('Alterações guardadas.');});};
