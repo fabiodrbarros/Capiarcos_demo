@@ -43,6 +43,6 @@
 }
 
 /* The solutions introduction is a single, larger sentence. */
-.story-ready .fh-services .fh-service-heading h2{font-size:clamp(1.125rem,1.4vw,1.5rem);line-height:1.35;letter-spacing:0;text-transform:none;text-wrap:balance}
+.story-ready .fh-services .fh-service-heading h2{font-size:clamp(1.125rem,1.4vw,1.5rem);line-height:1.35;letter-spacing:0;text-transform:none;text-wrap:balance;text-align:center;font-weight:400}
 @media(min-width:1101px){.story-ready .fh-service-heading{width:calc(100% + 12vw);margin-left:-6vw}.story-ready .fh-services .fh-service-heading h2{font-size:clamp(1.125rem,1.4vw,1.5rem)}}
 @media(max-width:1100px){.solutions-title-break{display:none}}
