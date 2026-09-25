@@ -26,8 +26,8 @@
 
 .story-ready .story-scroll-cue{display:flex;flex-direction:column;align-items:center;gap:10px;position:fixed;left:0;right:0;bottom:clamp(1.5rem,8dvh,5rem);margin:0;text-align:center;color:#766b60;font-size:8px;font-weight:400;line-height:1.4;letter-spacing:2.5px;z-index:6;pointer-events:none}
 .story-scroll-cue>span:first-child{padding-left:2.5px}
-.story-scroll-cue .story-scroll-line{display:block;position:relative;width:1px;height:clamp(24px,4.5dvh,36px);background:#d9c9ad}
-.story-scroll-line::after{content:"";position:absolute;left:0;top:34%;width:1px;height:20%;background:#ad8550}
+.story-scroll-cue .story-scroll-line{display:block;position:relative;width:1px;height:clamp(24px,4.5dvh,36px);background:#68272526}
+.story-scroll-line::after{content:"";position:absolute;left:0;top:34%;width:1px;height:20%;background:#682725}
 @media(prefers-reduced-motion:no-preference){
  .story-scroll-line::after{animation:scroll-cue-descent 1.8s ease-in-out infinite}
  @keyframes scroll-cue-descent{0%{top:0;opacity:0}20%{opacity:1}75%{opacity:1}100%{top:80%;opacity:0}}
