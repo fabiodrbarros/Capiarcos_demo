@@ -28,9 +28,9 @@ async function body(req,limit=16*1024){
  try{const value=JSON.parse(Buffer.concat(chunks).toString('utf8'));if(!value||typeof value!=='object'||Array.isArray(value))fail(400,'Pedido inválido.');return value;}catch{fail(400,'Pedido inválido.');}
 }
 function checkOrigin(req){if(req.headers.origin!==origin)fail(403,'Origem do pedido não autorizada.');}
-async function serve(res,file,method){
+async function serve(res,file,method,status=200){
  const type=mime[path.extname(file)];if(!type)fail(404,'Não encontrado.');
- try{if(!(await stat(file)).isFile())fail(404,'Não encontrado.');const bytes=await readFile(file);res.writeHead(200,{'Content-Type':type,'Content-Length':bytes.length});res.end(method==='HEAD'?undefined:bytes);}catch(e){if(e.code==='ENOENT'||e.code==='ENOTDIR')fail(404,'Não encontrado.');throw e;}
+ try{if(!(await stat(file)).isFile())fail(404,'Não encontrado.');const bytes=await readFile(file);res.writeHead(status,{'Content-Type':type,'Content-Length':bytes.length});res.end(method==='HEAD'?undefined:bytes);}catch(e){if(e.code==='ENOENT'||e.code==='ENOTDIR')fail(404,'Não encontrado.');throw e;}
 }
 function catalogueMarkup(template){
  const data=publicCatalog();
@@ -90,6 +90,7 @@ const server=http.createServer(async(req,res)=>{
    fail(404,'Operação inexistente.');
   }
   if(!['GET','HEAD'].includes(method))fail(405,'Método não permitido.');
+  if(p==='/404.html')return await serve(res,path.join(root,'404.html'),method,404);
   if(p==='/healthz')return json(res,200,{ok:true});
   if(p==='/catalogo.html'||p==='/contactos.html'||p==='/admin'||p==='/ca-guest-admin'||p==='/ca-guest-admin/'){res.writeHead(302,{Location:p.includes('admin')?'/admin/':p.replace('.html','/')});return res.end();}
   if(p==='/catalogo'||p==='/contactos'){res.writeHead(301,{Location:p+'/'});return res.end();}
@@ -109,7 +110,11 @@ const server=http.createServer(async(req,res)=>{
   const normalized=path.resolve(root,'.'+p);
   if(normalized!==path.resolve(root)&&!normalized.startsWith(path.resolve(root)+path.sep))fail(404,'Não encontrado.');
   return await serve(res,p.endsWith('/')?path.join(normalized,'index.html'):normalized,method);
- }catch(e){if(!res.headersSent)json(res,e.status||500,{error:e.status?e.message:'Não foi possível concluir. Tente novamente.'});else res.end();if(!e.status)console.error(e);}
+  }catch(e){
+  if(e.status===404&&!res.headersSent&&['GET','HEAD'].includes(req.method)&&req.headers.accept?.includes('text/html')&&!/^\/(api|media|assets)\//.test(req.url)){
+   try{return await serve(res,path.join(root,'404.html'),req.method,404);}catch{}
+  }
+  if(!res.headersSent)json(res,e.status||500,{error:e.status?e.message:'Não foi possível concluir. Tente novamente.'});else res.end();if(!e.status)console.error(e);}
 });
 server.requestTimeout=30000;server.headersTimeout=10000;
 server.listen(port,host,()=>console.log(`Capiarcos: http://${host}:${port} — painel /admin/`));

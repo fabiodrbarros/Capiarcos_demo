@@ -22,6 +22,10 @@ test('admin: authentication, drafts, publication, validation, conflicts and pers
  async function call(url,method='GET',body,headers={}){return fetch(origin+url,{method,headers:{Origin:origin,Cookie:cookie,'X-CSRF-Token':csrf,...(body?{'Content-Type':'application/json'}:{}),...headers},...(body?{body:JSON.stringify(body)}:{})});}
  try{
   await start();
+  const missing=await call('/pagina-inexistente','GET',undefined,{Accept:'text/html'});assert.equal(missing.status,404);assert.match(missing.headers.get('content-type'),/text\/html/);assert.match(await missing.text(),/Página não encontrada/);
+  const head404=await call('/pagina-inexistente','HEAD',undefined,{Accept:'text/html'});assert.equal(head404.status,404);assert.equal(await head404.text(),'');
+  assert.equal((await call('/404.html')).status,404);
+  const missingAsset=await call('/assets/inexistente.png');assert.equal(missingAsset.status,404);assert.match(missingAsset.headers.get('content-type'),/application\/json/);
   assert.equal((await call('/api/admin/catalogue')).status,401);
   assert.equal((await call('/data/admin.json')).status,404);
   assert.equal((await call('/api/login','POST',{user:'test-admin',password},{Origin:'https://other.example'})).status,403);

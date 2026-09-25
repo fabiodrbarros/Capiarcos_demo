@@ -1,0 +1,13 @@
+.room-not-found .room-main{margin:0;padding:2rem 1.5rem 4rem;display:grid;place-items:center;text-align:center}
+.room-not-found .room-backdrop:after{content:"";position:absolute;inset:0;background:#f4f1ebdb}
+.not-found-card{max-width:36rem;color:#682725}
+.not-found-logo{display:block;width:10rem;margin:0 auto 2rem}.not-found-logo img{width:100%;height:auto}
+.not-found-code{font-size:clamp(5rem,13vw,9rem);line-height:1;font-weight:400;letter-spacing:-.07em;margin:0 0 1rem}
+.not-found h1{font-size:clamp(1.5rem,3vw,2.25rem);font-weight:400;line-height:1.2;margin:0 0 1rem}
+.not-found h1+p{color:#754946;font-size:1rem;line-height:1.6}
+.not-found-actions{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:1rem 1.5rem;margin-top:2rem;font-size:.875rem}
+.not-found-actions a{display:inline-flex;align-items:center;gap:.5rem;min-height:44px;padding:.65rem 1rem;border:1px solid transparent}
+.not-found-actions .not-found-home{border-color:#682725}.not-found-actions a:hover{background:#682725;color:#fff}
+.not-found-actions a:focus-visible,.not-found-logo:focus-visible{outline:2px solid #682725;outline-offset:4px}
+@media(max-height:650px){.not-found-logo{margin-bottom:1rem}.not-found-code{font-size:5rem}.room-not-found .room-main{padding-top:1rem;padding-bottom:2rem}}
+.room-not-found .burger i{background:#682725}
