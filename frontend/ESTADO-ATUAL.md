@@ -68,3 +68,7 @@ Esta revisão substitui a decisão anterior de footer fixo na Home: depois dos 1
 Os quadros sobressaem 3 px e aumentam 3,5% no hover (rato) e foco visível (teclado), com animação de 200 ms e respeito por movimento reduzido. O canvas acompanha a posição dos elementos durante a animação.
 
 Google Maps substituído por OpenStreetMap, incluindo ligações e atribuição nativa. Marcador nas coordenadas fornecidas pelo utilizador: 41.822322, -8.436533. Não requer chave de API.
+
+## Atualização da grelha e mapa
+
+Os 12 quadros móveis cabem numa secção sem scroll interno. O pin OpenStreetMap usa agora #682725 através de Leaflet local em map.html/map.js; atribuição e coordenadas mantidas. Leaflet está em dist/vendor/leaflet, incluindo licença. Sem dependências npm nem chave de API; o mapa necessita de rede para obter os tiles.

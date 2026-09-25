@@ -144,3 +144,6 @@
 .room-page-content>.room-main{min-height:calc(100dvh - 6rem)}
 .room-page:not(.fixed-home)>.brand-footer{flex-shrink:0}
 @media(max-width:700px){.room-page-content>.room-main{min-height:calc(100dvh - 5.25rem)}}
+
+/* Keep the custom pin in the exact brand red. */
+.map-band iframe{filter:none}

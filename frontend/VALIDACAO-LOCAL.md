@@ -80,3 +80,11 @@ Em caso de nova falha, o script guarda logs/estado do container antes de recuper
 ## Footer normal, destaque e OpenStreetMap — 25/09/2026
 
 Verificado no browser local: Home 1440×900 e 390×844; footer em fluxo normal, scroll da grelha móvel e ausência de overflow horizontal; recuo para Materiais e avanço para Soluções; destaque por foco com escala 1.035 e deslocamento -3 px. Hover usa o mesmo transform, limitado a rato/ponteiro fino; interação de hover com rato físico não verificada. OpenStreetMap carregou visualmente, com marcador nas coordenadas fornecidas pelo utilizador, controlos e atribuição. Gestos de toque em dispositivo físico não testados. Build de fontes e Docker executados após alterações. Publicação na VPS pendente da sessão SSH do utilizador.
+
+## Pin vermelho e grelha móvel — 25/09/2026
+
+Marcador SVG em #682725 no mapa OpenStreetMap, servido por map.html/map.js com Leaflet 1.9.4 local (licença incluída). Não requer instalação npm nem chave. Apenas os tiles vêm do OpenStreetMap; atribuição preservada. Removido o filtro de saturação do iframe para manter a cor exata.
+
+Home móvel: 12 quadros numa única secção, três colunas em retrato e quatro em paisagem baixa; dimensões adaptadas à largura e altura, legendas interiores e CTA visíveis, sem scroll interno. Esta decisão substitui as notas anteriores sobre scroll próprio na grelha móvel.
+
+Verificado no browser: 390×844, 320×568 e 844×390; os 12 quadros completos, grelha sem scroll interno e CTA visível. Mapa local com oito tiles carregados e pin SVG #682725 confirmado visualmente e no DOM. Testes em viewport emulado, não em telemóvel físico. Build de fontes e Docker executados. VPS pendente de atualização manual pelo utilizador.
