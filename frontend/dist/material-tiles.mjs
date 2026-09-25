@@ -1,10 +1,8 @@
 import {ease,mix} from './material-story.mjs';
 import {loadImage} from './image-assets.mjs';
 const crops=[[965,543,55,55],[1175,554,85,85]];
-const assets=Array.from({length:12},(_,i)=>{
- const name=`solution-drawings/${String(i).padStart(2,'0')}.png`;
- return loadImage(`/assets/optimized/${name}`,`/assets/${name}`);
-});
+const drawingNames=['01_cozinhas', '02_roupeiros', '03_moveis_tv', '04_quartos', '05_casas_banho', '06_ripados', '07_mesas', '08_portas', '09_escadas', '10_aparadores', '11_escritorios', '12_estantes'];
+const assets=drawingNames.map(name=>loadImage(`/assets/solution-svg/${name}.svg`));
 const drawings=assets.map(asset=>asset.image);
 export const drawingsReady=Promise.allSettled(assets.map(asset=>asset.ready));
 export function tilePose(source,destination,p,i){

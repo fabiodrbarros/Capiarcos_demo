@@ -43,10 +43,12 @@ function check(dir){
 }
 check(root);
 // Dynamic drawing URLs also need an explicit integrity check.
-for(let i=0;i<12;i++)for(const folder of ['solution-drawings','optimized/solution-drawings']){
-  const file=path.join(root,'assets',folder,`${String(i).padStart(2,'0')}.png`);
-  const bytes=readFileSync(file);
-  assert.equal(bytes.subarray(1,4).toString(),'PNG',`PNG inválido: ${file}`);
+const drawings=readdirSync(path.join(root,'assets/solution-svg')).filter(name=>name.endsWith('.svg'));
+assert.equal(drawings.length,12);
+for(const name of drawings){
+ const svg=readFileSync(path.join(root,'assets/solution-svg',name),'utf8');
+ assert.match(svg,/<svg[^>]+viewBox=/);
+ assert.doesNotMatch(svg,/<(?:script|foreignObject)\b/i);
 }
 assert.equal(TRANSITION_MS,1800);
 for(const [from,to] of [[0,1],[3,4],[4,3],[4,0]]){
@@ -55,5 +57,5 @@ for(const [from,to] of [[0,1],[3,4],[4,3],[4,0]]){
   assert.deepEqual(transitionValue(from,to,1800),{value:to,done:true});
   assert.deepEqual(transitionValue(from,to,5000),{value:to,done:true});
 }
-console.log(`${pages} páginas, ${scripts} módulos, ${references} referências locais e 12 pares de PNG validados. Transições: 1800 ms, avanço/recuo e conclusão verificados.`);
+console.log(`${pages} páginas, ${scripts} módulos, ${references} referências locais e 12 desenhos SVG validados. Transições: 1800 ms, avanço/recuo e conclusão verificados.`);
 console.log('dist/ contém os fontes e o site pronto a servir; nada foi apagado ou reconstruído.');

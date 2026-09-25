@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+    <g fill="none" stroke="#7A201C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    
+<line x1="220" y1="220" x2="1380" y2="220"/>
+<rect x="250" y="250" width="900" height="130"/>
+<line x1="475" y1="250" x2="475" y2="380"/><line x1="700" y1="250" x2="700" y2="380"/><line x1="925" y1="250" x2="925" y2="380"/>
+<rect x="250" y="500" width="900" height="165"/>
+<line x1="430" y1="500" x2="430" y2="665"/><line x1="610" y1="500" x2="610" y2="665"/><line x1="790" y1="500" x2="790" y2="665"/><line x1="970" y1="500" x2="970" y2="665"/>
+<rect x="1160" y="250" width="180" height="415"/>
+<line x1="1160" y1="430" x2="1340" y2="430"/><line x1="1160" y1="510" x2="1340" y2="510"/>
+<path d="M610 500 v-50 q0-55 35-55 q35 0 35 55 v50"/>
+<line x1="630" y1="500" x2="660" y2="500"/>
+<rect x="500" y="515" width="160" height="18"/>
+<line x1="835" y1="510" x2="930" y2="510"/>
+<line x1="835" y1="528" x2="930" y2="528"/>
+<line x1="780" y1="620" x2="915" y2="620"/>
+
+    </g>
+    </svg>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <g fill="none" stroke="#7A201C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    
+<!-- desk -->
+<rect x="300" y="420" width="1000" height="55"/>
+<line x1="340" y1="475" x2="320" y2="760"/>
+<line x1="1260" y1="475" x2="1280" y2="760"/>
+
+<!-- drawer pedestal -->
+<rect x="1030" y="475" width="240" height="285"/>
+<line x1="1030" y1="570" x2="1270" y2="570"/>
+<line x1="1030" y1="665" x2="1270" y2="665"/>
+<line x1="1100" y1="520" x2="1200" y2="520"/>
+<line x1="1100" y1="615" x2="1200" y2="615"/>
+<line x1="1100" y1="710" x2="1200" y2="710"/>
+
+<!-- monitor -->
+<rect x="650" y="250" width="300" height="165" rx="8"/>
+<line x1="800" y1="415" x2="800" y2="440"/>
+<line x1="735" y1="440" x2="865" y2="440"/>
+
+<!-- desk lamp -->
+<circle cx="430" cy="280" r="18"/>
+<line x1="445" y1="292" x2="515" y2="385"/>
+<line x1="515" y1="385" x2="590" y2="300"/>
+<path d="M590 300 q45 5 65 45"/>
+<line x1="392" y1="420" x2="510" y2="420"/>
+
+<!-- pencil pot -->
+<rect x="1140" y="345" width="70" height="75"/>
+<line x1="1160" y1="345" x2="1140" y2="300"/>
+<line x1="1175" y1="345" x2="1175" y2="292"/>
+<line x1="1190" y1="345" x2="1210" y2="305"/>
+
+<!-- chair -->
+<rect x="650" y="465" width="300" height="190" rx="50"/>
+<line x1="800" y1="655" x2="800" y2="710"/>
+<line x1="800" y1="710" x2="710" y2="760"/>
+<line x1="800" y1="710" x2="890" y2="760"/>
+<line x1="800" y1="710" x2="800" y2="775"/>
+<circle cx="700" cy="770" r="18"/>
+<circle cx="800" cy="785" r="18"/>
+<circle cx="900" cy="770" r="18"/>
+
+  </g>
+</svg>
