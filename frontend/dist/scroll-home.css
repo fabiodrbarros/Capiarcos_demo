@@ -24,10 +24,14 @@
 .story-ready .story-lines{display:block;position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
 .story-ready .story-lines{z-index:2}
 
-.story-ready .story-scroll-cue{display:flex;flex-direction:column;align-items:center;gap:14px;position:fixed;left:0;right:0;bottom:clamp(1.5rem,8dvh,5rem);margin:0;text-align:center;color:#766b60;font-size:9px;font-weight:400;line-height:1.4;letter-spacing:3px;z-index:6;pointer-events:none}
-.story-scroll-cue>span:first-child{padding-left:3px}
-.story-scroll-cue .story-scroll-line{display:block;position:relative;width:1px;height:clamp(28px,6dvh,50px);background:#d9c9ad}
+.story-ready .story-scroll-cue{display:flex;flex-direction:column;align-items:center;gap:10px;position:fixed;left:0;right:0;bottom:clamp(1.5rem,8dvh,5rem);margin:0;text-align:center;color:#766b60;font-size:8px;font-weight:400;line-height:1.4;letter-spacing:2.5px;z-index:6;pointer-events:none}
+.story-scroll-cue>span:first-child{padding-left:2.5px}
+.story-scroll-cue .story-scroll-line{display:block;position:relative;width:1px;height:clamp(24px,4.5dvh,36px);background:#d9c9ad}
 .story-scroll-line::after{content:"";position:absolute;left:0;top:34%;width:1px;height:20%;background:#ad8550}
+@media(prefers-reduced-motion:no-preference){
+ .story-scroll-line::after{animation:scroll-cue-descent 1.8s ease-in-out infinite}
+ @keyframes scroll-cue-descent{0%{top:0;opacity:0}20%{opacity:1}75%{opacity:1}100%{top:80%;opacity:0}}
+}
 .story-ready .fh-controls{position:fixed;left:5vw;right:13.5rem;bottom:1.25rem;margin:0;min-height:3rem;padding:0;z-index:25;gap:1.5rem}
 .story-ready .fh-counter{position:static}
 .story-ready .fh-steps{margin:0 auto 0 0;gap:1.75rem}
