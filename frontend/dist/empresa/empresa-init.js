@@ -1,4 +1,4 @@
 // Set the opening layout before the scene is parsed or painted.
-if (matchMedia('(min-height:740px) and (min-width:360px)').matches) {
+if (matchMedia('screen').matches) {
  document.body.classList.add('company-ready');
 }
