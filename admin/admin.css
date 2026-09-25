@@ -77,8 +77,6 @@ body:not(.login-view) main{padding-bottom:7rem}
 .session-actions{flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:0;padding:0;background:transparent;border:0;right:auto}
 .session-actions a,.session-actions button{min-height:30px;padding:.25rem 0;border:0;border-radius:0;background:transparent;color:#682725;font-size:.6875rem;font-weight:400;line-height:1.5;letter-spacing:0;text-transform:none;box-shadow:none}
 .session-actions button:not(:disabled):is(:hover,:focus-visible),.session-actions a:hover{background:transparent;color:#682725;text-decoration:underline;text-underline-offset:3px}
-.retired-link{display:block;margin-top:.75rem;padding:.25rem 0;border:0;background:transparent;font-size:.6875rem;text-transform:none}
-.retired-link:not(:disabled):hover{background:transparent;color:#682725;text-decoration:underline}
 @media(max-width:700px){.session-actions{position:static;margin:0 1.25rem 1rem;order:2}body:not(.login-view){display:flex;flex-direction:column}body:not(.login-view) main{width:calc(100% - 2.5rem);padding-bottom:2rem}}
 
 .session-actions{border:1px solid #68272540;padding:.5rem .75rem}
