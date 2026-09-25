@@ -22,16 +22,20 @@
  .story-ready .fh-services>.fh-action{margin-top:1rem}
  .story-ready.solutions-ready>.home-scene{height:max(100dvh,calc(var(--home-copy-height,150px) + 26rem))}
 }
-/* Copy sits beside the work, with the solutions text below its frames. */
+/* Copy sits beside the work, with the solutions text above its frames. */
 .story-ready .fh-panel .fh-copy :is(h1,h2),.story-ready .fh-service-heading h2{font-weight:700;font-synthesis:weight}
 @media(min-width:701px){
  .story-ready .fh-panel .fh-copy{left:17vw;top:26vh;width:21vw;max-width:24rem}
  .story-ready .fh-intro .fh-copy{left:30vw;top:0;width:44vw;max-width:40rem}
  .story-ready .fh-services{padding-top:1rem}
- .story-ready .fh-service-heading{position:relative;left:auto;top:auto;width:100%;max-width:none;margin:1.5rem 0 0;flex-shrink:0}
+ .story-ready .fh-service-heading{position:relative;left:auto;top:auto;width:100%;max-width:none;margin:0 0 1.25rem;flex-shrink:0}
+ .story-ready .fh-categories{grid-template-columns:repeat(4,minmax(0,1fr));gap:.85rem;flex-shrink:0}
+ .story-ready .fh-services .fh-category-link{--tile-size:min(12.3vw,168px);max-width:100%}
+ .story-ready.solutions-ready>.home-scene{height:max(100dvh,calc(var(--home-copy-height,150px) + 35rem))}
 }
 @media(max-width:700px){
- .story-ready .fh-service-heading{margin:1.25rem 0 0}
+ .story-ready .fh-service-heading{margin:0 0 1.25rem}
+ .story-ready .fh-services{--solution-size:min(104px,calc((100vw - 3rem)/3))}
 }
 @media(max-height:500px) and (min-width:701px){
  .story-ready .fh-panel .fh-copy{top:3vh;left:15vw;width:23vw}

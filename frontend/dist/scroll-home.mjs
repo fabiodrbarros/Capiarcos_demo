@@ -75,7 +75,7 @@ function renderLines(p,logoBox,room){
   }
   ctx.clearRect(0,0,width,height);
   drawCabinet(ctx,furniture,box,p);
-  if(p>=3){const origin=scene.getBoundingClientRect(),panel=panels[4].getBoundingClientRect();drawMaterialTiles(ctx,morphs,p,materialSources(box),furniture.finished,{left:panel.left-origin.left,top:panel.top-origin.top,width:panel.width,height:panel.height},origin);return;}
+  if(p>=3){const origin=scene.getBoundingClientRect(),panel=panels[4].getBoundingClientRect();drawMaterialTiles(ctx,morphs,p,materialSources(box),furniture.finished,{left:panel.left-origin.left,top:panel.top-origin.top,width:panel.width,height:Math.max(panel.height,panels[4].scrollHeight)},origin);return;}
   if(reduced.matches)return;
   if(!shapes||p<.12||p>1.02)return;
   const unfold=ease(.2,.9,p),alpha=ease(.12,.29,p)*(1-ease(.77,1.02,p));
