@@ -23,6 +23,7 @@ export function validateTranslations(value,fields){
  return result;
 }
 export function renderLanguage(html,lang,url){
+ html=html.replace(/(<dialog id="menu"[\s\S]*?<nav[^>]*><a href="\/">Home<\/a>)/, '$1<a href="/empresa/">Empresa</a>');
  const t=s=>escapeHtml(translate(decode(s),lang));
  let raw=false;
  html=html.split(/(<[^>]+>)/g).map(token=>{
@@ -41,7 +42,7 @@ export function renderLanguage(html,lang,url){
  // Keep the selected language across page navigation and map embeds.
  return html.replace(/\b(href|src)="(\/(?!\/)[^"]*)"/g,(all,attr,value)=>{
   const target=new URL(decode(value),'http://local');
-  if(!['/','/index.html','/catalogo/','/catalogo/index.html','/contactos/','/contactos/index.html','/404.html','/map.html'].includes(target.pathname))return all;
+  if(!['/','/index.html','/catalogo/','/catalogo/index.html','/contactos/','/contactos/index.html','/404.html','/map.html','/empresa/','/empresa/index.html'].includes(target.pathname))return all;
   if(!target.searchParams.has('lang'))target.searchParams.set('lang',lang);
   return `${attr}="${escapeHtml(target.pathname+target.search+target.hash)}"`;
  });

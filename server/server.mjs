@@ -36,6 +36,13 @@ async function serve(res,file,method,status=200){
 }
 async function servePage(res,file,method,url,status=200){
  let template;try{template=await readFile(file,'utf8');}catch(e){if(e.code==='ENOENT'||e.code==='ENOTDIR')fail(404,'Não encontrado.');throw e;}
+ if(file===path.join(root,'empresa/index.html')){
+  const shared=await readFile(path.join(root,'index.html'),'utf8');
+  const header=shared.match(/<header class="site-header">[\s\S]*?<\/header>/)[0];
+  const menu=shared.match(/<dialog id="menu"[\s\S]*?<\/dialog>/)[0];
+  const footer=shared.match(/<footer class="brand-footer"[\s\S]*?<\/footer>/)[0];
+  template=template.replace('<!-- company-shared-header -->',()=>header+menu).replace('<!-- company-shared-footer -->',()=>footer);
+ }
  const lang=language(url.searchParams.get('lang'));const html=renderLanguage(template,lang,url);
  res.writeHead(status,{'Content-Type':mime['.html'],'Content-Language':lang});res.end(method==='HEAD'?undefined:html);
 }
@@ -117,7 +124,7 @@ const server=http.createServer(async(req,res)=>{
   if(p==='/404.html')return await servePage(res,path.join(root,'404.html'),method,url,404);
   if(p==='/healthz')return json(res,200,{ok:true});
   if(p==='/catalogo.html'||p==='/contactos.html'||p==='/admin'||p==='/ca-guest-admin'||p==='/ca-guest-admin/'){res.writeHead(302,{Location:p.includes('admin')?'/admin/':p.replace('.html','/')+url.search});return res.end();}
-  if(p==='/catalogo'||p==='/contactos'){res.writeHead(301,{Location:p+'/'+url.search});return res.end();}
+  if(p==='/catalogo'||p==='/contactos'||p==='/empresa'){res.writeHead(301,{Location:p+'/'+url.search});return res.end();}
   if(p==='/catalogo/'||p==='/catalogo/index.html'){
    const html=catalogueMarkup(renderLanguage(await readFile(path.join(root,'catalogo/index.html'),'utf8'),lang,url),lang);res.writeHead(200,{'Content-Type':mime['.html'],'Content-Language':lang});return res.end(method==='HEAD'?undefined:html);
   }

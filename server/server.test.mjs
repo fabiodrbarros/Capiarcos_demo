@@ -23,6 +23,17 @@ test('admin: authentication, drafts, publication, validation, conflicts and pers
  try{
   await start();
   const missing=await call('/pagina-inexistente','GET',undefined,{Accept:'text/html'});assert.equal(missing.status,404);assert.match(missing.headers.get('content-type'),/text\/html/);assert.match(await missing.text(),/Página não encontrada/);
+  for(const [lang,title,heading] of [['pt','A empresa — Capiarcos','A ORIGEM'],['fr','L’entreprise — Capiarcos','LES ORIGINES'],['en','The company — Capiarcos','OUR ORIGINS']]){
+   const response=await call('/empresa/?lang='+lang),html=await response.text();
+   assert.equal(response.status,200);assert.equal(response.headers.get('content-language'),lang);
+   assert.ok(html.includes(title));assert.ok(html.includes(heading));
+   assert.equal((html.match(/<dialog id="menu"/g)||[]).length,1);
+   assert.equal((html.match(/<footer class="brand-footer"/g)||[]).length,1);
+   assert.equal((html.match(/class="company-topic"/g)||[]).length,4);
+   assert.ok(html.includes('/catalogo/?lang='+lang));assert.ok(html.includes('/empresa/?lang='+lang));
+   assert.doesNotMatch(html,/company-shared-|Qualidade além-fronteiras|Conhecer a Capiarcos|company-controls/);
+  }
+  const companyRedirect=await fetch(origin+'/empresa?lang=en',{redirect:'manual'});assert.equal(companyRedirect.headers.get('location'),'/empresa/?lang=en');
   const head404=await call('/pagina-inexistente','HEAD',undefined,{Accept:'text/html'});assert.equal(head404.status,404);assert.equal(await head404.text(),'');
   assert.equal((await call('/404.html')).status,404);
   const missingAsset=await call('/assets/inexistente.png');assert.equal(missingAsset.status,404);assert.match(missingAsset.headers.get('content-type'),/application\/json/);
