@@ -56,7 +56,7 @@ function go(index,focus=false){
  transition=reduced.matches?null:{from:progress,to:index,start:performance.now()};
  main.setAttribute('aria-busy',String(!!transition));
  if(reduced.matches)progress=index;
- history.replaceState(null,'',`#${ids[index]}`);
+
   if(focus){const heading=panels[index].querySelector('h1,h2');heading.tabIndex=-1;setTimeout(()=>{if(!document.querySelector('dialog[open]')&&target===index)heading.focus({preventScroll:true});},reduced.matches?0:TRANSITION_MS);}
  schedule();
 }
@@ -160,6 +160,8 @@ document.addEventListener('keydown',event=>{
 });
 fetch('/assets/logo-shapes.json').then(r=>{if(!r.ok)throw Error('Logo');return r.json();}).then(data=>{shapes=data;schedule();}).catch(()=>{});
 const initial=Math.max(0,ids.indexOf(location.hash.slice(1)));
+// Keep legacy chapter links working without exposing chapter fragments in the URL.
+if(location.hash)history.replaceState(history.state,'',location.pathname+location.search);
 // Deep links must respect the same decoded-image gate as wheel/touch navigation.
 target=progress=0;
 if(initial>0){pendingChapter=[initial,false];assetNotice.textContent='A carregar as imagens…';}
