@@ -66,8 +66,9 @@ function renderLines(p,logoBox,room){
   if(!ctx)return;
   // Supersample resting artwork, without making every animation frame as expensive.
   const d=transition?Math.min(devicePixelRatio||1,2):Math.min(Math.max(devicePixelRatio||1,2),3);
-  if(width!==innerWidth||height!==innerHeight||canvas.width!==Math.round(innerWidth*d)||canvas.height!==Math.round(innerHeight*d)){
-    width=innerWidth;height=innerHeight;
+  const sceneHeight=Math.max(innerHeight,scene.offsetHeight);canvas.style.height=sceneHeight+'px';
+  if(width!==innerWidth||height!==sceneHeight||canvas.width!==Math.round(innerWidth*d)||canvas.height!==Math.round(sceneHeight*d)){
+    width=innerWidth;height=sceneHeight;
     canvas.width=Math.round(width*d);canvas.height=Math.round(height*d);
     ctx.setTransform(d,0,0,d,0,0);
     ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
@@ -101,9 +102,10 @@ function tick(now=performance.now()){
   const p=reduced.matches?Math.round(progress):progress;
   const logoW=Math.min(480,Math.max(240,innerWidth*.34)),logoH=logoW*288/866;
   const origin={x:(innerWidth-logoW)/2,y:innerHeight*.5-logoH/2,w:logoW,h:logoH};
+  if(innerWidth<=700){const copyBottom=panels[0].querySelector('.fh-copy').offsetHeight+84;origin.y=Math.max(origin.y,copyBottom+16);}
   const dockW=innerWidth<=700?96:144,dockH=dockW*288/866,dock=ease(.06,.72,p);
   hero.style.width=`${logoW}px`;hero.style.transform=`translate(${origin.x}px,${origin.y}px)`;hero.style.opacity=1-ease(.2,.49,p);
-  signature.style.width=`${logoW}px`;signature.style.transform=`translate(${mix(origin.x,innerWidth-dockW-24,dock)}px,${mix(origin.y,innerHeight-dockH-20,dock)}px) scale(${mix(1,dockW/logoW,dock)})`;
+  signature.style.width=`${logoW}px`;signature.style.transform=`translate(${mix(origin.x,innerWidth-dockW-24,dock)}px,${mix(origin.y,(innerWidth<=700&&p>=3.995?scene.offsetHeight:innerHeight)-dockH-20,dock)}px) scale(${mix(1,dockW/logoW,dock)})`;
   signature.style.pointerEvents=dock>.95?'auto':'none';signature.tabIndex=dock>.95?0:-1;
   document.querySelector('.story-scroll-cue').style.opacity=1-ease(.02,.25,p);
   const opacity=[1-ease(.12,.45,p),ease(.62,.96,p)*(1-ease(1.25,1.55,p)),ease(1.62,1.96,p)*(1-ease(2.22,2.55,p)),ease(2.6,2.94,p)*(1-ease(3.2,3.55,p)),p>=3?1:0];
@@ -112,7 +114,7 @@ function tick(now=performance.now()){
     panel.style.opacity=opacity[i];panel.style.pointerEvents=panel.inert?'none':'auto';
     if(i<4)panel.querySelector('.fh-copy').style.transform=reduced.matches?'none':`translateY(${(1-opacity[i])*12}px)`;
   });
-  const solutionTitle=document.querySelector('.fh-service-heading');solutionTitle.style.opacity=ease(3.66,3.96,p);
+  const solutionTitle=document.querySelector('.fh-service-heading');body.style.setProperty('--home-copy-height',solutionTitle.offsetHeight+'px');solutionTitle.style.opacity=ease(3.66,3.96,p);
   document.querySelector('.fh-services>.fh-action').style.opacity=ease(3.85,4,p);
   const bounds=frame.getBoundingClientRect(),originBounds=scene.getBoundingClientRect();
   const room={left:bounds.left-originBounds.left,top:bounds.top-originBounds.top,width:bounds.width,height:bounds.height};
@@ -127,7 +129,7 @@ function tick(now=performance.now()){
   if(index!==active){active=index;body.dataset.scene=ids[index];steps.forEach((b,i)=>{if(i===index)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');});status.textContent=`${index+1} de 5 — ${steps[index].textContent.trim()}`;controls.querySelector('.fh-counter').textContent=`0${index+1} / 05`;}
   prev.disabled=!!transition||p<.02;next.disabled=!!transition||p>3.98;
   const solutionsReady=!transition&&target===4&&progress===4;
- body.classList.toggle('solutions-ready',solutionsReady);footer.inert=!solutionsReady;
+ const layoutChanged=body.classList.contains('solutions-ready')!==solutionsReady;body.classList.toggle('solutions-ready',solutionsReady);footer.inert=!solutionsReady;if(layoutChanged)schedule();
  if(transition||now<hoverUntil)schedule();
 }
 body.classList.add('story-ready');controls.hidden=false;

@@ -80,3 +80,6 @@ Foi acrescentado o backend Node e o painel /admin/ para um administrador, por pe
 ## Identidade e ícone — 25/09/2026
 Assinatura atualizada para CAPIARCOS - Rigor · Autenticidade · Proximidade nos títulos, menu e rodapés. Favicon SVG derivado dos contornos existentes de logo-shapes.json, isolando o rolo com C, com cópia PNG 64 px. Logo completo e originais preservados. Build validado e título/menu confirmados no browser local.
 
+
+## Textos da Home — 25/09/2026
+Integrados os seis textos fornecidos pelo utilizador, sem números ou travessões nos títulos. Os primeiros cinco acompanham as etapas existentes; «Da oficina à sua casa» é uma secção após os quadros e antes do footer. Em mobile, a secção de soluções pode crescer para manter texto e 12 quadros juntos e legíveis, com scroll normal. Canvas acompanha a altura total do cenário. Fontes em home-copy.css e index.html.
