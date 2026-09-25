@@ -79,3 +79,7 @@ O container serve frontend e API com Node, como utilizador não privilegiado, na
 Sessões em memória expiram ao fim de oito horas ou ao reiniciar o serviço. Login limitado a dez tentativas por origem de ligação em quinze minutos (atrás do proxy, este limite pode ser partilhado). Escritas exigem sessão, origem autorizada e token CSRF; revisões impedem uma janela antiga de sobrescrever alterações de outra. Textos do catálogo são escapados na saída HTML.
 
 Persistência JSON com escrita atómica, adequada a este catálogo e a uma instância única do serviço. Não iniciar várias instâncias sobre o mesmo volume. Não inclui múltiplos utilizadores, email de recuperação, MFA, encomendas ou alterações ao formulário mailto. O admin anterior permanece apenas como referência em `referencia/admin/`.
+
+## Atualização — fotografias e ordem dos itens
+Os itens aparecem do último inserido para o primeiro, tanto na gestão como no catálogo público. Editar ou substituir uma fotografia não altera a posição do item. O campo de ordem manual foi retirado dos itens.
+Para trocar a imagem: **Editar item → Substituir fotografia → Guardar alterações**. A imagem escolhida tem pré-visualização e passa pela mesma validação e otimização dos novos uploads. O item conserva a identidade e o estado de publicação. As imagens anteriores permanecem nos dados privados para recuperação por backup.

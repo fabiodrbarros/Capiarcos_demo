@@ -111,3 +111,5 @@ O Docker local passou o build, mas tentativas de criar o container de teste fica
 ## Contactos em portátil — 25/09/2026
 Espaçamentos compactos acima de 1000 px de largura e até 820 px de altura. Confirmado no browser: secção de 768 px em 1366×768 e de 640 px em 1280×640, com todo o conteúdo visível e footer imediatamente depois. Removido o botão sobreposto Abrir no OpenStreetMap; mapa, pin, atribuição e link Ver no mapa preservados. Build validado.
 
+
+Substituição de fotografia e ordem de inserção: build e teste integrado passaram, incluindo imagem inválida recusada, substituição sem duplicar item, novas dimensões, nova URL pública e retirada da URL anterior. Testado no browser com o item de validação local: escolher ficheiro em Substituir fotografia e guardar; catálogo de gestão manteve dois itens. Itens novos apresentados primeiro; campo Ordem removido do editor de itens.

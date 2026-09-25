@@ -32,6 +32,17 @@ async function serve(res,file,method,status=200){
  const type=mime[path.extname(file)];if(!type)fail(404,'Não encontrado.');
  try{if(!(await stat(file)).isFile())fail(404,'Não encontrado.');const bytes=await readFile(file);res.writeHead(status,{'Content-Type':type,'Content-Length':bytes.length});res.end(method==='HEAD'?undefined:bytes);}catch(e){if(e.code==='ENOENT'||e.code==='ENOTDIR')fail(404,'Não encontrado.');throw e;}
 }
+async function saveImage(imageData){
+    if(typeof imageData!=='string'||!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(imageData))fail(400,'Escolha uma imagem JPEG, PNG ou WebP.');
+    const bytes=Buffer.from(imageData.split(',')[1],'base64');if(bytes.length>10*1024*1024)fail(413,'Cada imagem pode ter até 10 MB.');
+     let encoded;
+     try{const image=sharp(bytes,{limitInputPixels:40000000,failOn:'warning'});const meta=await image.metadata();if(!['jpeg','png','webp'].includes(meta.format)||(meta.pages||1)>1)fail(400,'Formato de imagem não suportado.');encoded=await image.rotate().resize({width:2400,height:2400,fit:'inside',withoutEnlargement:true}).webp({quality:88}).toBuffer({resolveWithObject:true});}catch{fail(400,'Imagem inválida, animada ou superior a 40 megapíxeis.');}
+     const id=randomUUID(),url=`/media/${id}.webp`;
+     await writeFile(path.join(dataDir,'originals',id),bytes,{flag:'wx',mode:0o600});
+     await writeFile(path.join(dataDir,'images',id+'.webp'),encoded.data,{flag:'wx',mode:0o600});
+
+ return {url,width:encoded.info.width,height:encoded.info.height};
+}
 function catalogueMarkup(template){
  const data=publicCatalog();
  const counts=new Map(data.categories.map(c=>[c.id,data.items.filter(i=>i.category===c.id).length]));
@@ -62,17 +73,12 @@ const server=http.createServer(async(req,res)=>{
    if(p==='/api/admin/catalogue'&&method==='GET')return json(res,200,snapshot());
    if(p==='/api/admin/upload'&&method==='POST'){
     const b=await body(req,15*1024*1024);text(b.title);text(b.alt,300);
-    if(typeof b.image!=='string'||!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(b.image))fail(400,'Escolha uma imagem JPEG, PNG ou WebP.');
-    const bytes=Buffer.from(b.image.split(',')[1],'base64');if(bytes.length>10*1024*1024)fail(413,'Cada imagem pode ter até 10 MB.');
     const result=await mutate(b.revision,async data=>{
      if(!data.categories.some(c=>c.id===b.category))fail(400,'Selecione uma categoria.');
      if(data.items.length>=3000)fail(400,'Limite de imagens atingido.');
-     let encoded;
-     try{const image=sharp(bytes,{limitInputPixels:40000000,failOn:'warning'});const meta=await image.metadata();if(!['jpeg','png','webp'].includes(meta.format)||(meta.pages||1)>1)fail(400,'Formato de imagem não suportado.');encoded=await image.rotate().resize({width:2400,height:2400,fit:'inside',withoutEnlargement:true}).webp({quality:88}).toBuffer({resolveWithObject:true});}catch{fail(400,'Imagem inválida, animada ou superior a 40 megapíxeis.');}
-     const id=randomUUID(),url=`/media/${id}.webp`;
-     await writeFile(path.join(dataDir,'originals',id),bytes,{flag:'wx',mode:0o600});
-     await writeFile(path.join(dataDir,'images',id+'.webp'),encoded.data,{flag:'wx',mode:0o600});
-     data.items.push({id,category:b.category,title:text(b.title),alt:text(b.alt,300),url,width:encoded.info.width,height:encoded.info.height,order:data.items.length,published:false,deleted:false});
+     const {url,width,height}=await saveImage(b.image);
+     const id=randomUUID();
+     data.items.push({id,category:b.category,title:text(b.title),alt:text(b.alt,300),url,width,height,order:data.items.length,published:false,deleted:false});
     });return json(res,201,result);
    }
    if(p==='/api/admin/categories'&&method==='POST'){
@@ -84,7 +90,7 @@ const server=http.createServer(async(req,res)=>{
    }
    const item=/^\/api\/admin\/items\/([\w-]+)$/.exec(p);
    if(item&&method==='PATCH'){
-    const b=await body(req);return json(res,200,await mutate(b.revision,data=>{const i=data.items.find(x=>x.id===item[1]);if(!i)fail(404,'Imagem inexistente.');if(!data.categories.some(c=>c.id===b.category))fail(400,'Selecione uma categoria.');if(typeof b.published!=='boolean'||typeof b.deleted!=='boolean')fail(400,'Estado inválido.');Object.assign(i,{title:text(b.title),alt:text(b.alt,300),category:b.category,order:order(b.order),published:b.published,deleted:b.deleted});}));
+    const b=await body(req,15*1024*1024);return json(res,200,await mutate(b.revision,async data=>{const i=data.items.find(x=>x.id===item[1]);if(!i)fail(404,'Imagem inexistente.');if(!data.categories.some(c=>c.id===b.category))fail(400,'Selecione uma categoria.');if(typeof b.published!=='boolean'||typeof b.deleted!=='boolean')fail(400,'Estado inválido.');const changes={title:text(b.title),alt:text(b.alt,300),category:b.category,published:b.published,deleted:b.deleted};if(b.image!==undefined)Object.assign(changes,await saveImage(b.image));Object.assign(i,changes);}));
    }
    fail(404,'Operação inexistente.');
   }

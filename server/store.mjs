@@ -34,6 +34,6 @@ export function mutate(revision,fn){
 }
 export function publicCatalog(){
  const data=snapshot();
- const items=data.items.filter(i=>i.published&&!i.deleted).sort((a,b)=>a.order-b.order);
+ const items=data.items.filter(i=>i.published&&!i.deleted).reverse();
  return {categories:data.categories.filter(c=>items.some(i=>i.category===c.id)).sort((a,b)=>a.order-b.order),items};
 }

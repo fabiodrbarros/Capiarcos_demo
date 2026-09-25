@@ -41,6 +41,15 @@ test('admin: authentication, drafts, publication, validation, conflicts and pers
   assert.equal((await call(item.url,'GET',undefined,{Cookie:''})).status,404);
   data=await (await call('/api/admin/items/'+item.id,'PATCH',{...item,revision:data.revision,published:true})).json();
   assert.equal((await call(item.url,'GET',undefined,{Cookie:''})).status,200);
+  assert.equal((await (await call('/api/catalogue')).json()).items[0].id,item.id);
+  const oldUrl=item.url;
+  const replacement=await sharp({create:{width:24,height:18,channels:3,background:'#ffffff'}}).png().toBuffer();
+  const payload={title:item.title,alt:item.alt,category:item.category,published:true,deleted:false,revision:data.revision};
+  assert.equal((await call('/api/admin/items/'+item.id,'PATCH',{...payload,image:'data:image/png;base64,YWJj'})).status,400);
+  const replaced=await call('/api/admin/items/'+item.id,'PATCH',{...payload,image:'data:image/png;base64,'+replacement.toString('base64')});assert.equal(replaced.status,200);data=await replaced.json();
+  const updated=data.items.find(i=>i.id===item.id);assert.notEqual(updated.url,oldUrl);assert.equal(updated.width,24);assert.equal(updated.height,18);assert.equal(data.items.length,2);item=updated;
+  assert.equal((await call(item.url,'GET',undefined,{Cookie:''})).status,200);
+  assert.equal((await call(oldUrl,'GET',undefined,{Cookie:''})).status,404);
   const html=await (await call('/catalogo/')).text();assert.ok(html.includes('&lt;script&gt; $&amp; teste'));assert.ok(!html.includes('<script> $& teste'));
   assert.equal((await call('/api/admin/categories/'+category,'DELETE',{revision:data.revision})).status,409);
   data=await (await call('/api/admin/items/'+item.id,'PATCH',{...item,revision:data.revision,published:false,deleted:true})).json();
