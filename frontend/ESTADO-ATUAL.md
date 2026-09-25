@@ -60,3 +60,11 @@ O ficheiro `LICENCAS-ASSETS.md` regista as atribuições dos recursos mantidos. 
 
 ## Atualização para a VPS — 25/09/2026
 Por decisão do utilizador, o link Empresa foi retirado de todas as páginas até existir a página nova. Esta decisão substitui as referências anteriores ao link externo. O novo serviço publica apenas o frontend estático; admin/API antigos ficam indisponíveis. Publicação pelo utilizador na sessão SSH, conforme README da raiz do repositório.
+
+## Revisão pedida em 25/09/2026 — footer, quadros e mapa
+
+Esta revisão substitui a decisão anterior de footer fixo na Home: depois dos 12 quadros, o cenário e o footer seguem o scroll normal da página. Mantêm-se as transições completas de 1,8 s entre as cinco etapas e o scroll da grelha em ecrãs pequenos. O footer mantém a altura do conteúdo.
+
+Os quadros sobressaem 3 px e aumentam 3,5% no hover (rato) e foco visível (teclado), com animação de 200 ms e respeito por movimento reduzido. O canvas acompanha a posição dos elementos durante a animação.
+
+Google Maps substituído por OpenStreetMap, incluindo ligações e atribuição nativa. Marcador nas coordenadas fornecidas pelo utilizador: 41.822322, -8.436533. Não requer chave de API.

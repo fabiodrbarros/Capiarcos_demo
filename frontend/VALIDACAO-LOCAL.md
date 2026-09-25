@@ -76,3 +76,7 @@ O diagnóstico enviado da VPS revelou HTTP 403 por Permission denied ao ler inde
 Teste de regressão: build com diretórios de origem deliberadamente em 700 e ficheiros em 600; imagem final healthy, HTTP OK na Home, catálogo, contactos, módulo e PNG. Modos finais 755/644 confirmados. Build normal, validação de fontes, Compose e sintaxe Bash passaram. Não foi possível executar a correção na VPS nesta sessão.
 
 Em caso de nova falha, o script guarda logs/estado do container antes de recuperar. Ao repetir depois de uma recuperação, usa a configuração Compose registada no container em execução para a nova cópia de segurança.
+
+## Footer normal, destaque e OpenStreetMap — 25/09/2026
+
+Verificado no browser local: Home 1440×900 e 390×844; footer em fluxo normal, scroll da grelha móvel e ausência de overflow horizontal; recuo para Materiais e avanço para Soluções; destaque por foco com escala 1.035 e deslocamento -3 px. Hover usa o mesmo transform, limitado a rato/ponteiro fino; interação de hover com rato físico não verificada. OpenStreetMap carregou visualmente, com marcador nas coordenadas fornecidas pelo utilizador, controlos e atribuição. Gestos de toque em dispositivo físico não testados. Build de fontes e Docker executados após alterações. Publicação na VPS pendente da sessão SSH do utilizador.

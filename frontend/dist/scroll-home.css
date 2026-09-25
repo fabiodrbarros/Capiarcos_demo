@@ -150,3 +150,9 @@ body.story-ready{height:100dvh;min-height:0;overflow:hidden}
 @media(max-width:360px){
  .story-ready .fh-category-link .solution-label{font-size:.625rem;bottom:.5rem}
 }
+
+/* Canvas artwork follows these DOM boxes during the short hover transition. */
+.story-ready .fh-category-link{transition:transform .2s ease;transform-origin:center}
+@media(hover:hover) and (pointer:fine){.story-ready.solutions-ready .fh-category-link:hover{transform:translateY(-3px) scale(1.035)}}
+.story-ready.solutions-ready .fh-category-link:focus-visible{transform:translateY(-3px) scale(1.035)}
+@media(prefers-reduced-motion:reduce){.story-ready .fh-category-link{transition:none}}

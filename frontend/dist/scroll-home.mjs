@@ -41,26 +41,15 @@ const footer=document.querySelector('.brand-footer');
 const scene=document.querySelector('.home-scene');
 footer.tabIndex=-1;
 footer.inert=true;
-const sizeFooter=()=>body.style.setProperty('--home-footer-height',`${footer.getBoundingClientRect().height}px`);
-new ResizeObserver(sizeFooter).observe(footer);
-sizeFooter();
-let footerOpen=false,footerBusyUntil=0;
+let hoverUntil=0;
 function go(index,focus=false){
- if(transition||performance.now()<footerBusyUntil)return;
+ if(transition)return;
  if(!assetsReady){pendingChapter=[index,focus];assetNotice.textContent='A carregar as imagens…';return;}
- if(index>4||footerOpen){
-  const show=index>4;
-  if(show===footerOpen)return;
-  sizeFooter();footerOpen=show;body.classList.toggle('footer-open',show);footer.inert=!show;
-  // The translated header/skip link must not receive invisible keyboard focus.
-  scene.inert=show;
-  document.querySelector('.fh-main').inert=show;
-  footerBusyUntil=performance.now()+(reduced.matches?0:TRANSITION_MS);
-  signature.inert=show;
-  if(show){footer.scrollTop=0;target=5;status.textContent='Rodapé — Navegação e contactos';if(focus)footer.focus({preventScroll:true});}
-  else{target=4;active=-1;setTimeout(()=>{if(index<4)go(index,focus);else{schedule();if(focus&&!document.querySelector('dialog[open]'))panels[4].focus({preventScroll:true});}},reduced.matches?0:TRANSITION_MS);}
+ if(index>4){
+  window.scrollBy({top:innerHeight*.65,behavior:reduced.matches?'instant':'smooth'});
   return;
  }
+ if(scrollY>0)scrollTo({top:0,behavior:'instant'});
  index=Math.max(0,Math.min(4,index));
  if(index===target)return;
  target=index;
@@ -137,7 +126,9 @@ function tick(now=performance.now()){
   const index=Math.max(0,Math.min(4,Math.round(p)));
   if(index!==active){active=index;body.dataset.scene=ids[index];steps.forEach((b,i)=>{if(i===index)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');});status.textContent=`${index+1} de 5 — ${steps[index].textContent.trim()}`;controls.querySelector('.fh-counter').textContent=`0${index+1} / 05`;}
   prev.disabled=!!transition||p<.02;next.disabled=!!transition||p>3.98;
-  if(transition)schedule();
+  const solutionsReady=!transition&&target===4&&progress===4;
+ body.classList.toggle('solutions-ready',solutionsReady);footer.inert=!solutionsReady;
+ if(transition||now<hoverUntil)schedule();
 }
 body.classList.add('story-ready');controls.hidden=false;
 panels.forEach(p=>p.hidden=false);
@@ -147,6 +138,8 @@ document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=
 prev.addEventListener('click',()=>go(active-1));next.addEventListener('click',()=>go(active+1));
 signature.addEventListener('click',event=>{event.preventDefault();go(0);});
 addEventListener('resize',schedule);
+addEventListener('scroll',schedule,{passive:true});
+for(const category of categories)for(const type of ['pointerenter','pointerleave','focusin','focusout'])category.addEventListener(type,()=>{hoverUntil=performance.now()+240;schedule();});
 panels[4].addEventListener('scroll',schedule,{passive:true});
 addEventListener('popstate',()=>go(Math.max(0,ids.indexOf(location.hash.slice(1)))));
 document.addEventListener('visibilitychange',schedule);
@@ -154,10 +147,11 @@ reduced.addEventListener('change',()=>{if(reduced.matches&&transition){progress=
 document.addEventListener('keydown',event=>{
  if(event.altKey||event.ctrlKey||event.metaKey||document.querySelector('dialog[open]')||event.target.closest('input,textarea,select,button,[contenteditable="true"]'))return;
  if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp','PageDown','PageUp',' '].includes(event.key))return;
+ if(!transition&&target===4&&(scrollY>2||(!['ArrowLeft','ArrowUp','PageUp'].includes(event.key)&&!(event.key===' '&&event.shiftKey)&&!canScrollSolutions(panels[4],1))))return;
  event.preventDefault();
  if(event.repeat||transition)return;
  const dir=['ArrowLeft','ArrowUp','PageUp'].includes(event.key)||(event.key===' '&&event.shiftKey)?-1:1;
- const surface=footerOpen?footer:panels[4];
+ const surface=panels[4];
  if(canScrollSolutions(surface,dir)){
   surface.scrollBy({top:dir*(event.key.startsWith('Arrow')?80:surface.clientHeight*.8),behavior:'instant'});
   return;
@@ -175,7 +169,7 @@ addEventListener('pagehide',event=>{if(!event.persisted){stopped=true;cancelAnim
 addEventListener('pageshow',()=>{stopped=false;schedule();});
 
 function canScrollSolutions(element,dir){
- if(footerOpen)return dir>0||footer.scrollTop>2;
+
  const panel=panels[4];
  return !transition&&target===4&&panel.contains(element)&&
  (dir>0?panel.scrollTop+panel.clientHeight<panel.scrollHeight-2:panel.scrollTop>2);
@@ -183,6 +177,7 @@ function canScrollSolutions(element,dir){
 let wheelSum=0,lastWheel=0,wheelArmed=true,touchStart=null;
 addEventListener('wheel',event=>{
  if(document.querySelector('dialog[open]')||event.ctrlKey||Math.abs(event.deltaX)>Math.abs(event.deltaY))return;
+ if(!transition&&target===4&&(scrollY>2||event.deltaY>0))return;
  if(canScrollSolutions(event.target,Math.sign(event.deltaY)))return;
  event.preventDefault();const now=performance.now(),gap=now-lastWheel;lastWheel=now;
  if(gap>180){wheelSum=0;wheelArmed=true;}
@@ -196,7 +191,7 @@ addEventListener('touchcancel',()=>{touchStart=null;},{passive:true});
 addEventListener('touchmove',event=>{
  if(!touchStart||document.querySelector('dialog[open]'))return;
  const dy=touchStart.y-event.touches[0].clientY;
- if(canScrollSolutions(touchStart.element,Math.sign(dy)))touchStart.scrolled=true;else event.preventDefault();
+ if((!transition&&target===4&&(scrollY>2||dy>0))||canScrollSolutions(touchStart.element,Math.sign(dy)))touchStart.scrolled=true;else event.preventDefault();
 },{passive:false});
 addEventListener('touchend',event=>{
  if(!touchStart||document.querySelector('dialog[open]'))return;
