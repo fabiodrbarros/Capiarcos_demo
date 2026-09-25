@@ -99,3 +99,5 @@ body:not(.login-view) main{padding-bottom:7rem}
 @media(max-width:650px){#toast{inset:1rem 1rem auto;max-width:none;width:auto}}
 
 .translations{grid-column:1/-1;width:100%;margin:12px 0}.translations summary{cursor:pointer;font-size:12px;margin-bottom:10px}.translations fieldset{border:1px solid #782c2930;padding:12px;margin:10px 0}.translations legend{font-size:12px}.translations button{font-size:11px;padding:8px 12px}.category-row{flex-wrap:wrap}.category-row .translations{order:3;flex-basis:100%}
+
+.translations{margin:20px 0;padding-top:16px;border-top:1px solid #782c2930;clear:both}.translations summary{padding:8px 0;line-height:1.6;margin:0}.translations details[open] summary{margin-bottom:12px}.translations:has(details[hidden]){display:none}

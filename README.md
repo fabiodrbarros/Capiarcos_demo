@@ -51,4 +51,4 @@ Empresa continua sem link até existir página nova. O formulário continua mail
 
 ## PT / FR / EN
 
-O menu permite escolher o idioma. O site servido por `npm start` traduz os textos fixos; o painel inclui «Traduzir automaticamente» para novos itens e categorias, com MyMemory gratuito e sem chave. Ver `ADMIN.md` para limites, persistência e funcionamento em caso de falha. Não existe revisão obrigatória.
+O menu permite escolher o idioma. O site servido por `npm start` traduz os textos fixos; o painel traduz automaticamente ao guardar itens e categorias, com MyMemory gratuito e sem chave. Ver `ADMIN.md` para limites, persistência e funcionamento em caso de falha. Não existe revisão obrigatória.

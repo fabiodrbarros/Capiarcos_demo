@@ -18,7 +18,7 @@ Abrir https://capiarcos.fabiodrbarros.cloud/admin/ . Até configurar o acesso, o
 
 1. Criar/editar categorias em «Gerir categorias». Categorias com fotografias ativas não podem ser eliminadas.
 2. «Adicionar item ao catálogo»: escolher JPEG, PNG ou WebP até 10 MB e preencher título, descrição e categoria. A publicação está selecionada por defeito; pode desmarcar para guardar um rascunho.
-3. «Traduzir automaticamente» preenche FR e EN a partir do português, antes de criar ou guardar. Não existe aprovação obrigatória. «Editar FR / EN» permite ajustes opcionais. Também disponível nas categorias.
+3. Ao criar ou guardar, os campos FR e EN em falta ou desatualizados são traduzidos automaticamente. Só depois de a tradução terminar é guardado o item. «Rever traduções FR / EN» permite ajustes posteriores; correções atuais são preservadas. Também disponível nas categorias.
 4. «Editar item» permite substituir a fotografia e alterar os textos. Os itens mais recentes aparecem primeiro.
 5. «Retirar item» oculta sem apagar os ficheiros. Recuperar em «Itens retirados».
 
@@ -26,9 +26,9 @@ Abrir https://capiarcos.fabiodrbarros.cloud/admin/ . Até configurar o acesso, o
 
 O menu público permite escolher PT, FR e EN. A língua é mantida nas ligações através de `?lang=fr` ou `?lang=en`. Os textos fixos estão traduzidos em `frontend/dist/languages.mjs` e são servidos pelo Node; executar com `npm start` (a pré-visualização estática isolada mantém PT).
 
-O botão usa MyMemory sem conta nem chave: https://mymemory.translated.net/doc/usagelimits.php . Limite anónimo anunciado de 5 000 caracteres/dia por IP, partilhado por pedidos FR e EN. A VPS precisa de saída HTTPS para `api.mymemory.translated.net`. Apenas os textos a traduzir são enviados; não são enviados fotografias, credenciais ou o catálogo completo. Não introduzir dados privados nos textos públicos.
+A gravação usa MyMemory sem conta nem chave: https://mymemory.translated.net/doc/usagelimits.php . Limite anónimo anunciado de 5 000 caracteres/dia por IP, partilhado por pedidos FR e EN. A VPS precisa de saída HTTPS para `api.mymemory.translated.net`. Apenas os textos a traduzir são enviados; não são enviados fotografias, credenciais ou o catálogo completo. Não introduzir dados privados nos textos públicos.
 
-As traduções ficam guardadas com o item/categoria; os visitantes não fazem chamadas ao tradutor. Pedidos repetidos têm cache em memória. Falhas ou limite diário apresentam um toast e mantêm os campos. É possível preencher manualmente. Se mudar o original português, traduza novamente: versões antigas deixam de ser apresentadas e o site usa PT como alternativa. Não há garantia de disponibilidade ou qualidade do serviço externo.
+As traduções ficam guardadas com o item/categoria; os visitantes não fazem chamadas ao tradutor. Pedidos repetidos têm cache em memória. Falhas ou limite diário impedem a gravação, apresentam um toast e mantêm os campos. É possível preencher manualmente. Se mudar o original português, traduza novamente: versões antigas deixam de ser apresentadas e o site usa PT como alternativa. Não há garantia de disponibilidade ou qualidade do serviço externo.
 
 ## Imagens e dados
 
