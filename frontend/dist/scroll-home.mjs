@@ -115,6 +115,14 @@ function tick(now=performance.now()){
     if(i<4)panel.querySelector('.fh-copy').style.transform=reduced.matches?'none':`translateY(${(1-opacity[i])*12}px)`;
   });
   const solutionTitle=document.querySelector('.fh-service-heading');body.style.setProperty('--home-copy-height',solutionTitle.offsetHeight+'px');solutionTitle.style.opacity=ease(3.66,3.96,p);
+  if(!panels[4].hidden){
+    // Centre the sentence on the visible frames, not the wider wall container.
+    solutionTitle.style.transform='none';
+    const frames=categories.map(link=>link.getBoundingClientRect());
+    const frameCentre=(Math.min(...frames.map(r=>r.left))+Math.max(...frames.map(r=>r.right)))/2;
+    const titleBox=solutionTitle.getBoundingClientRect();
+    solutionTitle.style.transform=`translateX(${frameCentre-titleBox.left-titleBox.width/2}px)`;
+  }
   document.querySelector('.fh-services>.fh-action').style.opacity=ease(3.85,4,p);
   const bounds=frame.getBoundingClientRect(),originBounds=scene.getBoundingClientRect();
   const room={left:bounds.left-originBounds.left,top:bounds.top-originBounds.top,width:bounds.width,height:bounds.height};
