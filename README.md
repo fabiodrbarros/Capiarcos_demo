@@ -31,7 +31,7 @@ Depois, verificar https://capiarcos.fabiodrbarros.cloud/ incluindo catálogo, co
 
 ## Estrutura e limites
 
-O Docker serve exclusivamente `frontend/dist/` com Nginx, após validação numa etapa Node. Os antigos `src/`, `public/` e `legacy/` continuam no histórico e no checkout como referência para o futuro admin, mas não entram na imagem nem são servidos. Não executar os antigos comandos Next.
+O Docker serve exclusivamente `frontend/dist/` com Nginx, após validação numa etapa Node. O site antigo, os seus assets e as configurações Next foram removidos do checkout. Apenas o código do admin e as suas dependências locais foram guardados em `referencia/admin/`, como contexto para trabalho futuro. Esta referência não é uma aplicação executável e não entra na imagem Docker. O histórico Git anterior permanece disponível.
 
 A administração, API e Empresa antigas deixam de estar disponíveis. O link Empresa foi retirado por indicação do utilizador. O formulário continua a abrir o cliente de email por mailto; não envia email através do servidor. Sem backend/CMS, traduções ou credenciais adicionadas.
 

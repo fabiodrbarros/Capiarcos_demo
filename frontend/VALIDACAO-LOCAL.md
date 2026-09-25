@@ -62,3 +62,9 @@ A pedido do utilizador, quadros cerca de 9% maiores em desktop e ligeiramente ma
 - Browser no Docker (127.0.0.1:4174): Home carrega, menu sem Empresa, navegação para catálogo, filtro Cozinhas, ampliação, Escape e contactos/formulário confirmados. Matriz responsiva e animações já verificada na preparação local descrita acima; não repetida integralmente nesta passagem Docker.
 - deploy/update.sh validado com bash -n. A execução completa, recuperação automática e saúde na VPS não foram testadas: requerem a sessão SSH do utilizador. Nenhuma alteração remota à VPS nesta sessão.
 - Permanecem as limitações do catálogo fornecido (uma Cozinha Teste), mapa externo sem imagem e formulário mailto. Não foi enviado email nem simulado envio pelo servidor.
+
+## Limpeza do repositório — 25/09/2026
+
+Por indicação do utilizador, removidos o site antigo, public/, legacy/, componentes Next e configurações antigas. Apenas admin, API e três bibliotecas locais preservados em referencia/admin como contexto; cópias comparadas por SHA-256 antes de remover as localizações antigas. frontend/dist e Docker mantidos sem alterações.
+
+npm run build, docker compose config e docker build passaram. A imagem final mantém o mesmo ID d8c20791e01a5e03f37bad0d0a00e16fcf0706b453708f6576d9e389cee4f38d: nenhum conteúdo servido mudou nesta limpeza. Não repetida a verificação visual por não haver alterações no frontend. VPS não alterada nesta sessão.
