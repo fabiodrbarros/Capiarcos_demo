@@ -1,6 +1,22 @@
 const $=s=>document.querySelector(s);
 let state,csrf='',selected='all',editing=null,busy=false,view='active';
-const message=(text,error=false)=>{$('#message').textContent=text;$('#message').classList.toggle('error',error);};
+const toast=$('#toast');let toastTimer;
+function dismissToast(){clearTimeout(toastTimer);if(toast.matches(':popover-open'))toast.hidePopover();$('#toast-text').textContent='';}
+function message(text,error=false){
+ dismissToast();if(!text)return;
+ (document.querySelector('dialog[open]')||document.body).append(toast);
+ toast.classList.toggle('error',error);$('#toast-text').textContent=text;toast.showPopover();
+ toastTimer=setTimeout(dismissToast,4000);
+}
+$('#toast-close').onclick=dismissToast;
+document.querySelectorAll('dialog').forEach(dialog=>dialog.addEventListener('close',()=>{if(dialog.contains(toast)){const visible=toast.matches(':popover-open');if(visible)toast.hidePopover();document.body.append(toast);if(visible)toast.showPopover();}}));
+let validationPending=false;
+document.addEventListener('invalid',event=>{
+ event.preventDefault();if(validationPending)return;validationPending=true;
+ const field=event.target;
+ message(field.validity.valueMissing?'Preencha este campo.':field.validity.tooLong?'O texto ultrapassa o limite permitido.':'Verifique o valor deste campo.',true);
+ field.focus();setTimeout(()=>{validationPending=false;},0);
+},true);
 const element=(tag,props={},text)=>{const e=document.createElement(tag);Object.assign(e,props);if(text!==undefined)e.textContent=text;return e;};
 async function api(url,method='GET',data){
  const response=await fetch(url,{method,headers:{...(data?{'Content-Type':'application/json'}:{}),...(method!=='GET'?{'X-CSRF-Token':csrf}:{})},...(data?{body:JSON.stringify(data)}:{})});
@@ -8,7 +24,7 @@ async function api(url,method='GET',data){
  if(!response.ok){if(response.status===401){document.querySelectorAll('dialog[open]').forEach(d=>d.close());showLogin(true);}throw Error(result.error||'Não foi possível concluir.');}return result;
 }
 function showLogin(configured){document.body.classList.add('login-view');$('#login').hidden=false;$('#workspace').hidden=true;$('#logout').hidden=true;$('#login-form').hidden=!configured;$('#setup-note').hidden=configured;}
-function open(dialog){dialog.querySelector('.dialog-status')&&(dialog.querySelector('.dialog-status').textContent='');dialog.showModal();dialog.querySelector('input,select,button')?.focus();}
+function open(dialog){dialog.showModal();dialog.querySelector('input,select,button')?.focus();}
 function options(select,current){select.replaceChildren(...state.categories.slice().sort((a,b)=>a.order-b.order).map(c=>element('option',{value:c.id},c.name)));if(current)select.value=current;}
 function apply(data){state=data;render();}
 function render(){
@@ -29,9 +45,9 @@ function render(){
  $('#add-image').textContent=category?'Adicionar a '+category.name:'Adicionar item ao catálogo';
 }
 async function run(form,action){
- if(busy)return;busy=true;const status=form.closest('dialog')?.querySelector('.dialog-status');
- const buttons=[...form.querySelectorAll('button')];buttons.forEach(b=>b.disabled=true);if(status){status.textContent='A guardar…';status.classList.remove('error');}
- try{await action();}catch(e){if(status){status.textContent=e.message;status.classList.add('error');}message(e.message,true);}finally{busy=false;buttons.forEach(b=>b.disabled=false);}
+ if(busy)return;busy=true;
+ const buttons=[...form.querySelectorAll('button')];buttons.forEach(b=>b.disabled=true);message('A guardar…');
+ try{await action();}catch(e){message(e.message,true);}finally{busy=false;buttons.forEach(b=>b.disabled=false);}
 }
 $('#login-form').onsubmit=e=>{e.preventDefault();const f=e.currentTarget;run(f,async()=>{const result=await api('/api/login','POST',{user:f.elements.user.value,password:f.elements.password.value});csrf=result.csrf;f.reset();apply(await api('/api/admin/catalogue'));message('');});};
 $('#logout').onclick=async()=>{try{await api('/api/logout','POST',{});csrf='';state=null;showLogin(true);message('Sessão terminada.');}catch(e){message(e.message,true);}};
@@ -52,10 +68,10 @@ function categories(){
   const f=element('form',{className:'category-row'}),fields=element('div',{className:'fields'}),name=element('input',{value:c.name,required:true,maxLength:60});
   for(const [label,input] of [['Nome',name]]){const l=element('label',{},label);l.append(input);fields.append(l);}
   const actions=element('div',{className:'actions'}),remove=element('button',{type:'button'},'Eliminar'),save=element('button',{className:'primary'},'Guardar');for(const [button,label,shape] of [[save,'Guardar categoria','M5 3h12l4 4v14H3V3h2 M7 3v6h10V3 M7 21v-8h10v8'],[remove,'Eliminar categoria','M3 6h18 M9 6V3h6v3 M5 6l1 15h12l1-15 M10 10v7 M14 10v7']]){button.textContent='';button.classList.add('icon-button');button.setAttribute('aria-label',label+' '+c.name);button.title=label;const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('aria-hidden','true');const path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d',shape);svg.append(path);button.append(svg);}actions.append(save,remove);f.append(fields,actions);$('#category-list').append(f);
-  f.onsubmit=e=>{e.preventDefault();run(f,async()=>{apply(await api('/api/admin/categories/'+c.id,'PATCH',{revision:state.revision,name:name.value}));categories();message('Categoria guardada.');$('#category-dialog .dialog-status').textContent='Categoria guardada.';});};
-  remove.onclick=()=>{if(!confirm(`Eliminar a categoria «${c.name}»?`))return;run(f,async()=>{apply(await api('/api/admin/categories/'+c.id,'DELETE',{revision:state.revision}));categories();$('#category-dialog .dialog-status').textContent='Categoria eliminada.';});};
+  f.onsubmit=e=>{e.preventDefault();run(f,async()=>{apply(await api('/api/admin/categories/'+c.id,'PATCH',{revision:state.revision,name:name.value}));categories();message('Categoria guardada.');});};
+  remove.onclick=()=>{if(!confirm(`Eliminar a categoria «${c.name}»?`))return;run(f,async()=>{apply(await api('/api/admin/categories/'+c.id,'DELETE',{revision:state.revision}));categories();message('Categoria eliminada.');});};
  }
 }
 $('#manage-categories').onclick=()=>{categories();open($('#category-dialog'));};
-$('#category-add').onsubmit=e=>{e.preventDefault();const f=e.currentTarget;run(f,async()=>{apply(await api('/api/admin/categories','POST',{revision:state.revision,name:f.elements.name.value}));f.reset();categories();$('#category-dialog .dialog-status').textContent='Categoria criada.';});};
+$('#category-add').onsubmit=e=>{e.preventDefault();const f=e.currentTarget;run(f,async()=>{apply(await api('/api/admin/categories','POST',{revision:state.revision,name:f.elements.name.value}));f.reset();categories();message('Categoria criada.');});};
 (async()=>{try{const result=await api('/api/session');if(result.authenticated){csrf=result.csrf;apply(await api('/api/admin/catalogue'));}else showLogin(result.configured);message('');}catch(e){showLogin(true);message('Não foi possível ligar ao servidor. '+e.message,true);}})();

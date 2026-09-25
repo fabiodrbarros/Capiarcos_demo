@@ -89,3 +89,11 @@ body:not(.login-view) main{padding-bottom:7rem}
 #category-list .category-row .actions{flex-wrap:nowrap;gap:.375rem;margin:0;flex-shrink:0}
 #category-list .icon-button{width:40px;height:40px;min-height:40px;padding:.5rem}
 .icon-button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* Toasts use the top layer, including while an editor dialog is open. */
+#toast{position:fixed;inset:1.25rem 1.25rem auto auto;margin:0;width:max-content;max-width:min(28rem,calc(100vw - 2rem));padding:.85rem 1rem;border:1px solid #68272540;border-left:3px solid #682725;background:#fbf8f2;color:#682725;box-shadow:0 6px 24px #382a1e20;font-size:.875rem;line-height:1.5}
+#toast:popover-open{display:flex;align-items:center;gap:1rem}
+#toast-text{overflow-wrap:anywhere}
+#toast-close{flex-shrink:0;min-height:28px;width:28px;padding:0;border:0;font-size:1.25rem;background:transparent;color:inherit;text-transform:none}
+#toast.error{border-left-color:#a52222}
+@media(max-width:650px){#toast{inset:1rem 1rem auto;max-width:none;width:auto}}
