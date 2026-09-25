@@ -17,7 +17,6 @@ if(production&&new URL(origin).protocol!=='https:')throw Error('PUBLIC_ORIGIN de
 const mime={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.json':'application/json','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.svg':'image/svg+xml','.woff2':'font/woff2'};
 const fail=(status,message)=>{throw Object.assign(Error(message),{status});};
 const text=(value,max=120)=>{if(typeof value!=='string'||!value.trim()||value.trim().length>max)fail(400,`Preencha os campos obrigatórios (máximo ${max} caracteres).`);return value.trim();};
-const order=v=>{if(!Number.isInteger(v)||v<0||v>100000)fail(400,'Ordem inválida.');return v;};
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function json(res,status,value){res.writeHead(status,{'Content-Type':mime['.json']});res.end(JSON.stringify(value));}
 async function body(req,limit=16*1024){
@@ -86,7 +85,7 @@ const server=http.createServer(async(req,res)=>{
    }
    const category=/^\/api\/admin\/categories\/([\w-]+)$/.exec(p);
    if(category&&['PATCH','DELETE'].includes(method)){
-    const b=await body(req);return json(res,200,await mutate(b.revision,data=>{const c=data.categories.find(c=>c.id===category[1]);if(!c)fail(404,'Categoria inexistente.');if(method==='DELETE'){if(data.items.some(i=>i.category===c.id&&!i.deleted))fail(409,'Mova ou retire as imagens desta categoria primeiro.');data.categories=data.categories.filter(x=>x!==c);}else{const name=text(b.name,60);if(data.categories.some(x=>x.id!==c.id&&x.name.toLowerCase()===name.toLowerCase()))fail(409,'Nome de categoria repetido.');c.name=name;c.order=order(b.order);}}));
+    const b=await body(req);return json(res,200,await mutate(b.revision,data=>{const c=data.categories.find(c=>c.id===category[1]);if(!c)fail(404,'Categoria inexistente.');if(method==='DELETE'){if(data.items.some(i=>i.category===c.id&&!i.deleted))fail(409,'Mova ou retire as imagens desta categoria primeiro.');data.categories=data.categories.filter(x=>x!==c);}else{const name=text(b.name,60);if(data.categories.some(x=>x.id!==c.id&&x.name.toLowerCase()===name.toLowerCase()))fail(409,'Nome de categoria repetido.');c.name=name;}}));
    }
    const item=/^\/api\/admin\/items\/([\w-]+)$/.exec(p);
    if(item&&method==='PATCH'){

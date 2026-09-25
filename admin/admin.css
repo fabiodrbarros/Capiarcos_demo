@@ -82,3 +82,10 @@ body:not(.login-view) main{padding-bottom:7rem}
 @media(max-width:700px){.session-actions{position:static;margin:0 1.25rem 1rem;order:2}body:not(.login-view){display:flex;flex-direction:column}body:not(.login-view) main{width:calc(100% - 2.5rem);padding-bottom:2rem}}
 
 .session-actions{border:1px solid #68272540;padding:.5rem .75rem}
+
+/* Category names and actions share one compact row. */
+#category-list .category-row{display:flex;align-items:flex-end;gap:.5rem}
+#category-list .category-row .fields{display:block;flex:1;min-width:0}
+#category-list .category-row .actions{flex-wrap:nowrap;gap:.375rem;margin:0;flex-shrink:0}
+#category-list .icon-button{width:40px;height:40px;min-height:40px;padding:.5rem}
+.icon-button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}

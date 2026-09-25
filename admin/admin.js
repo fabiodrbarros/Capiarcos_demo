@@ -48,10 +48,10 @@ $('#remove-item').onclick=()=>{if(!confirm('Retirar este item do catálogo? Pode
 function categories(){
  $('#category-list').replaceChildren();
  for(const c of state.categories.slice().sort((a,b)=>a.order-b.order)){
-  const f=element('form',{className:'category-row'}),fields=element('div',{className:'fields'}),name=element('input',{value:c.name,required:true,maxLength:60}),number=element('input',{type:'number',value:c.order,min:'0',max:'100000',required:true});
-  for(const [label,input] of [['Nome',name],['Ordem',number]]){const l=element('label',{},label);l.append(input);fields.append(l);}
-  const actions=element('div',{className:'actions'}),remove=element('button',{type:'button'},'Eliminar'),save=element('button',{className:'primary'},'Guardar');actions.append(remove,save);f.append(fields,actions);$('#category-list').append(f);
-  f.onsubmit=e=>{e.preventDefault();run(f,async()=>{apply(await api('/api/admin/categories/'+c.id,'PATCH',{revision:state.revision,name:name.value,order:Number(number.value)}));categories();message('Categoria guardada.');$('#category-dialog .dialog-status').textContent='Categoria guardada.';});};
+  const f=element('form',{className:'category-row'}),fields=element('div',{className:'fields'}),name=element('input',{value:c.name,required:true,maxLength:60});
+  for(const [label,input] of [['Nome',name]]){const l=element('label',{},label);l.append(input);fields.append(l);}
+  const actions=element('div',{className:'actions'}),remove=element('button',{type:'button'},'Eliminar'),save=element('button',{className:'primary'},'Guardar');for(const [button,label,shape] of [[save,'Guardar categoria','M5 3h12l4 4v14H3V3h2 M7 3v6h10V3 M7 21v-8h10v8'],[remove,'Eliminar categoria','M3 6h18 M9 6V3h6v3 M5 6l1 15h12l1-15 M10 10v7 M14 10v7']]){button.textContent='';button.classList.add('icon-button');button.setAttribute('aria-label',label+' '+c.name);button.title=label;const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('aria-hidden','true');const path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d',shape);svg.append(path);button.append(svg);}actions.append(save,remove);f.append(fields,actions);$('#category-list').append(f);
+  f.onsubmit=e=>{e.preventDefault();run(f,async()=>{apply(await api('/api/admin/categories/'+c.id,'PATCH',{revision:state.revision,name:name.value}));categories();message('Categoria guardada.');$('#category-dialog .dialog-status').textContent='Categoria guardada.';});};
   remove.onclick=()=>{if(!confirm(`Eliminar a categoria «${c.name}»?`))return;run(f,async()=>{apply(await api('/api/admin/categories/'+c.id,'DELETE',{revision:state.revision}));categories();$('#category-dialog .dialog-status').textContent='Categoria eliminada.';});};
  }
 }
