@@ -7,31 +7,40 @@ const fullImage = dialog.querySelector('.gallery-full-image');
 const closeButton = dialog.querySelector('.gallery-close');
 let opener;
 
-// One row per page preserves the original room and keeps frames off its floor.
+// Two desktop rows preserve the original room and keep frames off its floor.
 let page=0,selectedCategory='all';
 const pager=document.createElement('nav');
 pager.className='catalogue-pagination';pager.setAttribute('aria-label','Páginas do catálogo');
 const previous=document.createElement('button'),next=document.createElement('button'),pageLabel=document.createElement('span');
-previous.type=next.type='button';previous.textContent='Anterior';next.textContent='Seguinte';
+previous.type=next.type='button';previous.textContent='‹';next.textContent='›';
+previous.setAttribute('aria-label','Página anterior');next.setAttribute('aria-label','Página seguinte');
 pager.append(previous,pageLabel,next);document.querySelector('#catalogue-grid').after(pager);
-function renderPage(){
+const grid=document.querySelector('#catalogue-grid');
+let renderVersion=0;
+async function renderPage(animate=false){
+ const version=++renderVersion;
+ grid.getAnimations().forEach(animation=>animation.cancel());
+ const motion=animate&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
+ if(motion){await grid.animate([{opacity:1},{opacity:0}],{duration:160,fill:'forwards',easing:'ease-out'}).finished.catch(()=>{});if(version!==renderVersion)return;}
  const matching=items.filter(item=>selectedCategory==='all'||item.dataset.category===selectedCategory);
- const size=innerWidth<=600?2:innerWidth<=1050?3:4;
+ const size=innerWidth<=600?2:innerWidth<=1050?6:10;
  const pages=Math.max(1,Math.ceil(matching.length/size));page=Math.min(page,pages-1);
  items.forEach(item=>item.hidden=true);
  matching.slice(page*size,(page+1)*size).forEach(item=>item.hidden=false);
- previous.disabled=page===0;next.disabled=page===pages-1;pager.hidden=pages===1;
+ previous.disabled=page===0;next.disabled=page===pages-1;pager.hidden=matching.length===0;
  pageLabel.textContent=`${page+1} / ${pages}`;
  empty.hidden=matching.length>0;
  status.textContent=`${matching.length} imagens no catálogo. Página ${page+1} de ${pages}.`;
+ grid.getAnimations().forEach(animation=>animation.cancel());
+ if(motion)grid.animate([{opacity:0,transform:'translateY(5px)'},{opacity:1,transform:'translateY(0)'}],{duration:300,easing:'ease-out'});
 }
-previous.onclick=()=>{page--;renderPage();};next.onclick=()=>{page++;renderPage();};
-window.addEventListener('resize',renderPage);
+previous.onclick=()=>{page=Math.max(0,page-1);renderPage(true);};next.onclick=()=>{page++;renderPage(true);};
+window.addEventListener('resize',()=>renderPage());
 
 function filterCategory(category, updateHistory = false) {
   const selected = filters.some(button => button.dataset.category === category) ? category : 'all';
   filters.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.category === selected)));
-  selectedCategory=selected;page=0;renderPage();
+  selectedCategory=selected;page=0;renderPage(updateHistory);
   if (updateHistory) {
     const url = new URL(location.href);
     if (selected === 'all') url.searchParams.delete('categoria');

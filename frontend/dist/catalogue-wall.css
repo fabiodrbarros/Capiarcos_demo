@@ -79,3 +79,18 @@
 .catalogue-pagination button{padding:.5rem .75rem;border:1px solid #682725;background:transparent;color:inherit;font:inherit;cursor:pointer}
 .catalogue-pagination button:hover:not(:disabled){background:#682725;color:#fff}
 .catalogue-pagination button:disabled{opacity:.35;cursor:default}
+
+/* Two rows stay within the original wall, clear of the red slats and floor. */
+@media(min-width:601px){
+ .room-catalogo .room-main{margin-left:18%;margin-right:20%;--catalogue-frame-width:clamp(64px,min(10vw,calc((72dvh - 14rem)/2.8)),150px)}
+ .room-catalogo .catalogue-layout{gap:1.5rem}
+ .room-catalogo .catalogue-grid,.room-catalogo .catalogue-grid:has(>.catalogue-item:only-child){grid-template-columns:repeat(5,minmax(0,var(--catalogue-frame-width)));gap:1.25rem .75rem;min-height:calc(var(--catalogue-frame-width)*2.8 + 1.25rem)}
+ .room-catalogo .catalogue-mat{padding:clamp(6px,.7vw,10px)}
+ .room-catalogo .catalogue-frame{padding:5px}
+}
+@media(min-width:601px) and (max-width:1050px){.room-catalogo .catalogue-grid,.room-catalogo .catalogue-grid:has(>.catalogue-item:only-child){grid-template-columns:repeat(3,minmax(0,var(--catalogue-frame-width)))}}
+.catalogue-pagination{justify-content:center;gap:.65rem;margin-top:.75rem;font-size:.6875rem;letter-spacing:.08em}
+.catalogue-pagination button{border:0;padding:.25rem .5rem;min-width:32px;min-height:32px;font-size:1.25rem;transition:opacity .2s,color .2s}
+.catalogue-pagination button:hover:not(:disabled){background:transparent;color:#a64b43}
+.catalogue-pagination button:focus-visible{outline:1px solid #682725;outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.catalogue-pagination button{transition:none}}
