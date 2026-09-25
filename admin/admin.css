@@ -8,8 +8,6 @@
 button,.primary{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:44px;padding:.65rem 1.1rem;border:1px solid var(--red);border-radius:0;background:transparent;color:var(--red);font-size:.75rem;font-weight:500;text-transform:uppercase;letter-spacing:.025em;box-shadow:none;transition:background .2s,color .2s}
 button:not(:disabled):is(:hover,:focus-visible),.primary:not(:disabled):is(:hover,:focus-visible){background:var(--red);color:#fff}
 button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline-color:var(--red)}
-.primary::after{content:"";width:0;height:1rem;opacity:0;background:currentColor;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cpath d='M1 8h21M15 1l7 7-7 7' fill='none' stroke='black' stroke-width='1.5'/%3E%3C/svg%3E") center/contain no-repeat;transition:width .2s,opacity .2s}
-.primary:not(:disabled):is(:hover,:focus-visible)::after{width:1.25rem;opacity:1}
 input,textarea,select,dialog{border-radius:0}input[type=checkbox]{accent-color:var(--red)}
 input[type=file]::file-selector-button{font:inherit;font-size:.75rem;text-transform:uppercase;border:1px solid var(--red);background:transparent;color:var(--red);padding:.5rem .75rem;margin-right:.75rem;cursor:pointer}
 input[type=file]::file-selector-button:hover{background:var(--red);color:#fff}
@@ -62,3 +60,6 @@ body:not(.login-view) .top nav{background:#fbf8f2;padding:.5rem .75rem;border:1p
 @media(max-width:1000px){body:not(.login-view) main,body:not(.login-view) #message{margin-right:8%}}
 @media(max-width:700px){body:not(.login-view) main,body:not(.login-view) #message{margin-right:1.25rem}.top nav{gap:.5rem}}
 @media(max-width:420px){.items{grid-template-columns:1fr}}
+
+/* Keep the room visible while ensuring readable management controls. */
+.admin-room:after{content:"";position:absolute;inset:0;background:rgba(255,255,255,.78)}
