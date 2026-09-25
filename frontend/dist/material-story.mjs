@@ -3,6 +3,13 @@ export const clamp=v=>Math.max(0,Math.min(1,v));
 export const mix=(a,b,t)=>a+(b-a)*t;
 export const ease=(a,b,v)=>{const t=clamp((v-a)/(b-a));return t*t*(3-2*t);};
 export function cabinetLayout(room,vw,vh){
+ if(vw<=700){
+  // Fit the complete cabinet independently of the portrait backdrop crop.
+  const width=vw*2,height=width*941/1672;
+  const floor=room.top+room.height*.772;
+  room={left:vw*.42-width*.59,top:floor-height*.772,width,height};
+ }
+
  return {x:room.left+room.width*.404,y:room.top+room.height*.542,w:room.width*.372,h:room.height*.230,mobile:vw<=700,room};
 }
 // Traced in the finished photograph's native 1672 × 941 coordinates.
@@ -39,15 +46,13 @@ export function materialSources(box){return sampleRects(box,3);}
 function ready(img){return img?.complete&&img.naturalWidth>0;}
 function roomPhoto(ctx,img,r,mobile){
  if(!mobile){ctx.drawImage(img,r.left,r.top,r.width,r.height);return;}
- // Feather only the room's upper/lower boundary into the portrait backdrop.
- const alpha=ctx.globalAlpha,n=24,edge=.08;
- ctx.drawImage(img,0,img.naturalHeight*edge,img.naturalWidth,img.naturalHeight*(1-2*edge),r.left,r.top+r.height*edge,r.width,r.height*(1-2*edge));
- for(let i=0;i<n;i++){
-  const y=edge*i/n,sh=edge/n;
-  ctx.globalAlpha=alpha*(i+.5)/n;
-  for(const sy of [y,1-y-sh])ctx.drawImage(img,0,sy*img.naturalHeight,img.naturalWidth,sh*img.naturalHeight,r.left,r.top+sy*r.height,r.width,sh*r.height+.1);
- }
- ctx.globalAlpha=alpha;
+ // Only composite the cabinet: the full-height backdrop remains untouched.
+ ctx.save();ctx.beginPath();
+ [[675,519],[686,511],[1276,511],[1297,520],[1297,725],[675,725]].forEach(([x,y],i)=>{
+  const px=r.left+x/1672*r.width,py=r.top+y/941*r.height;
+  i?ctx.lineTo(px,py):ctx.moveTo(px,py);
+ });
+ ctx.closePath();ctx.clip();ctx.drawImage(img,r.left,r.top,r.width,r.height);ctx.restore();
 }
 export function drawCabinet(ctx,images,box,p){
  if(p<.6||p>=3.72)return;
