@@ -1,4 +1,5 @@
 import http from 'node:http';
+import {socialMetadata} from './social.mjs';
 import {readFile,stat,writeFile} from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -43,7 +44,7 @@ async function servePage(res,file,method,url,status=200){
   const footer=shared.match(/<footer class="brand-footer"[\s\S]*?<\/footer>/)[0];
   template=template.replace('<!-- company-shared-header -->',()=>header+menu).replace('<!-- company-shared-footer -->',()=>footer);
  }
- const lang=language(url.searchParams.get('lang'));const html=renderLanguage(template,lang,url);
+ const lang=language(url.searchParams.get('lang'));const html=status===200?socialMetadata(renderLanguage(template,lang,url),lang,url,origin):renderLanguage(template,lang,url);
  res.writeHead(status,{'Content-Type':mime['.html'],'Content-Language':lang});res.end(method==='HEAD'?undefined:html);
 }
 async function saveImage(imageData){
@@ -126,7 +127,7 @@ const server=http.createServer(async(req,res)=>{
   if(p==='/catalogo.html'||p==='/contactos.html'||p==='/admin'||p==='/ca-guest-admin'||p==='/ca-guest-admin/'){res.writeHead(302,{Location:p.includes('admin')?'/admin/':p.replace('.html','/')+url.search});return res.end();}
   if(p==='/catalogo'||p==='/contactos'||p==='/empresa'){res.writeHead(301,{Location:p+'/'+url.search});return res.end();}
   if(p==='/catalogo/'||p==='/catalogo/index.html'){
-   const html=catalogueMarkup(renderLanguage(await readFile(path.join(root,'catalogo/index.html'),'utf8'),lang,url),lang);res.writeHead(200,{'Content-Type':mime['.html'],'Content-Language':lang});return res.end(method==='HEAD'?undefined:html);
+   const html=catalogueMarkup(socialMetadata(renderLanguage(await readFile(path.join(root,'catalogo/index.html'),'utf8'),lang,url),lang,url,origin),lang);res.writeHead(200,{'Content-Type':mime['.html'],'Content-Language':lang});return res.end(method==='HEAD'?undefined:html);
   }
   if(p.startsWith('/media/')){
    const item=snapshot().items.find(i=>i.url===p);

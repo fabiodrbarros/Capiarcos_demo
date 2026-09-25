@@ -33,6 +33,15 @@ test('admin: authentication, drafts, publication, validation, conflicts and pers
    assert.ok(html.includes('/catalogo/?lang='+lang));assert.ok(html.includes('/empresa/?lang='+lang));
    assert.doesNotMatch(html,/company-shared-|Qualidade além-fronteiras|Conhecer a Capiarcos|company-controls/);
   }
+  for(const page of ['/','/empresa/','/catalogo/','/contactos/']){
+   for(const [lang,description] of [['pt','Fabricação e montagem de carpintaria desde 1998'],['fr','Fabrication et pose de menuiserie depuis 1998'],['en','Manufacture and installation of joinery since 1998']]){
+    const html=await (await call(page+'?lang='+lang)).text();
+    assert.ok(html.includes(`<meta property="og:description" content="${description}">`));
+    assert.ok(html.includes(`<meta property="og:image" content="${origin}/assets/optimized/logo-original.png">`));
+    assert.ok(html.includes(`<meta property="og:url" content="${origin}${page}?lang=${lang}">`));
+    assert.equal((html.match(/property="og:title"/g)||[]).length,1);
+   }
+  }
   const companyRedirect=await fetch(origin+'/empresa?lang=en',{redirect:'manual'});assert.equal(companyRedirect.headers.get('location'),'/empresa/?lang=en');
   const head404=await call('/pagina-inexistente','HEAD',undefined,{Accept:'text/html'});assert.equal(head404.status,404);assert.equal(await head404.text(),'');
   assert.equal((await call('/404.html')).status,404);

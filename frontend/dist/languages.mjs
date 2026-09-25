@@ -1,5 +1,6 @@
 // Approved Portuguese copy and its French/English equivalents. Proper names stay unchanged.
 const rows = [
+['Fabricação e montagem de carpintaria desde 1998','Fabrication et pose de menuiserie depuis 1998','Manufacture and installation of joinery since 1998'],
 ['Home','Accueil','Home'],['Catálogo','Catalogue','Catalogue'],['Contactos','Contact','Contact'],
 ['Onde a madeira','Là où le bois','Where wood'],['ganha','prend','takes'],['forma.','forme.','shape.'],
 ['Onde a madeira ganha forma','Là où le bois prend forme','Where wood takes shape'],
