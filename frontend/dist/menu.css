@@ -33,3 +33,7 @@ dialog#menu{--ink:#682725;--muted:#865f5c;--rule:#68272526;background:#fff;color
  #menu .menu-copyright{padding-top:1.5rem}
  #menu .menu-inner nav a{padding:.75rem 0}
 }
+
+/* Only the final word of the menu slogan carries the brand red. */
+#menu .menu-slogan{color:#000}
+#menu .menu-slogan span{color:#682725}
