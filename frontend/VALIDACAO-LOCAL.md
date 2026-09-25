@@ -92,3 +92,8 @@ Verificado no browser: 390×844, 320×568 e 844×390; os 12 quadros completos, g
 ## Legendas dentro da moldura — 25/09/2026
 
 A margem inferior e lateral das legendas acompanha agora a espessura real do aro (mínimo 4 px), com mais 3 px de espaço branco. Reservada uma altura mínima de 18 px para legendas no desenho canvas, evitando sobreposição com o PNG em quadros pequenos. Verificadas visualmente as 12 legendas em 320×568 e 844×390 e medidas as margens no DOM: todas dentro da moldura. Build de fontes validado.
+
+## Centro das legendas — 25/09/2026
+
+Cada legenda está ancorada a 50% da largura do quadro, numa faixa inferior de altura uniforme, com centragem horizontal e vertical. A faixa depende apenas da moldura, não das proporções do PNG. O desenho reserva o espaço dessa faixa e uma folga adicional de 4 px. Build de fontes validado.
+Verificação no browser a 390×844: as 12 legendas têm desvio horizontal de 0 px em relação ao centro da respetiva moldura; composição confirmada visualmente.

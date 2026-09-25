@@ -180,7 +180,15 @@ body.story-ready{height:100dvh;min-height:0;overflow:hidden}
 .story-ready .fh-category-link .solution-label,
 .story-ready .fh-category:nth-child(even) .solution-label{
  bottom:calc(var(--frame-inset) + 3px);
- inset-inline:calc(var(--frame-inset) + 3px);
+ inset-inline:auto;
+ left:50%;
+ width:calc(100% - (var(--frame-inset) + 3px)*2);
+ height:max(18px,calc(var(--tile-size)*.1394));
+ transform:translateX(-50%);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
  overflow-wrap:normal;
  word-break:normal;
 }
