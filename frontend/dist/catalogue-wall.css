@@ -1,0 +1,55 @@
+/* The catalogue photographs hang within red wood frames on the existing room wall. */
+.room-catalogo .room-backdrop img{object-position:center top}
+.room-catalogo .room-main{margin-left:12%;margin-right:9%;padding-top:1.25rem;max-width:none}
+.room-catalogo .room-title{margin-bottom:1.75rem}
+.room-catalogo .catalogue-layout{grid-template-columns:8rem minmax(0,1fr);gap:clamp(1.5rem,3vw,3rem)}
+.room-catalogo .catalogue-filters{padding-top:.25rem}
+.room-catalogo .catalogue-grid{gap:3rem 2.5rem;align-items:start}
+.room-catalogo .catalogue-grid:has(>.catalogue-item:only-child){grid-template-columns:minmax(0,min(27rem,43dvh))}
+.room-catalogo .catalogue-image-link{cursor:zoom-in;outline-offset:.75rem}
+.catalogue-frame{display:block;position:relative;padding:8px;background:#913f32 url('/assets/optimized/oak-color.webp') center/cover;background-blend-mode:multiply;box-shadow:inset 1px 1px 0 #ffffff80,inset -1px -1px 0 #431a1688,2px 3px 4px #382a1e30,9px 14px 24px #382a1e25;transition:box-shadow .35s ease}
+.catalogue-frame:after{content:"";position:absolute;inset:0;pointer-events:none;border:1px solid #46191588;box-shadow:inset 0 0 0 1px #ffffff38}
+.catalogue-mat{display:block;padding:clamp(1rem,1.7vw,1.75rem);background:#f8f6f0;box-shadow:inset 0 1px 3px #554a3640}
+.room-catalogo .catalogue-image{aspect-ratio:5/3;background:#ede9e1;box-shadow:0 0 0 1px #a89d8950,0 -1px 2px #51453025}
+.room-catalogo .catalogue-image img{object-fit:contain;transition:none}
+.room-catalogo .catalogue-image-link:hover .catalogue-image img{transform:none}
+.room-catalogo .catalogue-image-link:hover .catalogue-frame{box-shadow:inset 1px 1px 0 #ffffff80,inset -1px -1px 0 #431a1688,2px 3px 5px #382a1e35,10px 15px 26px #382a1e2b}
+.room-catalogo .catalogue-caption{align-items:center;padding:1rem .25rem 0;gap:1.25rem}
+.room-catalogo .catalogue-category{font-size:.75rem;letter-spacing:.04em;color:var(--muted);margin-bottom:.2rem}
+.room-catalogo .catalogue-name{font-size:1rem;line-height:1.35}
+.room-catalogo .catalogue-caption svg{width:1.125rem;height:1.125rem;flex-basis:1.125rem;opacity:.65}
+.room-catalogo .room-footer{padding-left:12%;padding-right:9%}
+@media(max-width:1000px){
+ .room-catalogo .room-main{margin-left:6%;margin-right:8%;padding-top:1.5rem}
+ .room-catalogo .catalogue-layout{grid-template-columns:7rem minmax(0,1fr);gap:2rem}
+ .room-catalogo .room-footer{padding-left:6%;padding-right:8%}
+}
+@media(max-height:720px) and (min-width:701px){
+ .room-catalogo .room-title{margin-bottom:1.25rem}
+ .room-catalogo .room-title h1{font-size:2rem}
+ .room-catalogo .room-crumbs{margin-bottom:.5rem}
+ .room-catalogo .catalogue-mat{padding:.875rem}
+}
+@media(max-width:700px){
+ .room-catalogo .room-backdrop:after{background:#f4f1eb9c}
+ .room-catalogo .room-main{margin:0 1.5rem;padding-top:1.25rem}
+ .room-catalogo .room-title{margin-bottom:1.25rem}
+ .room-catalogo .catalogue-layout{grid-template-columns:1fr;gap:1.75rem}
+ .room-catalogo .catalogue-filters{flex-direction:row;flex-wrap:wrap;gap:1.5rem;padding:0}
+ .room-catalogo .catalogue-filters button{min-width:6rem;padding:.5rem 0}
+ .room-catalogo .catalogue-grid,.room-catalogo .catalogue-grid:has(>.catalogue-item:only-child){grid-template-columns:minmax(0,1fr);max-width:25rem;margin:0 auto;gap:2.5rem}
+ .catalogue-frame{padding:7px}
+ .catalogue-mat{padding:1.125rem}
+ .room-catalogo .catalogue-caption{padding-top:1rem}
+ .room-catalogo .room-footer{padding:1.25rem 1.5rem;border:0}
+}
+@media(prefers-reduced-motion:reduce){.room-catalogo .catalogue-frame{transition:none}}
+
+/* Use the wider wall for more, smaller frames. */
+.room-catalogo .catalogue-grid,.room-catalogo .catalogue-grid:has(>.catalogue-item:only-child){grid-template-columns:repeat(auto-fill,minmax(min(100%,13rem),1fr));gap:2rem 1.75rem}
+.room-catalogo .catalogue-item{width:100%;max-width:17rem}
+.room-catalogo .catalogue-mat{padding:.875rem}
+@media(max-width:700px){
+ .room-catalogo .catalogue-grid,.room-catalogo .catalogue-grid:has(>.catalogue-item:only-child){max-width:none;margin:0;gap:1.75rem 1rem}
+ .room-catalogo .catalogue-item{max-width:17rem}
+}

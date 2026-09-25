@@ -1,134 +1,38 @@
-# Capiarcos — site + plataforma de gestão
+# Capiarcos — frontend atual
 
-Site institucional da Capiarcos (Home, Empresa, Catálogo, Contactos) com
-**plataforma de admin** integrada para gerir as imagens do catálogo via
-drag-and-drop. As imagens carregadas aparecem automaticamente na página
-pública `/catalogo.html`.
+A versão aprovada encontra-se em `frontend/dist/`: esta pasta contém os próprios fontes. Não apagar como se fosse um build descartável. Os assets originais e as cópias otimizadas são preservados.
 
----
+## Executar e verificar
 
-## Como correr (local)
+Com Node.js 18 ou superior, sem instalação de dependências:
 
-Requer **Node.js 18 ou superior**.
+```sh
+npm start
+npm run build
+```
+
+Abrir http://127.0.0.1:4173. O build valida os fontes sem reconstruir o site.
+
+## Atualizar a VPS existente
+
+Na sessão SSH `fabiodrb@100.115.15.20`:
 
 ```bash
-# 1) Instalar dependências
-npm install
-
-# 2) Definir password de admin (opcional — default: capiarcos-admin)
-export ADMIN_PASSWORD="qualquer-coisa-segura"
-
-# 3) Arrancar
-npm start
+cd ~/Capiarcos_demo
+git fetch origin
+bash <(git show origin/main:deploy/update.sh)
 ```
 
-Depois:
+O script exige main sem alterações em ficheiros controlados, guarda o commit, configuração Docker, eventual .env, imagem anterior e cópia do catálogo antigo em `~/capiarcos-backups/`. Constrói antes de substituir apenas o serviço capiarcos-demo, mantendo porta 8080:3000 e rede web. Não modifica Cloudflare nem os outros serviços. Não elimina volumes.
 
-| Endereço                                | Para quê               |
-| --------------------------------------- | ---------------------- |
-| `http://localhost:3000/`                | Site público           |
-| `http://localhost:3000/catalogo.html`   | Catálogo (dinâmico)    |
-| `http://localhost:3000/admin/`          | Plataforma de gestão   |
+Se a ativação ou os testes HTTP falharem, tenta recuperar automaticamente o serviço anterior. Para recuperação posterior, executar `bash CAMINHO-DA-COPIA/rollback.sh`, usando o caminho apresentado pelo script. A recuperação repõe o serviço e a imagem anteriores; não altera o checkout Git. Guardar a cópia e a imagem Docker até aceitar a publicação. A cópia do catálogo não é uma snapshot transacional: evitar alterações no admin durante a atualização.
 
-> Para desenvolvimento com reload automático: `npm run dev`.
+Depois, verificar https://capiarcos.fabiodrbarros.cloud/ incluindo catálogo, contactos, menu, imagens e footer. A execução na VPS e esta verificação pública ficam a cargo do utilizador; não foram realizadas nesta sessão. Se existir cache configurada manualmente no Cloudflare, poderá ser necessário purgar essa cache após publicar.
 
----
+## Estrutura e limites
 
-## Plataforma de admin
+O Docker serve exclusivamente `frontend/dist/` com Nginx, após validação numa etapa Node. Os antigos `src/`, `public/` e `legacy/` continuam no histórico e no checkout como referência para o futuro admin, mas não entram na imagem nem são servidos. Não executar os antigos comandos Next.
 
-1. Abrir `http://localhost:3000/admin/` e fazer login com a password
-   definida em `ADMIN_PASSWORD`.
-2. Selecionar uma categoria na barra lateral
-   (Cozinhas, Roupeiros, Salas, Quartos, Casas de Banho, Pavimentos,
-   Portas, Escadas).
-3. **Arrastar imagens** para a zona de upload — ou clicar para escolher.
-   Várias imagens de uma vez são suportadas.
-4. As imagens aparecem de imediato na grelha; clicar no `×` apaga-as.
-5. Recarregar `/catalogo.html` para ver o resultado no site.
+A administração, API e Empresa antigas deixam de estar disponíveis. O link Empresa foi retirado por indicação do utilizador. O formulário continua a abrir o cliente de email por mailto; não envia email através do servidor. Sem backend/CMS, traduções ou credenciais adicionadas.
 
-A sessão dura 7 dias (cookie `cap_admin`).
-
----
-
-## Estrutura
-
-```
-Cpi/
-├── server.js                       # Express server (site + admin + API)
-├── package.json
-├── README.md
-│
-├── index.html                      # Home (pública, estática)
-├── empresa.html                    # Sobre a empresa
-├── catalogo.html                   # Catálogo (lê /api/manifest)
-├── contactos.html                  # Contactos + mapa
-│
-├── admin/
-│   └── index.html                  # UI da plataforma
-│
-└── assets/
-    ├── css/
-    │   ├── style.css               # Estilos do site público
-    │   └── admin.css               # Estilos da plataforma
-    ├── js/
-    │   ├── main.js                 # i18n + nav + animações do site
-    │   └── admin.js                # Lógica do admin (upload/delete)
-    └── img/
-        ├── logo.png                # Logotipo
-        ├── empresa.png             # Foto institucional (página Empresa)
-        ├── areas/                  # Thumbs das áreas da home
-        └── catalogo/               # ← Onde a plataforma guarda
-            ├── cozinhas/
-            ├── roupeiros/
-            ├── salas/
-            ├── quartos/
-            ├── casas-de-banho/
-            ├── pavimentos/
-            ├── portas/
-            └── escadas/
-```
-
----
-
-## API (referência rápida)
-
-| Método   | Rota                                          | Auth | O que faz                                  |
-| -------- | --------------------------------------------- | ---- | ------------------------------------------ |
-| `GET`    | `/api/manifest`                               | —    | Devolve categorias + imagens em cada uma  |
-| `POST`   | `/api/login`                                  | —    | `{ password }` → sessão                    |
-| `POST`   | `/api/logout`                                 | —    | Termina sessão                              |
-| `GET`    | `/api/me`                                     | —    | `{ authed: true|false }`                   |
-| `POST`   | `/api/upload?categoria=<slug>`                | ✓    | Multipart `files[]` → guarda na pasta     |
-| `DELETE` | `/api/image?categoria=<slug>&file=<nome>`     | ✓    | Apaga o ficheiro indicado                  |
-
-Categorias válidas (`slug`): `cozinhas`, `roupeiros`, `salas`, `quartos`,
-`casas-de-banho`, `pavimentos`, `portas`, `escadas`.
-
-Restrições de upload: só imagens, máx. **25 MB** por ficheiro, **30 ficheiros**
-por pedido.
-
----
-
-## Variáveis de ambiente
-
-| Variável         | Default              | Descrição                                |
-| ---------------- | -------------------- | ----------------------------------------- |
-| `PORT`           | `3000`               | Porta HTTP                                |
-| `ADMIN_PASSWORD` | `capiarcos-admin`    | Password do dashboard                     |
-
-Para produção, **mudar sempre** o `ADMIN_PASSWORD`.
-
----
-
-## Deploy (resumo)
-
-Qualquer host que corra Node 18+ serve. Exemplos rápidos:
-
-- **VPS / DigitalOcean** — `pm2 start server.js` (ou `systemd`),
-  proxy reverso por Nginx, HTTPS via Let's Encrypt.
-- **Railway / Render / Fly** — push do repositório, definir
-  `ADMIN_PASSWORD` nas env vars, expor porta 3000.
-
-> **Importante**: a pasta `assets/img/catalogo/` precisa de ser
-> **persistente** (não efémera). Em hosts que rebuildam o sistema de
-> ficheiros a cada deploy, montar volume / object storage.
+Ver `frontend/ESTADO-ATUAL.md`, `frontend/VALIDACAO-LOCAL.md` e `frontend/INTEGRACOES.md` para composição, testes e integrações pendentes.

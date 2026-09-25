@@ -10,14 +10,8 @@ services:
     restart: unless-stopped
     ports:
       - "8080:3000"
-    environment:
-      NODE_ENV: production
-      # muda estas credenciais em produção (ou usa um ficheiro .env):
-      ADMIN_USER: ${ADMIN_USER:-capiarcos}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-capiarcos-admin}
-    volumes:
-      # persiste as imagens carregadas no admin + titles.json entre rebuilds
-      - capiarcos-catalogo:/app/public/assets/img/catalogo
+    # Frontend estático: sem backend/admin e sem montagem dos uploads antigos.
+    # O volume permanece no Docker e não deve ser removido (admin futuro).
     networks:
       # rede partilhada com o cloudflared (Cloudflare Tunnel)
       - web

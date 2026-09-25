@@ -1,0 +1,130 @@
+[
+  {
+    "original": "solution-drawings/00.png",
+    "delivery": "optimized/solution-drawings/00.png",
+    "originalBytes": 1348690,
+    "deliveryBytes": 457496,
+    "width": 1024,
+    "height": 576
+  },
+  {
+    "original": "solution-drawings/01.png",
+    "delivery": "optimized/solution-drawings/01.png",
+    "originalBytes": 1775243,
+    "deliveryBytes": 784293,
+    "width": 1024,
+    "height": 768
+  },
+  {
+    "original": "solution-drawings/02.png",
+    "delivery": "optimized/solution-drawings/02.png",
+    "originalBytes": 1648586,
+    "deliveryBytes": 802794,
+    "width": 1024,
+    "height": 768
+  },
+  {
+    "original": "solution-drawings/03.png",
+    "delivery": "optimized/solution-drawings/03.png",
+    "originalBytes": 1701287,
+    "deliveryBytes": 862434,
+    "width": 1024,
+    "height": 768
+  },
+  {
+    "original": "solution-drawings/04.png",
+    "delivery": "optimized/solution-drawings/04.png",
+    "originalBytes": 1551850,
+    "deliveryBytes": 718133,
+    "width": 1024,
+    "height": 768
+  },
+  {
+    "original": "solution-drawings/05.png",
+    "delivery": "optimized/solution-drawings/05.png",
+    "originalBytes": 1891238,
+    "deliveryBytes": 586104,
+    "width": 1024,
+    "height": 576
+  },
+  {
+    "original": "solution-drawings/06.png",
+    "delivery": "optimized/solution-drawings/06.png",
+    "originalBytes": 1544801,
+    "deliveryBytes": 715739,
+    "width": 1024,
+    "height": 768
+  },
+  {
+    "original": "solution-drawings/07.png",
+    "delivery": "optimized/solution-drawings/07.png",
+    "originalBytes": 1718203,
+    "deliveryBytes": 690412,
+    "width": 768,
+    "height": 1024
+  },
+  {
+    "original": "solution-drawings/08.png",
+    "delivery": "optimized/solution-drawings/08.png",
+    "originalBytes": 1483432,
+    "deliveryBytes": 691084,
+    "width": 1024,
+    "height": 768
+  },
+  {
+    "original": "solution-drawings/09.png",
+    "delivery": "optimized/solution-drawings/09.png",
+    "originalBytes": 1402142,
+    "deliveryBytes": 654920,
+    "width": 1024,
+    "height": 768
+  },
+  {
+    "original": "solution-drawings/10.png",
+    "delivery": "optimized/solution-drawings/10.png",
+    "originalBytes": 1498172,
+    "deliveryBytes": 710433,
+    "width": 1024,
+    "height": 768
+  },
+  {
+    "original": "solution-drawings/11.png",
+    "delivery": "optimized/solution-drawings/11.png",
+    "originalBytes": 1759946,
+    "deliveryBytes": 784101,
+    "width": 1024,
+    "height": 768
+  },
+  {
+    "original": "logo-original.png",
+    "delivery": "optimized/logo-original.png",
+    "originalBytes": 204295,
+    "deliveryBytes": 128395,
+    "width": 866,
+    "height": 288
+  },
+  {
+    "original": "showroom-portugal.png",
+    "delivery": "optimized/showroom-portugal.webp",
+    "originalBytes": 2022467,
+    "deliveryBytes": 68102,
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "original": "room-portugal-cabinet.png",
+    "delivery": "optimized/room-portugal-cabinet.webp",
+    "originalBytes": 1455604,
+    "deliveryBytes": 83000,
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "original": "materials/oak-color-2k.jpg",
+    "delivery": "optimized/oak-color.webp",
+    "originalBytes": 2831117,
+    "deliveryBytes": 36602,
+    "width": 512,
+    "height": 512
+  }
+]

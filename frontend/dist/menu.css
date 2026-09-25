@@ -1,0 +1,35 @@
+
+dialog#menu{--ink:#682725;--muted:#865f5c;--rule:#68272526;background:#fff;color:#682725}
+#menu .menu-inner{display:grid;grid-template-columns:28.25% 43% 28.75%;min-height:100dvh;padding:0;gap:0}
+#menu .menu-identity{position:relative;display:flex;flex-direction:column;align-items:flex-start;padding:clamp(5rem,12vh,7.5rem) 2.5vw 3rem;border-right:1px solid var(--rule)}
+#menu .menu-identity img{display:block;width:12rem;height:auto;filter:none}
+#menu .menu-slogan{font-size:clamp(1rem,1.25vw,1.375rem);font-weight:600;line-height:1.15;text-transform:uppercase;margin-top:2rem}
+#menu .menu-copyright{font-size:.6875rem;line-height:1.6;color:var(--muted);margin-top:auto;padding-top:4rem}
+#menu .menu-inner nav{display:flex;flex-direction:column;justify-content:center;align-items:stretch;padding:5rem 2.8vw;gap:0;border-right:1px solid var(--rule)}
+#menu .menu-inner nav a{display:block;font-size:clamp(1.5rem,2vw,2.25rem);font-weight:400;letter-spacing:.015em;line-height:1.2;text-transform:uppercase;padding:1.1rem 0;border-bottom:1px solid var(--rule);transition:color .2s,padding-left .2s}
+#menu .menu-inner nav a:first-child{border-top:1px solid var(--rule)}
+#menu .menu-inner nav a:hover{transform:none;padding-left:.5rem;color:#aa7420}
+#menu .menu-inner nav a[aria-current=page]{color:#aa7420}
+#menu .menu-contact{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:6rem 2.8vw 3rem;min-width:0;font-size:.875rem;line-height:1.6}
+#menu .menu-contact h2{font-size:.625rem;letter-spacing:.18em;line-height:1.5;text-transform:uppercase;font-weight:500;color:#682725;margin-bottom:1rem}
+#menu .menu-contact p{margin:0 0 .75rem}
+#menu .menu-contact small{display:block;color:var(--muted);font-size:.75rem;margin-top:.15rem}
+#menu .menu-email{overflow-wrap:anywhere;max-width:100%}
+#menu .menu-contact .menu-address{font-size:.8125rem;color:var(--muted);margin:1.5rem 0 2.25rem}
+#menu .menu-language{font-size:.625rem;letter-spacing:.12em;border-radius:2rem;padding:.3rem .9rem;background:#682725;color:#fff}
+#menu .menu-contact a:hover{text-decoration:underline;text-underline-offset:.25em}
+#menu .menu-close{color:#682725;top:1.15rem;right:1.15rem;background:transparent;border:0}
+#menu .menu-close svg{stroke:currentColor;stroke-width:1.2;fill:none}
+@media(max-width:1000px){#menu .menu-inner{grid-template-columns:27% 40% 33%}#menu .menu-identity{padding-left:1.5rem;padding-right:1.5rem}#menu .menu-identity img{width:10rem}#menu .menu-contact{font-size:.8125rem;padding-left:1.5rem;padding-right:1.5rem}}
+@media(max-width:700px){#menu .menu-inner{grid-template-columns:1fr;min-height:100dvh}#menu .menu-identity{padding:2rem 1.5rem 1.5rem;border-right:0}#menu .menu-identity img{width:9rem}#menu .menu-slogan{margin-top:1rem;font-size:1rem}#menu .menu-copyright{display:none}#menu .menu-inner nav{padding:1rem 1.5rem 2rem;border-right:0}#menu .menu-inner nav a{font-size:1.5rem;padding:.85rem 0}#menu .menu-contact{padding:1.5rem;border-top:1px solid var(--rule)}#menu .menu-contact .menu-address{margin:1rem 0 1.5rem}}
+@media(prefers-reduced-motion:reduce){#menu .menu-inner nav a{transition:none}}
+
+/* Keep the close target clear and columns readable on short viewports. */
+#menu .menu-identity{min-width:0}
+#menu .menu-inner nav a:focus-visible{color:#aa7420;outline-color:#682725}
+#menu .menu-close{background:#ffffffed}
+@media(max-height:540px) and (min-width:701px){
+ #menu .menu-identity,#menu .menu-inner nav,#menu .menu-contact{padding-top:4.5rem;padding-bottom:1.5rem}
+ #menu .menu-copyright{padding-top:1.5rem}
+ #menu .menu-inner nav a{padding:.75rem 0}
+}

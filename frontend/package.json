@@ -1,0 +1,11 @@
+{
+  "name": "capiarcos",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/serve-local.mjs",
+    "dev": "node --watch scripts/serve-local.mjs",
+    "build": "node scripts/check-source.mjs"
+  }
+}

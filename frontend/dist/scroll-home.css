@@ -1,0 +1,152 @@
+/* Gestures trigger complete, reversible 1800 ms chapter transitions. */
+.story-hero-logo,.story-signature,.story-lines,.story-scroll-cue,.story-length{display:none}
+.story-ready{display:block;height:auto;min-height:100dvh;overflow-x:clip}
+.story-ready .story-length{display:block;height:760dvh;pointer-events:none}
+.story-ready .site-header{position:fixed;inset:0 0 auto;height:6rem;width:100%;z-index:30}
+.story-ready .site-header .brand{visibility:hidden}
+.story-ready .fh-main{position:fixed;inset:6rem 0 7rem;overflow:visible;z-index:5;pointer-events:none}
+.story-ready .fh-panel{position:absolute;inset:0;width:100%;height:100%;min-height:0;overflow:hidden;padding-bottom:1rem}
+.story-ready .fh-panel .fh-copy{will-change:transform,opacity}
+.story-ready .fh-intro{display:block;padding:0}
+.story-ready .fh-intro .fh-copy{position:absolute;top:calc(51dvh - 6rem);left:0;width:100%;max-width:none;text-align:center}
+.story-ready .fh-intro h1{font-size:clamp(1.5rem,2.1vw,2.125rem);line-height:1.3;letter-spacing:-.025em;font-weight:400}
+.story-ready .fh-intro h1 br{display:none}
+.story-ready .fh-project,.story-ready .fh-fabrication{display:block;padding:clamp(2rem,6vh,5rem) 4.5vw 1rem 75.5vw}
+.story-ready .fh-drawing,.story-ready .fh-scene-inline{display:none}
+.story-ready .fh-project .fh-copy{padding-top:0}
+.story-ready .fh-project .fh-action{margin-top:1.25rem}
+.story-ready .fh-detail{display:none}
+.story-ready .fh-room-drawing,.story-ready .fh-room-fabrication{transition:none!important}
+.story-ready .story-hero-logo,.story-ready .story-signature{display:block;position:fixed;left:0;top:0;height:auto;max-width:none;transform-origin:0 0;will-change:transform,opacity}
+.story-ready .story-hero-logo{z-index:12;pointer-events:none}
+.story-ready .story-signature{z-index:24;line-height:0}
+.story-signature img{display:block;width:100%;height:auto;filter:none}
+.story-ready .story-lines{display:block;position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+.story-ready .story-lines{z-index:2}
+
+.story-ready .story-scroll-cue{display:block;position:fixed;left:0;right:0;bottom:8rem;text-align:center;font-size:.8125rem;letter-spacing:.04em;z-index:6;pointer-events:none}
+.story-scroll-cue span{display:block;font-size:1.375rem;line-height:1.5}
+.story-ready .fh-controls{position:fixed;left:5vw;right:13.5rem;bottom:1.25rem;margin:0;min-height:3rem;padding:0;z-index:25;gap:1.5rem}
+.story-ready .fh-counter{position:static}
+.story-ready .fh-steps{margin:0 auto 0 0;gap:1.75rem}
+.story-ready .fh-arrows{margin:0}
+.story-ready .fh-services{display:flex;overflow:auto;overscroll-behavior:auto;padding:1rem 6vw 2rem 39vw}
+.story-ready .fh-services>.fh-action{flex-shrink:0}
+.solution-object{display:grid;place-items:center;width:100%;height:5.5rem;position:relative}
+.solution-object svg{grid-area:1/1;transform-origin:center}
+.solution-label{display:block;position:relative;z-index:8}
+.story-ready .fh-category-link{min-height:8.5rem;gap:.75rem}
+
+.story-ready .fh-category-link:focus-visible{outline:2px solid var(--brand-red);outline-offset:.375rem}
+@media(max-width:1100px){.story-ready .fh-services{padding-left:8vw;padding-right:8vw}.story-ready .fh-steps{gap:1rem}.story-ready .fh-controls{left:2rem;right:12rem;gap:1rem}}
+@media(max-width:950px){
+ .story-ready .fh-project,.story-ready .fh-fabrication{padding:1.5rem 6vw 1rem}
+ .story-ready .fh-project .fh-copy,.story-ready .fh-fabrication .fh-copy{width:min(100%,32rem);margin:0 auto}
+ .story-ready .room-backdrop:after{background:linear-gradient(to bottom,rgba(244,241,235,.55),rgba(244,241,235,.1) 40%,transparent 50%)}
+}
+@media(max-width:700px){
+ .story-ready .site-header{height:5.25rem}
+ .story-ready .fh-main{inset:5.25rem 0 7.75rem}
+ .story-ready .fh-intro .fh-copy{top:calc(51dvh - 5.25rem);padding:0 1.5rem}
+ .story-ready .fh-intro h1{font-size:1.5rem;max-width:19rem;margin:auto}
+ .story-ready .fh-intro h1 br{display:block}
+ .story-ready .fh-project,.story-ready .fh-fabrication{padding:1.25rem 1.5rem}
+ .story-ready .fh-project .fh-description,.story-ready .fh-fabrication .fh-description{font-size:.9375rem}
+ .story-ready .fh-project .fh-copy h2,.story-ready .fh-fabrication .fh-copy h2{font-size:1.75rem}
+ .story-ready .fh-project .fh-action{display:none}
+ .story-ready .fh-services{padding:1rem 1.5rem 2rem}
+ .story-ready .fh-services .fh-service-heading h2{font-size:2rem}
+ .story-ready .fh-controls{display:flex;flex-wrap:wrap;left:1.25rem;right:1.25rem;bottom:1.25rem;gap:.5rem}
+ .story-ready .fh-steps{gap:.8rem;width:100%;justify-content:space-between}
+ .story-ready .fh-steps button{font-size:.75rem;min-height:2rem;padding:.25rem 0}
+ .story-ready .fh-arrows{width:calc(100% - 7.5rem);justify-content:flex-start;gap:.625rem}
+ .story-ready .fh-arrows button{width:2.25rem;height:2.25rem}
+ .story-ready .fh-counter{font-size:.75rem;margin-right:auto}
+ .story-ready .story-scroll-cue{bottom:9rem}
+ .story-ready .fh-category-link{min-height:8rem}
+ .solution-object{height:5rem}
+}
+@media(max-height:720px) and (min-width:951px){
+ .story-ready .fh-main{inset:5.25rem 0 6rem}
+ .story-ready .site-header{height:5.25rem}
+ .story-ready .fh-intro .fh-copy{top:calc(53dvh - 5.25rem)}
+ .story-ready .fh-services{padding-top:0}
+ .story-ready .fh-category-link{min-height:6rem;gap:.375rem}
+ .solution-object{height:4rem}
+}
+@media(prefers-reduced-motion:reduce){.story-ready *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+
+
+.story-ready .fh-project,.story-ready .fh-fabrication{overflow-y:auto}
+
+.solution-object svg{stroke-width:1.15;fill:none;overflow:visible}
+
+/* Keep chapter names accessible without visible headings or promotional copy. */
+.story-ready .fh-copy{visibility:hidden}
+.story-ready .fh-copy .sr-only{visibility:visible}
+.story-ready .fh-services{padding-top:clamp(2rem,10vh,7rem)}
+@media(max-width:700px){.story-ready .fh-services{padding-top:1rem}}
+
+.story-ready .fh-materials{pointer-events:none}
+@media(max-width:700px){.story-ready .fh-steps{gap:.5rem}.story-ready .fh-steps button{font-size:.75rem}.story-ready .fh-steps button span{display:none}}
+/* Keep the whole dismantled cabinet in view on portrait screens. */
+@media(max-width:700px){
+ .story-ready .room-backdrop{background:linear-gradient(#bdac9c 0%,#dcc9b4 48%,#d4bba3 100%)}
+ .story-ready .fh-scene-frame{width:200vw;height:calc(200vw * 941 / 1672);left:50%;top:50%;transform:translate(-64%,-50%)}
+ .story-ready .fh-scene-frame>img{mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent)}
+ .story-ready .room-backdrop:after{background:none}
+}
+@media(min-width:701px){.story-ready .fh-scene-frame{left:50%;transform:translate(-50%,-50%)}}
+/* Wheel/touch select chapters; the 1.8 s animation cannot rest between them. */
+html:has(.story-ready){overflow:hidden}
+body.story-ready{height:100dvh;min-height:0;overflow:hidden}
+.story-ready .story-length{display:none}
+.story-ready .solution-object{height:clamp(5.5rem,12vh,8rem)}
+.story-ready .fh-category-link{gap:.65rem;min-height:0}
+.story-ready .fh-services{padding-top:1.5rem}
+.story-ready .fh-categories{row-gap:1.25rem}
+@media(max-width:700px){.story-ready .solution-object{height:6.5rem}.story-ready .fh-services{overflow-y:auto;touch-action:pan-y}}
+/* Navigation is handled by scroll, touch and keyboard. */
+.story-ready .fh-controls{display:none!important}
+/* The entire solutions grid stays on the clear wall, with labels inside tiles. */
+.story-ready .fh-services{padding-left:30vw;padding-right:20vw}
+.story-ready .fh-categories{gap:1.25rem 1rem;align-items:start}
+.story-ready .fh-category-link{--tile-size:clamp(6.5rem,min(11vw,16vh),9rem);position:relative;display:block;justify-self:center;width:var(--tile-size);height:var(--tile-size);min-height:0;padding:0}
+.story-ready .fh-category-link .solution-object{width:100%;height:100%}
+.story-ready .fh-category-link .solution-label{position:absolute;inset:auto .4rem .65rem;text-align:center;font-size:.875rem;line-height:1.15;color:#392719}
+.story-ready .fh-category:nth-child(even) .solution-label{color:#fff}
+@media(max-width:1100px){.story-ready .fh-services{padding-left:12vw;padding-right:20vw}}
+@media(max-width:700px){
+ .story-ready .fh-services{padding-left:1.5rem;padding-right:1.5rem}
+ .story-ready .fh-category-link{--tile-size:clamp(7rem,34vw,9rem)}
+}
+
+.story-ready .fh-category-link .solution-label{text-transform:uppercase;font-weight:500;overflow-wrap:anywhere}
+.story-ready .fh-services>.fh-action{position:relative;isolation:isolate;align-self:flex-start;justify-content:center;margin:3rem 0 0;padding:.65rem 1.1rem;min-height:2.5rem;gap:0;font-size:.75rem;border:1px solid #682725;border-radius:0;background:transparent;color:#682725;font-weight:500;text-transform:uppercase;text-align:center;text-decoration:none;box-shadow:none;transition:color .25s ease}
+.story-ready .fh-services>.fh-action:before{content:"";position:absolute;inset:0;z-index:-1;background:#682725;opacity:0;transition:opacity .25s ease}
+.story-ready .fh-services>.fh-action:is(:hover,:focus-visible){color:#fff;text-decoration:none}
+.story-ready .fh-services>.fh-action:is(:hover,:focus-visible):before{opacity:1}
+.story-ready .fh-services>.fh-action:focus-visible{outline:2px solid #682725;outline-offset:4px}
+
+.story-ready .fh-services>.fh-action:after{content:"";display:block;flex:0 0 auto;width:0;height:1rem;margin-left:0;opacity:0;transform:translateX(-.35rem);background:currentColor;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cpath d='M1 8h21M15 1l7 7-7 7' fill='none' stroke='black' stroke-width='1.5'/%3E%3C/svg%3E") center/contain no-repeat;transition:width .25s ease,margin-left .25s ease,opacity .25s ease,transform .25s ease}
+.story-ready .fh-services>.fh-action:hover:after{width:1.25rem;margin-left:.65rem;opacity:1;transform:translateX(0)}
+@media(prefers-reduced-motion:reduce){.story-ready .fh-services>.fh-action,.story-ready .fh-services>.fh-action:before,.story-ready .fh-services>.fh-action:after{transition:none}}
+
+/* Uploaded drawings are presented as red-framed pictures. */
+.story-ready .fh-category-link{--tile-size:clamp(7rem,12vw,11rem);height:calc(var(--tile-size)*.82)}
+.story-ready .fh-category-link .solution-label,.story-ready .fh-category:nth-child(even) .solution-label{color:#682725;font-size:.6875rem;bottom:.65rem;inset-inline:.6rem}
+@media(min-width:1101px){.story-ready .fh-services{padding-left:26vw}}
+@media(max-width:700px){.story-ready .fh-category-link{--tile-size:clamp(7rem,36vw,11rem)}}
+
+.asset-notice{position:fixed;left:1.5rem;bottom:1rem;max-width:min(32rem,80vw);z-index:30;background:#fbf8f2;color:#682725;font-size:.8125rem;padding:.5rem .75rem}
+.asset-notice:empty{display:none}
+/* Retain the approved grid, giving it usable scroll space on low screens. */
+@media(max-height:540px){
+ .story-ready .fh-main{top:4.5rem;bottom:4rem}
+ .story-ready .fh-services{padding-top:.5rem;padding-bottom:1.5rem}
+}
+@media(max-width:360px){
+ .story-ready .fh-category-link .solution-label{font-size:.625rem;bottom:.5rem}
+}
