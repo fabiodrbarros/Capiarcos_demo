@@ -25,7 +25,7 @@
 /* Copy sits beside the work, with the solutions text below its frames. */
 .story-ready .fh-panel .fh-copy :is(h1,h2),.story-ready .fh-service-heading h2{font-weight:700;font-synthesis:weight}
 @media(min-width:701px){
- .story-ready .fh-panel .fh-copy{left:36vw;top:18vh;width:38vw;max-width:34rem}
+ .story-ready .fh-panel .fh-copy{left:17vw;top:26vh;width:21vw;max-width:24rem}
  .story-ready .fh-intro .fh-copy{left:30vw;top:0;width:44vw;max-width:40rem}
  .story-ready .fh-services{padding-top:1rem}
  .story-ready .fh-service-heading{position:relative;left:auto;top:auto;width:100%;max-width:none;margin:1.5rem 0 0;flex-shrink:0}
@@ -34,6 +34,6 @@
  .story-ready .fh-service-heading{margin:1.25rem 0 0}
 }
 @media(max-height:500px) and (min-width:701px){
- .story-ready .fh-panel .fh-copy{top:2vh;left:36vw;width:39vw}
+ .story-ready .fh-panel .fh-copy{top:3vh;left:15vw;width:23vw}
  .story-ready .fh-intro .fh-copy{left:24vw;width:52vw}
 }
