@@ -102,6 +102,12 @@ const server=http.createServer(async(req,res)=>{
     const b=await body(req);return json(res,200,await mutate(b.revision,data=>{const c=data.categories.find(c=>c.id===category[1]);if(!c)fail(404,'Categoria inexistente.');if(method==='DELETE'){if(data.items.some(i=>i.category===c.id&&!i.deleted))fail(409,'Mova ou retire as imagens desta categoria primeiro.');data.categories=data.categories.filter(x=>x!==c);}else{const name=text(b.name,60);if(data.categories.some(x=>x.id!==c.id&&x.name.toLowerCase()===name.toLowerCase()))fail(409,'Nome de categoria repetido.');const translations=validateTranslations(b.translations,{name:120});c.name=name;if(translations)c.translations=translations;}}));
    }
    const item=/^\/api\/admin\/items\/([\w-]+)$/.exec(p);
+   if(item&&method==='DELETE'){
+    const b=await body(req);return json(res,200,await mutate(b.revision,data=>{
+     if(!data.items.some(i=>i.id===item[1]))fail(404,'Item inexistente.');
+     data.items=data.items.filter(i=>i.id!==item[1]);
+    }));
+   }
    if(item&&method==='PATCH'){
     const b=await body(req,15*1024*1024);return json(res,200,await mutate(b.revision,async data=>{const i=data.items.find(x=>x.id===item[1]);if(!i)fail(404,'Imagem inexistente.');if(!data.categories.some(c=>c.id===b.category))fail(400,'Selecione uma categoria.');if(typeof b.published!=='boolean'||typeof b.deleted!=='boolean')fail(400,'Estado inválido.');const changes={title:text(b.title),alt:text(b.alt,300),category:b.category,published:b.published,deleted:b.deleted};const translations=validateTranslations(b.translations,{title:240,alt:600});if(translations)changes.translations=translations;if(b.image!==undefined)Object.assign(changes,await saveImage(b.image));Object.assign(i,changes);}));
    }

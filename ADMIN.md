@@ -20,7 +20,7 @@ Abrir https://capiarcos.fabiodrbarros.cloud/admin/ . Até configurar o acesso, o
 2. «Adicionar item ao catálogo»: escolher JPEG, PNG ou WebP até 10 MB e preencher título, descrição e categoria. A publicação está selecionada por defeito; pode desmarcar para guardar um rascunho.
 3. Ao criar ou guardar, os campos FR e EN em falta ou desatualizados são traduzidos automaticamente. Só depois de a tradução terminar é guardado o item. «Rever traduções FR / EN» permite ajustes posteriores; correções atuais são preservadas. Também disponível nas categorias.
 4. «Editar item» permite substituir a fotografia e alterar os textos. Os itens mais recentes aparecem primeiro.
-5. «Retirar item» oculta sem apagar os ficheiros. Recuperar em «Itens retirados».
+5. «Eliminar item» apaga o registo diretamente do catálogo, após confirmação, sem passar por «Itens retirados». Não há recuperação no painel. Os ficheiros privados e backups técnicos continuam guardados; a imagem eliminada deixa de ser servida pela API. Itens retirados antes desta alteração continuam acessíveis para recuperação ou eliminação.
 
 ## Idiomas e tradução gratuita
 

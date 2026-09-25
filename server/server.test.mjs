@@ -62,9 +62,15 @@ test('admin: authentication, drafts, publication, validation, conflicts and pers
   const french=await call('/?lang=fr');assert.match(await french.text(),/Là où le bois prend forme/);
   assert.match(await (await call('/404.html?lang=en')).text(),/Page not found/);
   assert.equal((await call('/api/admin/translate','POST',{title:'Mesa',alt:'Madeira'},{'X-CSRF-Token':'wrong'})).status,403);
+  assert.equal((await call('/api/admin/items/'+newest.id,'DELETE',{revision:data.revision},{'X-CSRF-Token':'wrong'})).status,403);
+  assert.equal((await call('/api/admin/items/'+newest.id,'DELETE',{revision:0})).status,409);
+  data=await (await call('/api/admin/items/'+newest.id,'DELETE',{revision:data.revision})).json();
+  assert.equal(data.items.some(i=>i.id===newest.id),false);
+  assert.equal((await call(newest.url)).status,404);
+  assert.equal((await call('/api/admin/items/'+newest.id,'DELETE',{revision:data.revision})).status,404);
   await stop();await start();cookie='';assert.equal((await call('/api/admin/catalogue')).status,401);
   const again=await call('/api/login','POST',{user:'test-admin',password});cookie=again.headers.get('set-cookie').split(';')[0];csrf=(await again.json()).csrf;
-  const restored=await (await call('/api/admin/catalogue')).json();assert.equal(restored.items.find(i=>i.id===item.id).deleted,true);assert.equal(restored.revision,data.revision);
+  const restored=await (await call('/api/admin/catalogue')).json();assert.equal(restored.items.find(i=>i.id===item.id).deleted,true);assert.equal(restored.revision,data.revision);assert.equal(restored.items.some(i=>i.id===newest.id),false);
   await call('/api/logout','POST',{});assert.equal((await call('/api/admin/catalogue')).status,401);
  }finally{await stop();await rm(dir,{recursive:true,force:true});}
 });
