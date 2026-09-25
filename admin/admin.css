@@ -19,3 +19,12 @@ aside .plain{border:1px solid var(--red);padding:.65rem .75rem;text-decoration:n
 .dialog-heading button{min-width:44px;min-height:44px;border:0;background:transparent}
 @media(prefers-reduced-motion:reduce){button,.primary::after{transition:none}}
 .actions{flex-wrap:wrap}.primary::after{flex-shrink:0}
+
+/* The login is a standalone logo and form, without dashboard navigation. */
+.login-view .top,.login-view .admin-footer{display:none}
+.login-view main{width:100%;min-height:100dvh;display:grid;place-items:center;padding:4rem 1.5rem}
+.login-view #message{position:absolute;top:1rem;left:0;right:0;text-align:center;margin:0;max-width:none}
+.login-view .login{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(3rem,7vw,7rem);width:min(100%,800px);max-width:none;margin:0}
+.login-logo{display:block;width:100%;max-width:320px}.login-logo img{display:block;width:100%;height:auto}
+.login-fields{min-width:0}.login form{margin:0;gap:1.25rem}
+@media(max-width:650px){.login-view .login{grid-template-columns:1fr;gap:2.5rem;max-width:340px}.login-logo{width:220px;max-width:100%;margin:auto}.login-view main{padding:4rem 1.5rem 2rem}}

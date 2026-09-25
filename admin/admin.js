@@ -7,11 +7,12 @@ async function api(url,method='GET',data){
  const result=await response.json();
  if(!response.ok){if(response.status===401){document.querySelectorAll('dialog[open]').forEach(d=>d.close());showLogin(true);}throw Error(result.error||'Não foi possível concluir.');}return result;
 }
-function showLogin(configured){$('#login').hidden=false;$('#workspace').hidden=true;$('#logout').hidden=true;$('#login-form').hidden=!configured;$('#setup-note').hidden=configured;}
+function showLogin(configured){document.body.classList.add('login-view');$('#login').hidden=false;$('#workspace').hidden=true;$('#logout').hidden=true;$('#login-form').hidden=!configured;$('#setup-note').hidden=configured;}
 function open(dialog){dialog.querySelector('.dialog-status')&&(dialog.querySelector('.dialog-status').textContent='');dialog.showModal();dialog.querySelector('input,select,button')?.focus();}
 function options(select,current){select.replaceChildren(...state.categories.slice().sort((a,b)=>a.order-b.order).map(c=>element('option',{value:c.id},c.name)));if(current)select.value=current;}
 function apply(data){state=data;render();}
 function render(){
+ document.body.classList.remove('login-view');
  $('#workspace').hidden=false;$('#login').hidden=true;$('#logout').hidden=false;
  const active=state.items.filter(i=>!i.deleted),published=active.filter(i=>i.published).length;
  $('#summary').textContent=`${active.length} fotografias · ${published} publicadas · ${active.length-published} em rascunho`;
