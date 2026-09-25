@@ -48,3 +48,7 @@ Esta revisão substitui a decisão anterior de footer fixo na Home: depois dos 1
 Os quadros sobressaem 3 px e aumentam 3,5% no hover (rato) e foco visível (teclado), com animação de 200 ms e respeito por movimento reduzido. O canvas acompanha a posição dos elementos durante a animação.
 
 Google Maps substituído por OpenStreetMap, incluindo ligações e atribuição nativa. Marcador nas coordenadas fornecidas pelo utilizador: 41.822322, -8.436533. Não requer chave de API.
+
+## Integração de catálogo implementada — 25/09/2026
+
+O catálogo dispõe agora de backend Node, painel /admin/ e volume persistente, com um administrador. Não são necessárias chaves externas para a gestão. É necessário criar o utilizador e a palavra-passe no terminal, através de server/setup-admin.mjs, e depois entrar no painel. A configuração PUBLIC_ORIGIN em docker-compose.yml utiliza o domínio já fornecido. Ver ADMIN.md. O conteúdo inicial é preservado; fotografias finais e seus títulos/descrições serão introduzidos pelo utilizador. O formulário de contactos continua sem envio no servidor.

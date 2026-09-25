@@ -4,8 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node frontend/scripts/serve-local.mjs",
-    "dev": "node --watch frontend/scripts/serve-local.mjs",
-    "build": "node frontend/scripts/check-source.mjs"
+    "start": "node server/server.mjs",
+    "dev": "node --watch server/server.mjs",
+    "build": "node frontend/scripts/check-source.mjs && node --check server/server.mjs && node --check server/store.mjs && node --check server/auth.mjs && node --check server/setup-admin.mjs && node --check admin/admin.js",
+    "admin:setup": "node server/setup-admin.mjs",
+    "test": "node --test server/server.test.mjs"
+  },
+  "dependencies": {
+    "sharp": "0.35.4"
   }
 }

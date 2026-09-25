@@ -29,6 +29,14 @@ printf '%s\n' "$rollback_tag" > "$backup/image"
 if docker exec capiarcos-demo test -d /app/public/assets/img/catalogo; then
   docker cp capiarcos-demo:/app/public/assets/img/catalogo "$backup/catalogo"
 fi
+if docker exec capiarcos-demo test -f /app/data/catalog.json; then
+  # Pause writes while taking a consistent catalogue + image snapshot.
+  docker pause capiarcos-demo >/dev/null
+  trap 'docker unpause capiarcos-demo >/dev/null 2>&1 || true' EXIT
+  docker cp capiarcos-demo:/app/data "$backup/admin-data"
+  docker unpause capiarcos-demo >/dev/null
+  trap - EXIT
+fi
 printf '#!/usr/bin/env bash\nset -euo pipefail\ncd %q\ndocker tag %q capiarcos_demo-capiarcos-demo\ndocker compose --project-directory %q -f %q up -d --no-deps --no-build capiarcos-demo\n' "$repo" "$rollback_tag" "$repo" "$backup/docker-compose.yml" > "$backup/rollback.sh"
 switching=0
 on_error() {

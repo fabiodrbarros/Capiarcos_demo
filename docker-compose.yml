@@ -10,8 +10,10 @@ services:
     restart: unless-stopped
     ports:
       - "8080:3000"
-    # Frontend estático: sem backend/admin e sem montagem dos uploads antigos.
-    # O volume permanece no Docker e não deve ser removido (admin futuro).
+    environment:
+      PUBLIC_ORIGIN: "https://capiarcos.fabiodrbarros.cloud"
+    volumes:
+      - capiarcos-admin-data:/app/data
     networks:
       # rede partilhada com o cloudflared (Cloudflare Tunnel)
       - web
@@ -24,6 +26,7 @@ services:
 
 volumes:
   capiarcos-catalogo:
+  capiarcos-admin-data:
 
 networks:
   web:

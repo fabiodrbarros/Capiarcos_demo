@@ -97,3 +97,13 @@ A margem inferior e lateral das legendas acompanha agora a espessura real do aro
 
 Cada legenda está ancorada a 50% da largura do quadro, numa faixa inferior de altura uniforme, com centragem horizontal e vertical. A faixa depende apenas da moldura, não das proporções do PNG. O desenho reserva o espaço dessa faixa e uma folga adicional de 4 px. Build de fontes validado.
 Verificação no browser a 390×844: as 12 legendas têm desvio horizontal de 0 px em relação ao centro da respetiva moldura; composição confirmada visualmente.
+
+## Administração do catálogo — 25/09/2026
+
+Implementados login/sessão, categorias, upload e conversão WebP, edição de título/descrição/categoria/ordem, rascunho/publicação, retirada/recuperação e exportação JSON. Dados e originais privados fora do frontend; escrita atómica com revisões e backup anterior. Sem credenciais por omissão. Docker adaptado para Node sem privilégios, com novo volume persistente, preservando portas/rede/nome existentes.
+
+npm test: teste integrado passou, incluindo acesso não autenticado, origem inválida, CSRF inválido, revisão desatualizada, imagem inválida, upload real convertido, rascunho não público, publicação, texto escapado, bloqueio de categoria não vazia, retirada, reinício com persistência e logout. npm run build passou; npm audit sem vulnerabilidades reportadas no momento do teste. Imagem Docker construída e Compose validado.
+
+Browser: acesso local configurado com os dados fornecidos pelo utilizador, fora do Git. Verificados início de sessão, criação de categoria, upload da fotografia existente, rascunho, edição/publicação, filtro público, imagem ampliada, retirada e recuperação como rascunho. Painel observado em desktop e mobile (390×844); não testado em dispositivo físico. Os dados de validação ficam apenas em data-preview, ignorado pelo Git.
+
+O Docker local passou o build, mas tentativas de criar o container de teste ficaram pendentes sem produzir container nem erro; não foi confirmada a execução/saúde com volume no Docker Desktop. Não foi reiniciado/reinstalado o Docker. Persistência validada pelo servidor Node local após reinício. Nenhuma publicação na VPS nesta sessão.

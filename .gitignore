@@ -5,3 +5,5 @@ coverage/
 *.key
 .env*
 npm-debug.log*
+/data/
+/data-preview/

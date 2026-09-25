@@ -72,3 +72,7 @@ Google Maps substituído por OpenStreetMap, incluindo ligações e atribuição 
 ## Atualização da grelha e mapa
 
 Os 12 quadros móveis cabem numa secção sem scroll interno. O pin OpenStreetMap usa agora #682725 através de Leaflet local em map.html/map.js; atribuição e coordenadas mantidas. Leaflet está em dist/vendor/leaflet, incluindo licença. Sem dependências npm nem chave de API; o mapa necessita de rede para obter os tiles.
+
+## Painel de catálogo — atualização em 25/09/2026
+
+Foi acrescentado o backend Node e o painel /admin/ para um administrador, por pedido do utilizador. Categorias, títulos, descrições, ordem, publicação e retirada/recuperação de imagens são geridos no painel. Catálogo público renderizado com os mesmos componentes visuais. Ver ADMIN.md na raiz; esta atualização substitui as notas históricas de inexistência de backend/CMS. Formulário permanece mailto.

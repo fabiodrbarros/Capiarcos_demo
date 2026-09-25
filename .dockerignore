@@ -1,9 +1,14 @@
 **
 !Dockerfile
-!deploy/
-!deploy/nginx.conf
+!package.json
+!package-lock.json
 !frontend/
 !frontend/dist/
 !frontend/dist/**
 !frontend/scripts/
 !frontend/scripts/check-source.mjs
+!server/
+!server/*.mjs
+server/*.test.mjs
+!admin/
+!admin/**
