@@ -101,3 +101,42 @@ body:not(.login-view) main{padding-bottom:7rem}
 .translations{grid-column:1/-1;width:100%;margin:12px 0}.translations summary{cursor:pointer;font-size:12px;margin-bottom:10px}.translations fieldset{border:1px solid #782c2930;padding:12px;margin:10px 0}.translations legend{font-size:12px}.translations button{font-size:11px;padding:8px 12px}.category-row{flex-wrap:wrap}.category-row .translations{order:3;flex-basis:100%}
 
 .translations{margin:20px 0;padding-top:16px;border-top:1px solid #782c2930;clear:both}.translations summary{padding:8px 0;line-height:1.6;margin:0}.translations details[open] summary{margin-bottom:12px}.translations:has(details[hidden]){display:none}
+/* Responsive management: constrain intrinsic form widths instead of clipping them. */
+main,.workspace,.workspace>*,form,label,fieldset,.translations,.translations details{min-width:0}
+.translations fieldset{display:grid;gap:1rem;min-inline-size:0}
+#category-add{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end}
+#category-add>.translations{grid-column:1/-1;grid-row:2}
+body:has(dialog[open]){overflow:hidden}
+@media(max-width:700px){
+ body:not(.login-view) .top{min-height:4.5rem;padding:1rem}
+ body:not(.login-view) main{width:auto;margin:0 1rem;padding:0 0 1.5rem;min-height:0}
+ #workspace .heading{gap:.5rem;margin-bottom:1.25rem}
+ #workspace .heading>button{width:100%;white-space:normal}
+ #workspace h1{font-size:1.125rem}
+ .workspace{display:block;min-width:0}
+ #categories{flex-wrap:nowrap;gap:1rem;max-width:100%;overflow-x:auto;padding-bottom:.35rem;scroll-padding-inline:.25rem}
+ #categories button{flex:0 0 auto;min-height:44px}
+ .items{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem .75rem}
+ .catalogue-frame{padding:5px}.catalogue-mat{padding:8px}
+ .card-body{padding:.75rem 0}.card h3{font-size:.875rem}.card button{min-height:44px;width:100%}
+ .session-actions{align-self:flex-start;margin:0 1rem calc(1rem + env(safe-area-inset-bottom));width:auto}
+ dialog{width:calc(100% - 1rem);max-width:560px;max-height:calc(100dvh - 1rem);margin:auto;padding:1rem;overflow:auto;overscroll-behavior:contain}
+ dialog form{gap:.875rem}
+ .dialog-heading{gap:.5rem;margin-bottom:.5rem}.dialog-heading h2{font-size:.875rem;overflow-wrap:anywhere}
+ input,textarea,select{font-size:16px;max-width:100%}
+ input[type=file]{font-size:12px;padding:.6rem;overflow:hidden}
+ input[type=file]::file-selector-button{font-size:11px;padding:.6rem;margin-right:.4rem}
+ .preview{max-height:150px}
+ .actions>button{flex:1 1 7rem;white-space:normal}
+ #category-list .category-row{gap:.5rem}
+ #category-list .category-row .actions{flex:0 0 auto}
+ #category-list .icon-button{width:44px;height:44px;min-height:44px;flex:none}
+ .translations{margin:8px 0;padding-top:12px}.translations summary{min-height:44px;line-height:1.5;padding:12px 0}
+ #toast{inset:calc(.5rem + env(safe-area-inset-top)) .5rem auto;max-height:35dvh;overflow:auto}
+}
+@media(max-width:360px){
+ .items{grid-template-columns:1fr}
+ #category-add{grid-template-columns:minmax(0,1fr)}
+ #category-add>button{grid-row:2;width:100%}
+ #category-add>.translations{grid-row:3}
+}
