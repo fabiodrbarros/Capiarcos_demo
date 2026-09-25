@@ -118,6 +118,22 @@ function tick(now=performance.now()){
   document.querySelector('.fh-services>.fh-action').style.opacity=ease(3.85,4,p);
   const bounds=frame.getBoundingClientRect(),originBounds=scene.getBoundingClientRect();
   const room={left:bounds.left-originBounds.left,top:bounds.top-originBounds.top,width:bounds.width,height:bounds.height};
+  // Keep chapter copy above the cabinet and to the left of the lifted samples.
+  const cabinet=cabinetLayout(room,innerWidth,innerHeight);
+  panels.slice(1,4).forEach((panel,i)=>{
+    const copy=panel.querySelector('.fh-copy');
+    if(panel.hidden)return;
+    const panelTop=panel.getBoundingClientRect().top-originBounds.top;
+    const left=Math.max(16,room.left+room.width*.15);
+    const right=Math.min(innerWidth-24,cabinet.x+cabinet.w*.5,
+      i===2?materialSources(cabinet)[0][0]-24:Infinity);
+    copy.style.left=left+'px';copy.style.width=Math.max(180,right-left)+'px';
+    copy.style.maxWidth='none';
+    const ceiling=room.top+room.height*(i===2?.35:.542);
+    const bottom=i===2&&left+copy.offsetWidth>materialSources(cabinet)[0][0]-20?ceiling:cabinet.y;
+    copy.style.top=Math.max(0,Math.min(innerHeight*.26,bottom-panelTop-copy.offsetHeight-24))+'px';
+    if(innerWidth<=700){copy.style.left='1rem';copy.style.width='calc(100% - 2rem)';copy.style.top='0';}
+  });
   categories.forEach((a,i)=>{
     // Supplied PNGs are painted on the canvas; retain SVGs only for no-JS fallback.
     const svg=slots[i].querySelector('svg');
