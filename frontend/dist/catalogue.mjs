@@ -7,6 +7,17 @@ const fullImage = dialog.querySelector('.gallery-full-image');
 const closeButton = dialog.querySelector('.gallery-close');
 let opener;
 
+// Keep the lowest frame above the floor in the original room photograph.
+const roomSection=document.querySelector('.room-page-content');
+const catalogueGrid=document.querySelector('.catalogue-grid');
+function fitCatalogueWall(){
+  const bottom=catalogueGrid.getBoundingClientRect().bottom-roomSection.getBoundingClientRect().top;
+  roomSection.style.minHeight=Math.ceil(Math.max(innerHeight,(bottom+32)/.72))+'px';
+}
+new ResizeObserver(fitCatalogueWall).observe(catalogueGrid);
+window.addEventListener('resize',fitCatalogueWall);
+document.fonts.ready.then(fitCatalogueWall);
+
 function filterCategory(category, updateHistory = false) {
   const selected = filters.some(button => button.dataset.category === category) ? category : 'all';
   filters.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.category === selected)));

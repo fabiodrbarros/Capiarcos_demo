@@ -65,7 +65,7 @@
 .room-catalogo .catalogue-filters button[aria-pressed=true]:after{opacity:1}
 .room-catalogo .catalogue-filters button:hover{background:#ffffff30}
 .room-catalogo .category-count{display:none}
-.room-catalogo .catalogue-grid,.room-catalogo .catalogue-grid:has(>.catalogue-item:only-child){grid-template-columns:repeat(4,minmax(0,10.5rem));gap:2.5rem clamp(1rem,2.5vw,2.5rem);max-width:none;margin:0}
+.room-catalogo .catalogue-grid,.room-catalogo .catalogue-grid:has(>.catalogue-item:only-child){grid-template-columns:repeat(4,minmax(0,10.5rem));justify-content:space-between;gap:2.5rem clamp(1rem,2.5vw,2.5rem);max-width:none;margin:0}
 .room-catalogo .catalogue-item{max-width:none;min-width:0}
 .room-catalogo .catalogue-frame{padding:6px}
 .room-catalogo .catalogue-mat{padding:clamp(.65rem,1.4vw,1.25rem)}
