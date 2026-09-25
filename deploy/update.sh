@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Execute from the existing VPS checkout after git fetch origin.
 set -Eeuo pipefail
+original_umask=$(umask)
 umask 077
 repo=$(git rev-parse --show-toplevel)
 cd "$repo"
@@ -11,7 +12,14 @@ docker inspect capiarcos-demo >/dev/null
 backup="$HOME/capiarcos-backups/$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$backup"
 git rev-parse HEAD > "$backup/commit"
-cp docker-compose.yml "$backup/docker-compose.yml"
+# After a rollback, the running service may use a compose file from a backup.
+compose_source=$(docker inspect --format '{{index .Config.Labels "com.docker.compose.project.config_files"}}' capiarcos-demo)
+if test -z "$compose_source" || test "$compose_source" = '<no value>'; then compose_source="$repo/docker-compose.yml"; fi
+if test ! -f "$compose_source"; then
+  echo 'Não foi possível localizar a configuração do serviço atual para recuperação.'
+  exit 1
+fi
+cp "$compose_source" "$backup/docker-compose.yml"
 if test -f .env; then cp .env "$backup/.env"; fi
 docker inspect capiarcos-demo > "$backup/container.json"
 old_image=$(docker inspect --format '{{.Image}}' capiarcos-demo)
@@ -27,11 +35,18 @@ on_error() {
   code=$?
   trap - ERR
   echo "Atualização falhou. Cópia: $backup"
-  if test "$switching" = 1; then bash "$backup/rollback.sh" || echo "Executar recuperação manual: bash $backup/rollback.sh"; fi
+  if test "$switching" = 1; then
+    docker logs --tail 100 capiarcos-demo > "$backup/failed-container.log" 2>&1 || true
+    docker inspect --format '{{json .State}}' capiarcos-demo > "$backup/failed-state.json" 2>&1 || true
+    echo "Diagnóstico guardado em $backup/failed-container.log e failed-state.json"
+    bash "$backup/rollback.sh" || echo "Executar recuperação manual: bash $backup/rollback.sh"
+  fi
   exit "$code"
 }
 trap on_error ERR
 echo "Cópia de segurança: $backup"
+# Restrict backup files only, not files created by the Git checkout.
+umask "$original_umask"
 git merge --ff-only origin/main
 docker compose config --quiet
 docker compose build capiarcos-demo

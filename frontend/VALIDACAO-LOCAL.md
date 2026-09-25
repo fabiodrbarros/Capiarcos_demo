@@ -68,3 +68,11 @@ A pedido do utilizador, quadros cerca de 9% maiores em desktop e ligeiramente ma
 Por indicação do utilizador, removidos o site antigo, public/, legacy/, componentes Next e configurações antigas. Apenas admin, API e três bibliotecas locais preservados em referencia/admin como contexto; cópias comparadas por SHA-256 antes de remover as localizações antigas. frontend/dist e Docker mantidos sem alterações.
 
 npm run build, docker compose config e docker build passaram. A imagem final mantém o mesmo ID d8c20791e01a5e03f37bad0d0a00e16fcf0706b453708f6576d9e389cee4f38d: nenhum conteúdo servido mudou nesta limpeza. Não repetida a verificação visual por não haver alterações no frontend. VPS não alterada nesta sessão.
+
+## Correção de permissões Docker — 25/09/2026
+
+O diagnóstico enviado da VPS revelou HTTP 403 por Permission denied ao ler index.html. O umask 077 do script de backup também afetava o checkout Git. O script repõe agora o umask original antes do merge; a imagem normaliza diretórios públicos para 755 e ficheiros para 644, corrigindo também checkouts já restritos.
+
+Teste de regressão: build com diretórios de origem deliberadamente em 700 e ficheiros em 600; imagem final healthy, HTTP OK na Home, catálogo, contactos, módulo e PNG. Modos finais 755/644 confirmados. Build normal, validação de fontes, Compose e sintaxe Bash passaram. Não foi possível executar a correção na VPS nesta sessão.
+
+Em caso de nova falha, o script guarda logs/estado do container antes de recuperar. Ao repetir depois de uma recuperação, usa a configuração Compose registada no container em execução para a nova cópia de segurança.
