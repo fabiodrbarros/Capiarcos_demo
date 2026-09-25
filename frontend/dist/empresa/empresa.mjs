@@ -17,7 +17,7 @@ if(body.classList.contains('company-page')){
   status.textContent=animated&&current>0&&current<5?stageStatus(current,4,topics[current-1].querySelector('h2').textContent):'';
  }
  function go(n){if(locked||n<0||n>4||n===current)return;locked=true;setScene(n);clearTimeout(timer);timer=setTimeout(()=>locked=false,reduce.matches?0:1800);}
- function mode(){clearTimeout(timer);locked=false;body.classList.toggle('company-ready',enabled.matches);setScene(current);}
+ function mode(){clearTimeout(timer);locked=false;body.classList.remove('company-initialized');body.classList.toggle('company-ready',enabled.matches);setScene(current);void body.offsetHeight;body.classList.add('company-initialized');}
  function wheelMove(e){
   if(!enabled.matches||menu.open||e.ctrlKey)return;
   if(current===4&&!locked&&(e.deltaY>0||window.scrollY>0))return;
