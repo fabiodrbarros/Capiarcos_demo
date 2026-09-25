@@ -27,7 +27,7 @@ export function drawMaterialTiles(ctx,models,p,sources,img,panel,origin={left:0,
   ctx.strokeStyle='#b976604d';ctx.lineWidth=1;ctx.strokeRect(x+.5,y+.5,w-1,h-1);
   const drawing=drawings[i];
   if(drawing.complete&&drawing.naturalWidth){
-   const pad=rim+w*.015,areaW=w-2*pad,areaH=h-2*pad-h*.17;
+   const pad=rim+w*.015,areaW=w-2*pad,areaH=h-2*pad-Math.max(h*.17,18);
    const scale=Math.min(areaW/drawing.naturalWidth,areaH/drawing.naturalHeight);
    const dw=drawing.naturalWidth*scale,dh=drawing.naturalHeight*scale;
    ctx.globalAlpha=art;ctx.drawImage(drawing,x+(w-dw)/2,y+pad+(areaH-dh)/2,dw,dh);

@@ -88,3 +88,7 @@ Marcador SVG em #682725 no mapa OpenStreetMap, servido por map.html/map.js com L
 Home móvel: 12 quadros numa única secção, três colunas em retrato e quatro em paisagem baixa; dimensões adaptadas à largura e altura, legendas interiores e CTA visíveis, sem scroll interno. Esta decisão substitui as notas anteriores sobre scroll próprio na grelha móvel.
 
 Verificado no browser: 390×844, 320×568 e 844×390; os 12 quadros completos, grelha sem scroll interno e CTA visível. Mapa local com oito tiles carregados e pin SVG #682725 confirmado visualmente e no DOM. Testes em viewport emulado, não em telemóvel físico. Build de fontes e Docker executados. VPS pendente de atualização manual pelo utilizador.
+
+## Legendas dentro da moldura — 25/09/2026
+
+A margem inferior e lateral das legendas acompanha agora a espessura real do aro (mínimo 4 px), com mais 3 px de espaço branco. Reservada uma altura mínima de 18 px para legendas no desenho canvas, evitando sobreposição com o PNG em quadros pequenos. Verificadas visualmente as 12 legendas em 320×568 e 844×390 e medidas as margens no DOM: todas dentro da moldura. Build de fontes validado.

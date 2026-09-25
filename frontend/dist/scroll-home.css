@@ -174,3 +174,13 @@ body.story-ready{height:100dvh;min-height:0;overflow:hidden}
  .story-ready .fh-category-link .solution-label,.story-ready .fh-category:nth-child(even) .solution-label{font-size:.5rem;bottom:.25rem;inset-inline:.1rem;line-height:1}
  .story-ready .fh-services>.fh-action{margin:.75rem 0 0;align-self:center;font-size:.625rem;min-height:2rem;padding:.5rem .75rem}
 }
+
+/* Keep every caption inside the white mat, clear of the painted frame. */
+.story-ready .fh-category-link{--frame-inset:max(4px,calc(var(--tile-size)*.035))}
+.story-ready .fh-category-link .solution-label,
+.story-ready .fh-category:nth-child(even) .solution-label{
+ bottom:calc(var(--frame-inset) + 3px);
+ inset-inline:calc(var(--frame-inset) + 3px);
+ overflow-wrap:normal;
+ word-break:normal;
+}
