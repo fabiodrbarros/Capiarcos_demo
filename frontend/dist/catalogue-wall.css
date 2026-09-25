@@ -74,3 +74,8 @@
 .room-catalogo .catalogue-caption{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @media(max-width:1050px){.room-catalogo .catalogue-grid,.room-catalogo .catalogue-grid:has(>.catalogue-item:only-child){grid-template-columns:repeat(3,minmax(0,10.5rem))}}
 @media(max-width:600px){.room-catalogo .room-main{margin-inline:1rem}.room-catalogo .catalogue-filters button{flex-basis:auto;min-width:7rem;padding-inline:.85rem}.room-catalogo .catalogue-filters button:after{left:.85rem}.room-catalogo .catalogue-grid,.room-catalogo .catalogue-grid:has(>.catalogue-item:only-child){grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem 1rem}}
+.catalogue-pagination{display:flex;align-items:center;gap:1rem;margin-top:1.5rem;color:#682725;font-size:.75rem}
+.catalogue-pagination[hidden]{display:none}
+.catalogue-pagination button{padding:.5rem .75rem;border:1px solid #682725;background:transparent;color:inherit;font:inherit;cursor:pointer}
+.catalogue-pagination button:hover:not(:disabled){background:#682725;color:#fff}
+.catalogue-pagination button:disabled{opacity:.35;cursor:default}

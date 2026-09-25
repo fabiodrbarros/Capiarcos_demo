@@ -7,27 +7,31 @@ const fullImage = dialog.querySelector('.gallery-full-image');
 const closeButton = dialog.querySelector('.gallery-close');
 let opener;
 
-// Keep the lowest frame above the floor in the original room photograph.
-const roomSection=document.querySelector('.room-page-content');
-const catalogueGrid=document.querySelector('.catalogue-grid');
-function fitCatalogueWall(){
-  const bottom=catalogueGrid.getBoundingClientRect().bottom-roomSection.getBoundingClientRect().top;
-  roomSection.style.minHeight=Math.ceil(Math.max(innerHeight,(bottom+32)/.72))+'px';
+// One row per page preserves the original room and keeps frames off its floor.
+let page=0,selectedCategory='all';
+const pager=document.createElement('nav');
+pager.className='catalogue-pagination';pager.setAttribute('aria-label','Páginas do catálogo');
+const previous=document.createElement('button'),next=document.createElement('button'),pageLabel=document.createElement('span');
+previous.type=next.type='button';previous.textContent='Anterior';next.textContent='Seguinte';
+pager.append(previous,pageLabel,next);document.querySelector('#catalogue-grid').after(pager);
+function renderPage(){
+ const matching=items.filter(item=>selectedCategory==='all'||item.dataset.category===selectedCategory);
+ const size=innerWidth<=600?2:innerWidth<=1050?3:4;
+ const pages=Math.max(1,Math.ceil(matching.length/size));page=Math.min(page,pages-1);
+ items.forEach(item=>item.hidden=true);
+ matching.slice(page*size,(page+1)*size).forEach(item=>item.hidden=false);
+ previous.disabled=page===0;next.disabled=page===pages-1;pager.hidden=pages===1;
+ pageLabel.textContent=`${page+1} / ${pages}`;
+ empty.hidden=matching.length>0;
+ status.textContent=`${matching.length} imagens no catálogo. Página ${page+1} de ${pages}.`;
 }
-new ResizeObserver(fitCatalogueWall).observe(catalogueGrid);
-window.addEventListener('resize',fitCatalogueWall);
-document.fonts.ready.then(fitCatalogueWall);
+previous.onclick=()=>{page--;renderPage();};next.onclick=()=>{page++;renderPage();};
+window.addEventListener('resize',renderPage);
 
 function filterCategory(category, updateHistory = false) {
   const selected = filters.some(button => button.dataset.category === category) ? category : 'all';
   filters.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.category === selected)));
-  let count = 0;
-  items.forEach(item => {
-    item.hidden = selected !== 'all' && item.dataset.category !== selected;
-    if (!item.hidden) count += 1;
-  });
-  empty.hidden = count > 0;
-  status.textContent = `${count} ${count === 1 ? 'imagem' : 'imagens'} no catálogo.`;
+  selectedCategory=selected;page=0;renderPage();
   if (updateHistory) {
     const url = new URL(location.href);
     if (selected === 'all') url.searchParams.delete('categoria');
