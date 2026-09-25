@@ -48,3 +48,7 @@ Depois abrir https://capiarcos.fabiodrbarros.cloud/admin/ . Consultar [ADMIN.md]
 O Docker passou de Nginx estático para Node para suportar a API, mantendo nome, rede e portas do serviço. Sharp é a única dependência direta acrescentada, necessária para validar e otimizar uploads. O catálogo é renderizado pelo servidor com o mesmo HTML/CSS do site e continua a funcionar sem JavaScript; filtros e ampliação utilizam o módulo existente.
 
 Empresa continua sem link até existir página nova. O formulário continua mailto, sem envio de email pelo servidor. Não foram acrescentadas traduções, produtos fictícios ou credenciais. As notas históricas em frontend/ESTADO-ATUAL.md e frontend/INTEGRACOES.md devem ser lidas com a atualização do admin documentada em ADMIN.md.
+
+## PT / FR / EN
+
+O menu permite escolher o idioma. O site servido por `npm start` traduz os textos fixos; o painel inclui «Traduzir automaticamente» para novos itens e categorias, com MyMemory gratuito e sem chave. Ver `ADMIN.md` para limites, persistência e funcionamento em caso de falha. Não existe revisão obrigatória.

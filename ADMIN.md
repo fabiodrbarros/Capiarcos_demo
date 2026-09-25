@@ -16,13 +16,19 @@ Abrir https://capiarcos.fabiodrbarros.cloud/admin/ . Até configurar o acesso, o
 
 ## Utilização
 
-1. Criar/editar categorias em «Gerir categorias». A ordem mais baixa aparece primeiro. Categorias com fotografias ativas não podem ser eliminadas.
-2. «Adicionar fotografia»: escolher JPEG, PNG ou WebP até 10 MB, indicar título, descrição acessível e categoria. Imagens novas ficam em rascunho.
-3. «Editar fotografia»: mudar título, descrição, categoria ou ordem. Marcar «Publicar no catálogo» e guardar para aparecer no site.
-4. «Retirar» remove a imagem do catálogo sem apagar o ficheiro. Recuperar em «Mostrar → Retiradas»; escolher categoria e guardar. Pode recuperar como rascunho ou publicar.
-5. «Ver catálogo» abre o resultado público. As alterações entram em vigor ao guardar; não é necessário novo build.
+1. Criar/editar categorias em «Gerir categorias». Categorias com fotografias ativas não podem ser eliminadas.
+2. «Adicionar item ao catálogo»: escolher JPEG, PNG ou WebP até 10 MB e preencher título, descrição e categoria. A publicação está selecionada por defeito; pode desmarcar para guardar um rascunho.
+3. «Traduzir automaticamente» preenche FR e EN a partir do português, antes de criar ou guardar. Não existe aprovação obrigatória. «Editar FR / EN» permite ajustes opcionais. Também disponível nas categorias.
+4. «Editar item» permite substituir a fotografia e alterar os textos. Os itens mais recentes aparecem primeiro.
+5. «Retirar item» oculta sem apagar os ficheiros. Recuperar em «Itens retirados».
 
-O nome da categoria pode mudar sem quebrar o identificador usado nos filtros. Não há traduções automáticas nem produtos inventados. O conteúdo inicial é apenas a «Cozinha Teste» recebida; pode retirá-la no painel quando existirem fotografias finais.
+## Idiomas e tradução gratuita
+
+O menu público permite escolher PT, FR e EN. A língua é mantida nas ligações através de `?lang=fr` ou `?lang=en`. Os textos fixos estão traduzidos em `frontend/dist/languages.mjs` e são servidos pelo Node; executar com `npm start` (a pré-visualização estática isolada mantém PT).
+
+O botão usa MyMemory sem conta nem chave: https://mymemory.translated.net/doc/usagelimits.php . Limite anónimo anunciado de 5 000 caracteres/dia por IP, partilhado por pedidos FR e EN. A VPS precisa de saída HTTPS para `api.mymemory.translated.net`. Apenas os textos a traduzir são enviados; não são enviados fotografias, credenciais ou o catálogo completo. Não introduzir dados privados nos textos públicos.
+
+As traduções ficam guardadas com o item/categoria; os visitantes não fazem chamadas ao tradutor. Pedidos repetidos têm cache em memória. Falhas ou limite diário apresentam um toast e mantêm os campos. É possível preencher manualmente. Se mudar o original português, traduza novamente: versões antigas deixam de ser apresentadas e o site usa PT como alternativa. Não há garantia de disponibilidade ou qualidade do serviço externo.
 
 ## Imagens e dados
 

@@ -1,3 +1,4 @@
+import {t,pageStatus} from './i18n.mjs';
 const filters = [...document.querySelectorAll('[data-category][aria-pressed]')];
 const items = [...document.querySelectorAll('.catalogue-item')];
 const status = document.querySelector('#catalogue-status');
@@ -10,10 +11,10 @@ let opener;
 // Two desktop rows preserve the original room and keep frames off its floor.
 let page=0,selectedCategory='all';
 const pager=document.createElement('nav');
-pager.className='catalogue-pagination';pager.setAttribute('aria-label','Páginas do catálogo');
+pager.className='catalogue-pagination';pager.setAttribute('aria-label',t('Páginas do catálogo'));
 const previous=document.createElement('button'),next=document.createElement('button'),pageLabel=document.createElement('span');
 previous.type=next.type='button';previous.textContent='‹';next.textContent='›';
-previous.setAttribute('aria-label','Página anterior');next.setAttribute('aria-label','Página seguinte');
+previous.setAttribute('aria-label',t('Página anterior'));next.setAttribute('aria-label',t('Página seguinte'));
 pager.append(previous,pageLabel,next);document.querySelector('#catalogue-grid').after(pager);
 const grid=document.querySelector('#catalogue-grid');
 let renderVersion=0;
@@ -30,7 +31,7 @@ async function renderPage(animate=false){
  previous.disabled=page===0;next.disabled=page===pages-1;pager.hidden=matching.length===0;
  pageLabel.textContent=`${page+1} / ${pages}`;
  empty.hidden=matching.length>0;
- status.textContent=`${matching.length} imagens no catálogo. Página ${page+1} de ${pages}.`;
+ status.textContent=pageStatus(matching.length,page+1,pages);
  grid.getAnimations().forEach(animation=>animation.cancel());
  if(motion)grid.animate([{opacity:0,transform:'translateY(5px)'},{opacity:1,transform:'translateY(0)'}],{duration:300,easing:'ease-out'});
 }

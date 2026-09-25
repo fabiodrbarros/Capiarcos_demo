@@ -26,7 +26,7 @@ test('admin: authentication, drafts, publication, validation, conflicts and pers
   const head404=await call('/pagina-inexistente','HEAD',undefined,{Accept:'text/html'});assert.equal(head404.status,404);assert.equal(await head404.text(),'');
   assert.equal((await call('/404.html')).status,404);
   const missingAsset=await call('/assets/inexistente.png');assert.equal(missingAsset.status,404);assert.match(missingAsset.headers.get('content-type'),/application\/json/);
-  assert.equal((await call('/api/admin/catalogue')).status,401);
+  assert.equal((await call('/api/admin/catalogue')).status,401);assert.equal((await call('/api/admin/translate','POST',{title:'Mesa',alt:'Madeira'})).status,401);
   assert.equal((await call('/data/admin.json')).status,404);
   assert.equal((await call('/api/login','POST',{user:'test-admin',password},{Origin:'https://other.example'})).status,403);
   const signed=await call('/api/login','POST',{user:'test-admin',password});assert.equal(signed.status,200);cookie=signed.headers.get('set-cookie').split(';')[0];assert.match(signed.headers.get('set-cookie'),/HttpOnly/);csrf=(await signed.json()).csrf;
@@ -56,6 +56,12 @@ test('admin: authentication, drafts, publication, validation, conflicts and pers
   assert.equal((await (await call('/api/catalogue')).json()).items.some(i=>i.id===item.id),false);
   const direct=await call('/api/admin/upload','POST',{revision:data.revision,category,title:'Publicação direta',alt:'Imagem de teste',published:true,image:'data:image/png;base64,'+png.toString('base64')});assert.equal(direct.status,201);data=await direct.json();const newest=data.items.at(-1);
   assert.equal(newest.published,true);assert.equal((await (await call('/api/catalogue')).json()).items[0].id,newest.id);assert.equal((await call(newest.url,'GET',undefined,{Cookie:''})).status,200);
+  const translated={en:{source:{title:newest.title,alt:newest.alt},title:'Custom table <safe>',alt:'Oak table'}};
+  data=await (await call('/api/admin/items/'+newest.id,'PATCH',{...newest,revision:data.revision,translations:translated})).json();
+  const english=await call('/catalogo/?lang=en');assert.equal(english.headers.get('content-language'),'en');assert.match(await english.text(),/Custom table &lt;safe&gt;/);
+  const french=await call('/?lang=fr');assert.match(await french.text(),/Là où le bois prend forme/);
+  assert.match(await (await call('/404.html?lang=en')).text(),/Page not found/);
+  assert.equal((await call('/api/admin/translate','POST',{title:'Mesa',alt:'Madeira'},{'X-CSRF-Token':'wrong'})).status,403);
   await stop();await start();cookie='';assert.equal((await call('/api/admin/catalogue')).status,401);
   const again=await call('/api/login','POST',{user:'test-admin',password});cookie=again.headers.get('set-cookie').split(';')[0];csrf=(await again.json()).csrf;
   const restored=await (await call('/api/admin/catalogue')).json();assert.equal(restored.items.find(i=>i.id===item.id).deleted,true);assert.equal(restored.revision,data.revision);

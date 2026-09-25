@@ -4,6 +4,9 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {randomUUID} from 'node:crypto';
 import sharp from 'sharp';
+import {language,localized,validateTranslations,renderLanguage} from './localization.mjs';
+import {translate} from '../frontend/dist/languages.mjs';
+import {translateFields} from './translation-service.mjs';
 import {dataDir,initStore,snapshot,mutate,publicCatalog} from './store.mjs';
 import {credentials,allowLogin,login,session,logout,cookie} from './auth.mjs';
 
@@ -31,6 +34,11 @@ async function serve(res,file,method,status=200){
  const type=mime[path.extname(file)];if(!type)fail(404,'Não encontrado.');
  try{if(!(await stat(file)).isFile())fail(404,'Não encontrado.');const bytes=await readFile(file);res.writeHead(status,{'Content-Type':type,'Content-Length':bytes.length});res.end(method==='HEAD'?undefined:bytes);}catch(e){if(e.code==='ENOENT'||e.code==='ENOTDIR')fail(404,'Não encontrado.');throw e;}
 }
+async function servePage(res,file,method,url,status=200){
+ let template;try{template=await readFile(file,'utf8');}catch(e){if(e.code==='ENOENT'||e.code==='ENOTDIR')fail(404,'Não encontrado.');throw e;}
+ const lang=language(url.searchParams.get('lang'));const html=renderLanguage(template,lang,url);
+ res.writeHead(status,{'Content-Type':mime['.html'],'Content-Language':lang});res.end(method==='HEAD'?undefined:html);
+}
 async function saveImage(imageData){
     if(typeof imageData!=='string'||!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(imageData))fail(400,'Escolha uma imagem JPEG, PNG ou WebP.');
     const bytes=Buffer.from(imageData.split(',')[1],'base64');if(bytes.length>10*1024*1024)fail(413,'Cada imagem pode ter até 10 MB.');
@@ -42,18 +50,20 @@ async function saveImage(imageData){
 
  return {url,width:encoded.info.width,height:encoded.info.height};
 }
-function catalogueMarkup(template){
+function catalogueMarkup(template,lang){
  const data=publicCatalog();
+ data.categories=data.categories.map(c=>({...c,name:localized(c,'name',lang)}));
+ data.items=data.items.map(i=>({...i,title:localized(i,'title',lang),alt:localized(i,'alt',lang)}));
  const counts=new Map(data.categories.map(c=>[c.id,data.items.filter(i=>i.category===c.id).length]));
- const filters=[{id:'all',name:'Todos'},...data.categories].map(c=>`<button type="button" data-category="${escape(c.id)}" aria-pressed="${c.id==='all'}" aria-controls="catalogue-grid"><span>${escape(c.name)}</span><span class="category-count">${c.id==='all'?data.items.length:counts.get(c.id)}</span></button>`).join('');
- const cards=data.items.map(i=>{const category=data.categories.find(c=>c.id===i.category)?.name||'';return `<article class="catalogue-item" data-category="${escape(i.category)}"><a class="catalogue-image-link" href="${escape(i.url)}" data-gallery-image aria-label="Ampliar ${escape(i.title)}" data-title="${escape(i.title)}" data-label="${escape(category)}"><span class="catalogue-frame"><span class="catalogue-mat"><span class="catalogue-image"><img src="${escape(i.url)}" alt="${escape(i.alt)}" width="${i.width}" height="${i.height}" loading="lazy"></span></span></span><span class="catalogue-caption"><span><span class="catalogue-category">${escape(category)}</span><span class="catalogue-name">${escape(i.title)}</span></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a></article>`;}).join('');
+ const filters=[{id:'all',name:translate('Todos',lang)},...data.categories].map(c=>`<button type="button" data-category="${escape(c.id)}" aria-pressed="${c.id==='all'}" aria-controls="catalogue-grid"><span>${escape(c.name)}</span><span class="category-count">${c.id==='all'?data.items.length:counts.get(c.id)}</span></button>`).join('');
+ const cards=data.items.map(i=>{const category=data.categories.find(c=>c.id===i.category)?.name||'';return `<article class="catalogue-item" data-category="${escape(i.category)}"><a class="catalogue-image-link" href="${escape(i.url)}" data-gallery-image aria-label="${escape(translate('Ampliar',lang))} ${escape(i.title)}" data-title="${escape(i.title)}" data-label="${escape(category)}"><span class="catalogue-frame"><span class="catalogue-mat"><span class="catalogue-image"><img src="${escape(i.url)}" alt="${escape(i.alt)}" width="${i.width}" height="${i.height}" loading="lazy"></span></span></span><span class="catalogue-caption"><span><span class="catalogue-category">${escape(category)}</span><span class="catalogue-name">${escape(i.title)}</span></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a></article>`;}).join('');
  return template.replace(/(<nav class="catalogue-filters"[^>]*>)[\s\S]*?<\/nav>/,(_,start)=>`${start}${filters}</nav>`).replace(/(<div class="catalogue-grid" id="catalogue-grid">)[\s\S]*?(<\/div><p class="catalogue-empty")/,(_,start,end)=>`${start}${cards}${end}`).replace('class="catalogue-empty" hidden',`class="catalogue-empty"${data.items.length?' hidden':''}`);
 }
 await initStore();
 const server=http.createServer(async(req,res)=>{
  res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Referrer-Policy','strict-origin-when-cross-origin');res.setHeader('Cache-Control','no-store');res.setHeader('X-Frame-Options','SAMEORIGIN');
  try{
-  const url=new URL(req.url,'http://localhost'),p=decodeURIComponent(url.pathname),method=req.method;
+  const url=new URL(req.url,'http://localhost'),p=decodeURIComponent(url.pathname),method=req.method,lang=language(url.searchParams.get('lang'));
   if(p.startsWith('/api/')){
    if(p==='/api/catalogue'&&method==='GET')return json(res,200,publicCatalog());
    if(p==='/api/session'&&method==='GET'){const s=await session(req);return json(res,200,{configured:!!await credentials(),authenticated:!!s,...(s?{csrf:s.csrf,user:s.user}:{})});}
@@ -69,37 +79,41 @@ const server=http.createServer(async(req,res)=>{
    const s=await session(req);if(!s)fail(401,'Inicie sessão para continuar.');
    if(method!=='GET'){checkOrigin(req);if(req.headers['x-csrf-token']!==s.csrf)fail(403,'Pedido não autorizado. Recarregue a página.');}
    if(p==='/api/logout'&&method==='POST'){logout(req);res.setHeader('Set-Cookie',cookie('',true));return json(res,200,{ok:true});}
+   if(p==='/api/admin/translate'&&method==='POST'){
+    const b=await body(req);const fields=b.kind==='category'?{name:text(b.name,60)}:{title:text(b.title),alt:text(b.alt,300)};
+    return json(res,200,{translations:await translateFields(fields)});
+   }
    if(p==='/api/admin/catalogue'&&method==='GET')return json(res,200,snapshot());
    if(p==='/api/admin/upload'&&method==='POST'){
-    const b=await body(req,15*1024*1024);text(b.title);text(b.alt,300);if(b.published!==undefined&&typeof b.published!=='boolean')fail(400,'Estado inválido.');
+    const b=await body(req,15*1024*1024);text(b.title);text(b.alt,300);const translations=validateTranslations(b.translations,{title:240,alt:600});if(b.published!==undefined&&typeof b.published!=='boolean')fail(400,'Estado inválido.');
     const result=await mutate(b.revision,async data=>{
      if(!data.categories.some(c=>c.id===b.category))fail(400,'Selecione uma categoria.');
      if(data.items.length>=3000)fail(400,'Limite de imagens atingido.');
      const {url,width,height}=await saveImage(b.image);
      const id=randomUUID();
-     data.items.push({id,category:b.category,title:text(b.title),alt:text(b.alt,300),url,width,height,order:data.items.length,published:b.published===true,deleted:false});
+     data.items.push({id,category:b.category,title:text(b.title),alt:text(b.alt,300),url,width,height,order:data.items.length,published:b.published===true,deleted:false,...(translations?{translations}:{})});
     });return json(res,201,result);
    }
    if(p==='/api/admin/categories'&&method==='POST'){
-    const b=await body(req);return json(res,201,await mutate(b.revision,data=>{const name=text(b.name,60);if(data.categories.length>=100)fail(400,'Limite de categorias atingido.');if(data.categories.some(c=>c.name.toLocaleLowerCase('pt')===name.toLocaleLowerCase('pt')))fail(409,'Já existe uma categoria com esse nome.');const base=name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'categoria';const id=data.categories.some(c=>c.id===base)?base+'-'+randomUUID().slice(0,8):base;data.categories.push({id,name,order:data.categories.length});}));
+    const b=await body(req);return json(res,201,await mutate(b.revision,data=>{const name=text(b.name,60);if(data.categories.length>=100)fail(400,'Limite de categorias atingido.');if(data.categories.some(c=>c.name.toLocaleLowerCase('pt')===name.toLocaleLowerCase('pt')))fail(409,'Já existe uma categoria com esse nome.');const base=name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'categoria';const id=data.categories.some(c=>c.id===base)?base+'-'+randomUUID().slice(0,8):base;const translations=validateTranslations(b.translations,{name:120});data.categories.push({id,name,order:data.categories.length,...(translations?{translations}:{})});}));
    }
    const category=/^\/api\/admin\/categories\/([\w-]+)$/.exec(p);
    if(category&&['PATCH','DELETE'].includes(method)){
-    const b=await body(req);return json(res,200,await mutate(b.revision,data=>{const c=data.categories.find(c=>c.id===category[1]);if(!c)fail(404,'Categoria inexistente.');if(method==='DELETE'){if(data.items.some(i=>i.category===c.id&&!i.deleted))fail(409,'Mova ou retire as imagens desta categoria primeiro.');data.categories=data.categories.filter(x=>x!==c);}else{const name=text(b.name,60);if(data.categories.some(x=>x.id!==c.id&&x.name.toLowerCase()===name.toLowerCase()))fail(409,'Nome de categoria repetido.');c.name=name;}}));
+    const b=await body(req);return json(res,200,await mutate(b.revision,data=>{const c=data.categories.find(c=>c.id===category[1]);if(!c)fail(404,'Categoria inexistente.');if(method==='DELETE'){if(data.items.some(i=>i.category===c.id&&!i.deleted))fail(409,'Mova ou retire as imagens desta categoria primeiro.');data.categories=data.categories.filter(x=>x!==c);}else{const name=text(b.name,60);if(data.categories.some(x=>x.id!==c.id&&x.name.toLowerCase()===name.toLowerCase()))fail(409,'Nome de categoria repetido.');const translations=validateTranslations(b.translations,{name:120});c.name=name;if(translations)c.translations=translations;}}));
    }
    const item=/^\/api\/admin\/items\/([\w-]+)$/.exec(p);
    if(item&&method==='PATCH'){
-    const b=await body(req,15*1024*1024);return json(res,200,await mutate(b.revision,async data=>{const i=data.items.find(x=>x.id===item[1]);if(!i)fail(404,'Imagem inexistente.');if(!data.categories.some(c=>c.id===b.category))fail(400,'Selecione uma categoria.');if(typeof b.published!=='boolean'||typeof b.deleted!=='boolean')fail(400,'Estado inválido.');const changes={title:text(b.title),alt:text(b.alt,300),category:b.category,published:b.published,deleted:b.deleted};if(b.image!==undefined)Object.assign(changes,await saveImage(b.image));Object.assign(i,changes);}));
+    const b=await body(req,15*1024*1024);return json(res,200,await mutate(b.revision,async data=>{const i=data.items.find(x=>x.id===item[1]);if(!i)fail(404,'Imagem inexistente.');if(!data.categories.some(c=>c.id===b.category))fail(400,'Selecione uma categoria.');if(typeof b.published!=='boolean'||typeof b.deleted!=='boolean')fail(400,'Estado inválido.');const changes={title:text(b.title),alt:text(b.alt,300),category:b.category,published:b.published,deleted:b.deleted};const translations=validateTranslations(b.translations,{title:240,alt:600});if(translations)changes.translations=translations;if(b.image!==undefined)Object.assign(changes,await saveImage(b.image));Object.assign(i,changes);}));
    }
    fail(404,'Operação inexistente.');
   }
   if(!['GET','HEAD'].includes(method))fail(405,'Método não permitido.');
-  if(p==='/404.html')return await serve(res,path.join(root,'404.html'),method,404);
+  if(p==='/404.html')return await servePage(res,path.join(root,'404.html'),method,url,404);
   if(p==='/healthz')return json(res,200,{ok:true});
-  if(p==='/catalogo.html'||p==='/contactos.html'||p==='/admin'||p==='/ca-guest-admin'||p==='/ca-guest-admin/'){res.writeHead(302,{Location:p.includes('admin')?'/admin/':p.replace('.html','/')});return res.end();}
-  if(p==='/catalogo'||p==='/contactos'){res.writeHead(301,{Location:p+'/'});return res.end();}
+  if(p==='/catalogo.html'||p==='/contactos.html'||p==='/admin'||p==='/ca-guest-admin'||p==='/ca-guest-admin/'){res.writeHead(302,{Location:p.includes('admin')?'/admin/':p.replace('.html','/')+url.search});return res.end();}
+  if(p==='/catalogo'||p==='/contactos'){res.writeHead(301,{Location:p+'/'+url.search});return res.end();}
   if(p==='/catalogo/'||p==='/catalogo/index.html'){
-   const html=catalogueMarkup(await readFile(path.join(root,'catalogo/index.html'),'utf8'));res.writeHead(200,{'Content-Type':mime['.html']});return res.end(method==='HEAD'?undefined:html);
+   const html=catalogueMarkup(renderLanguage(await readFile(path.join(root,'catalogo/index.html'),'utf8'),lang,url),lang);res.writeHead(200,{'Content-Type':mime['.html'],'Content-Language':lang});return res.end(method==='HEAD'?undefined:html);
   }
   if(p.startsWith('/media/')){
    const item=snapshot().items.find(i=>i.url===p);
@@ -113,10 +127,12 @@ const server=http.createServer(async(req,res)=>{
   }
   const normalized=path.resolve(root,'.'+p);
   if(normalized!==path.resolve(root)&&!normalized.startsWith(path.resolve(root)+path.sep))fail(404,'Não encontrado.');
-  return await serve(res,p.endsWith('/')?path.join(normalized,'index.html'):normalized,method);
+  const file=p.endsWith('/')?path.join(normalized,'index.html'):normalized;
+  if(file.endsWith('.html'))return await servePage(res,file,method,url);
+  return await serve(res,file,method);
   }catch(e){
   if(e.status===404&&!res.headersSent&&['GET','HEAD'].includes(req.method)&&req.headers.accept?.includes('text/html')&&!/^\/(api|media|assets)\//.test(req.url)){
-   try{return await serve(res,path.join(root,'404.html'),req.method,404);}catch{}
+   try{return await servePage(res,path.join(root,'404.html'),req.method,new URL(req.url,'http://localhost'),404);}catch{}
   }
   if(!res.headersSent)json(res,e.status||500,{error:e.status?e.message:'Não foi possível concluir. Tente novamente.'});else res.end();if(!e.status)console.error(e);}
 });

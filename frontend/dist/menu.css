@@ -37,3 +37,5 @@ dialog#menu{--ink:#682725;--muted:#865f5c;--rule:#68272526;background:#fff;color
 /* Only the final word of the menu slogan carries the brand red. */
 #menu .menu-slogan{color:#000}
 #menu .menu-slogan span{color:#682725}
+
+.menu-languages{display:flex;gap:14px;align-items:center}.menu-languages a{font-size:12px!important;letter-spacing:.12em;text-decoration:none;padding:6px 0;color:inherit;opacity:.55}.menu-languages a[aria-current]{opacity:1;border-bottom:1px solid currentColor}.menu-languages a:focus-visible{outline:2px solid currentColor;outline-offset:4px}

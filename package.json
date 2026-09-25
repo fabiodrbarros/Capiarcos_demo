@@ -8,7 +8,7 @@
     "dev": "node --watch server/server.mjs",
     "build": "node frontend/scripts/check-source.mjs && node --check server/server.mjs && node --check server/store.mjs && node --check server/auth.mjs && node --check server/setup-admin.mjs && node --check admin/admin.js",
     "admin:setup": "node server/setup-admin.mjs",
-    "test": "node --test server/server.test.mjs"
+    "test": "node --test server/*.test.mjs"
   },
   "dependencies": {
     "sharp": "0.35.4"

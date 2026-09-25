@@ -1,3 +1,4 @@
+import {t,stageStatus} from './i18n.mjs';
 import { drawMaterialTiles, drawingsReady } from './material-tiles.mjs';
 import { loadImage } from './image-assets.mjs';
 import { TRANSITION_MS, transitionValue } from './chapter-timing.mjs';
@@ -44,7 +45,7 @@ footer.inert=true;
 let hoverUntil=0;
 function go(index,focus=false){
  if(transition)return;
- if(!assetsReady){pendingChapter=[index,focus];assetNotice.textContent='A carregar as imagens…';return;}
+ if(!assetsReady){pendingChapter=[index,focus];assetNotice.textContent=t('A carregar as imagens…');return;}
  if(index>4){
   window.scrollBy({top:innerHeight*.65,behavior:reduced.matches?'instant':'smooth'});
   return;
@@ -153,7 +154,7 @@ function tick(now=performance.now()){
   });
   renderLines(p,origin,room);
   const index=Math.max(0,Math.min(4,Math.round(p)));
-  if(index!==active){active=index;body.dataset.scene=ids[index];steps.forEach((b,i)=>{if(i===index)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');});status.textContent=`${index+1} de 5 — ${steps[index].textContent.trim()}`;controls.querySelector('.fh-counter').textContent=`0${index+1} / 05`;}
+  if(index!==active){active=index;body.dataset.scene=ids[index];steps.forEach((b,i)=>{if(i===index)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');});status.textContent=stageStatus(index+1,5,steps[index].textContent.trim());controls.querySelector('.fh-counter').textContent=`0${index+1} / 05`;}
   prev.disabled=!!transition||p<.02;next.disabled=!!transition||p>3.98;
   const solutionsReady=!transition&&target===4&&progress===4;
  const layoutChanged=body.classList.contains('solutions-ready')!==solutionsReady;body.classList.toggle('solutions-ready',solutionsReady);footer.inert=!solutionsReady;if(layoutChanged)schedule();
@@ -193,7 +194,7 @@ const initial=Math.max(0,ids.indexOf(location.hash.slice(1)));
 if(location.hash)history.replaceState(history.state,'',location.pathname+location.search);
 // Deep links must respect the same decoded-image gate as wheel/touch navigation.
 target=progress=0;
-if(initial>0){pendingChapter=[initial,false];assetNotice.textContent='A carregar as imagens…';}
+if(initial>0){pendingChapter=[initial,false];assetNotice.textContent=t('A carregar as imagens…');}
 scrollTo({top:0,behavior:'instant'});
 schedule();
 addEventListener('pagehide',event=>{if(!event.persisted){stopped=true;cancelAnimationFrame(raf);}});
