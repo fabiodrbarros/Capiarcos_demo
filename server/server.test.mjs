@@ -23,7 +23,7 @@ test('admin: authentication, drafts, publication, validation, conflicts and pers
  try{
   await start();
   const missing=await call('/pagina-inexistente','GET',undefined,{Accept:'text/html'});assert.equal(missing.status,404);assert.match(missing.headers.get('content-type'),/text\/html/);assert.match(await missing.text(),/Página não encontrada/);
-  for(const [lang,title,heading] of [['pt','A empresa — Capiarcos','A ORIGEM'],['fr','L’entreprise — Capiarcos','LES ORIGINES'],['en','The company — Capiarcos','OUR ORIGINS']]){
+  for(const [lang,title,heading] of [['pt','Empresa | CAPIARCOS - Rigor · Autenticidade · Experiência','A ORIGEM'],['fr','Entreprise | CAPIARCOS - Rigueur · Authenticité · Expérience','LES ORIGINES'],['en','Company | CAPIARCOS - Precision · Authenticity · Experience','OUR ORIGINS']]){
    const response=await call('/empresa/?lang='+lang),html=await response.text();
    assert.equal(response.status,200);assert.equal(response.headers.get('content-language'),lang);
    assert.ok(html.includes(title));assert.ok(html.includes(heading));
