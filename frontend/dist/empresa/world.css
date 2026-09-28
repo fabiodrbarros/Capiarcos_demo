@@ -1,0 +1,26 @@
+/* Original transparent globe asset; all overlays are confined to Empresa. */
+.company-page .world-chapter{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;padding:4rem 1.5rem;min-height:70svh}
+.company-page .world-chapter h2{margin:0;text-align:center;font-size:clamp(1.1rem,2vw,1.9rem);line-height:1.35;letter-spacing:-.02em;color:#000;font-weight:700}
+.company-page .world-chapter h2 span{display:block}
+.company-page .world-chapter h2 span+span{color:#682725}
+.company-page .world-map{display:block;width:min(32vw,43dvh,420px);height:auto;aspect-ratio:1;overflow:visible;flex-shrink:0}
+.company-page .world-map text{font-family:inherit;font-size:15px;font-weight:600;fill:#682725;paint-order:stroke;stroke:#f1e3cc;stroke-width:3px;stroke-linejoin:round}
+.company-page .world-land{transform-box:fill-box;transform-origin:center}
+.company-page .world-threads{display:none;position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none;overflow:visible}
+.company-page .world-threads>path{fill:none;stroke:url(#thread-color);stroke-width:1.4;opacity:0;stroke-linecap:round}
+.company-page.company-ready .world-threads{display:block}
+.company-page.company-ready .world-chapter{position:absolute;inset:0;visibility:hidden;opacity:0;pointer-events:none;z-index:2;min-height:0;padding:6dvh 1.5rem 16dvh}
+.company-page.company-ready.world-visible .world-chapter{visibility:visible;opacity:1}
+.company-page.company-ready.world-visible .company-circle{opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+.company-page.company-ready.world-visible .company-topic{opacity:0;visibility:hidden;pointer-events:none}
+@media(max-width:760px){
+ .company-page.company-ready .world-chapter{padding:3rem 1.2rem 10rem;gap:1.6rem}
+ .company-page .world-map{width:min(73vw,40dvh)}
+ .company-page .world-chapter h2{font-size:clamp(.9rem,3.5vw,1.3rem)}
+}
+@media(max-height:500px){
+ .company-page.company-ready .world-chapter{padding:3.5rem 1rem 4rem;gap:.5rem}
+ .company-page .world-map{width:min(55vw,43dvh)}
+ .company-page .world-chapter h2{font-size:1rem}
+}
+@media(prefers-reduced-motion:reduce){.company-page .world-threads{display:none}}

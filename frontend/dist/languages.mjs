@@ -1,5 +1,10 @@
 // Approved Portuguese copy and its French/English equivalents. Proper names stay unchanged.
 const rows = [
+["DE ARCOS DE VALDEVEZ PARA O MUNDO:","D’ARCOS DE VALDEVEZ VERS LE MONDE :","FROM ARCOS DE VALDEVEZ TO THE WORLD:"],
+["QUALIDADE ALÉM FRONTEIRAS!","LA QUALITÉ AU-DELÀ DES FRONTIÈRES!","QUALITY BEYOND BORDERS!"],
+["Portugal","Portugal","Portugal"],
+["França","France","France"],
+["Continentes em relevo vermelho, com ligação de Arcos de Valdevez, Portugal, a França","Continents rouges en relief, avec une liaison entre Arcos de Valdevez, au Portugal, et la France","Red relief continents, with a connection from Arcos de Valdevez, Portugal, to France"],
 ["Onde a madeira ganha forma, ","Là où le bois prend forme, ","Where wood takes shape, "],
 ["A Capiarcos, fundada em 1998, dedica-se desde então à execução de trabalhos de carpintaria e mobiliário, desenvolvendo soluções para cozinhas, roupeiros, portas, escadas, pavimentos, salas, quartos, escritórios e outros espaços interiores e exteriores.","Fondée en 1998, Capiarcos réalise depuis lors des travaux de menuiserie et de mobilier, en développant des solutions pour les cuisines, les armoires, les portes, les escaliers, les sols, les salons, les chambres, les bureaux et autres espaces intérieurs et extérieurs.","Founded in 1998, Capiarcos has since specialised in carpentry and furniture, developing solutions for kitchens, wardrobes, doors, staircases, flooring, living rooms, bedrooms, offices and other interior and exterior spaces."],
 ["Carpintaria por medida","Menuiserie sur mesure","Bespoke carpentry"],
