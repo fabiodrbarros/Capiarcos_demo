@@ -116,6 +116,15 @@ function tick(now=performance.now()){
   });
   const solutionTitle=document.querySelector('.fh-service-heading');body.style.setProperty('--home-copy-height',solutionTitle.offsetHeight+'px');solutionTitle.style.opacity=ease(3.66,3.96,p);
   if(!panels[4].hidden){
+    // Account for the real title, button and grid gaps in short laptop windows.
+    if(innerWidth>700){
+      const panel=panels[4],grid=panel.querySelector('.fh-categories'),action=panel.querySelector('.fh-action');
+      const ps=getComputedStyle(panel),gs=getComputedStyle(grid),ts=getComputedStyle(solutionTitle),as=getComputedStyle(action);
+      const px=value=>parseFloat(value)||0;
+      const available=panel.clientHeight-px(ps.paddingTop)-px(ps.paddingBottom)-solutionTitle.offsetHeight-px(ts.marginTop)-px(ts.marginBottom)-action.offsetHeight-px(as.marginTop)-px(as.marginBottom);
+      const columns=gs.gridTemplateColumns.split(' ').length,rows=Math.ceil(categories.length/columns);
+      panel.style.setProperty('--solution-fit',Math.max(40,(available-px(gs.rowGap)*(rows-1))/(rows*.82))+'px');
+    }
     // Centre the sentence on the visible frames, not the wider wall container.
     solutionTitle.style.transform='none';
     const frames=categories.map(link=>link.getBoundingClientRect());
