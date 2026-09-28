@@ -1,9 +1,15 @@
 // Approved Portuguese copy and its French/English equivalents. Proper names stay unchanged.
 const rows = [
+["Onde a madeira ganha forma, ","Là où le bois prend forme, ","Where wood takes shape, "],
+["A Capiarcos, fundada em 1998, dedica-se desde então à execução de trabalhos de carpintaria e mobiliário, desenvolvendo soluções para cozinhas, roupeiros, portas, escadas, pavimentos, salas, quartos, escritórios e outros espaços interiores e exteriores.","Fondée en 1998, Capiarcos réalise depuis lors des travaux de menuiserie et de mobilier, en développant des solutions pour les cuisines, les armoires, les portes, les escaliers, les sols, les salons, les chambres, les bureaux et autres espaces intérieurs et extérieurs.","Founded in 1998, Capiarcos has since specialised in carpentry and furniture, developing solutions for kitchens, wardrobes, doors, staircases, flooring, living rooms, bedrooms, offices and other interior and exterior spaces."],
+["Carpintaria por medida","Menuiserie sur mesure","Bespoke carpentry"],
+["Fale connosco","Parlons de votre projet","Talk to us"],
 ['Fabricação e montagem de carpintaria desde 1998','Fabrication et pose de menuiserie depuis 1998','Manufacture and installation of joinery since 1998'],
 ['Home','Accueil','Home'],['Catálogo','Catalogue','Catalogue'],['Contactos','Contact','Contact'],
 ['Onde a madeira','Là où le bois','Where wood'],['ganha','prend','takes'],['forma.','forme.','shape.'],
-['Onde a madeira ganha forma','Là où le bois prend forme','Where wood takes shape'],
+['Onde a madeira ganha forma,','Là où le bois prend forme,','Where wood takes shape,'],
+['o espaço ganha identidade.','l’espace prend une identité.','space gains identity.'],
+['Onde a madeira ganha forma, o espaço ganha identidade.','Là où le bois prend forme, l’espace prend une identité.','Where wood takes shape, space gains identity.'],
 ['Da medida nasce a peça','La pièce naît de la mesure','Every piece begins with precise measurements'],
 ['Cada projeto começa com o levantamento do espaço e com a compreensão daquilo que é necessário construir. Medidas, volumes, aberturas, ferragens, materiais e acabamentos são definidos em conjunto para que cada peça seja produzida com rigor e se adapte corretamente ao local onde vai ser instalada.','Chaque projet commence par un relevé des lieux et une compréhension de ce qui doit être réalisé. Dimensions, volumes, ouvertures, quincaillerie, matériaux et finitions sont définis ensemble afin que chaque pièce soit fabriquée avec précision et s’intègre parfaitement à son emplacement.','Every project begins with a survey of the space and an understanding of what needs to be built. Dimensions, volumes, openings, fittings, materials and finishes are defined together so that each piece is made with precision and fits its intended location.'],
 ['É na oficina que o projeto ganha corpo','C’est à l’atelier que le projet prend forme','The project takes shape in the workshop'],

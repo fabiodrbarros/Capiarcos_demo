@@ -62,6 +62,11 @@ document.querySelectorAll('[data-gallery-image]').forEach(link => {
     fullImage.alt = link.querySelector('img').alt;
     dialog.querySelector('.gallery-label').textContent = link.dataset.label;
     dialog.querySelector('.gallery-title').textContent = link.dataset.title;
+    const description = dialog.querySelector('.gallery-description');
+    description.textContent = fullImage.alt.trim();
+    description.hidden = !description.textContent;
+    if (description.hidden) dialog.removeAttribute('aria-describedby');
+    else dialog.setAttribute('aria-describedby', 'gallery-description');
     dialog.showModal();
     closeButton.focus();
   });

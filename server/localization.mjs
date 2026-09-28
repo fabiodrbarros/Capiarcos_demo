@@ -23,14 +23,14 @@ export function validateTranslations(value,fields){
  return result;
 }
 export function renderLanguage(html,lang,url){
- html=html.replace(/(<dialog id="menu"[\s\S]*?<nav[^>]*><a href="\/">Home<\/a>)/, '$1<a href="/empresa/">Empresa</a>');
+ if(!/<dialog id="menu"(?:(?!<\/dialog>)[\s\S])*href="\/empresa\/"/.test(html))html=html.replace(/(<dialog id="menu"[\s\S]*?<nav[^>]*><a href="\/">Home<\/a>)/, '$1<a href="/empresa/">Empresa</a>');
  const t=s=>escapeHtml(translate(decode(s),lang));
  let raw=false;
  html=html.split(/(<[^>]+>)/g).map(token=>{
   if(token.startsWith('<')){
    if(/^<(script|style)\b/i.test(token))raw=true;
    if(/^<\/(script|style)>/i.test(token))raw=false;
-   return token.replace(/\b(aria-label|placeholder|title|alt|content)="([^"]*)"/g,(_,attr,value)=>`${attr}="${t(value)}"`);
+   return token.replace(/\b(aria-label|placeholder|data-title|data-label|title|alt|content)="([^"]*)"/g,(_,attr,value)=>`${attr}="${t(value)}"`);
   }
   if(raw)return token;
   return token.replace(/^(\s*)([\s\S]*?)(\s*)$/,(_,a,b,c)=>a+t(b)+c);
