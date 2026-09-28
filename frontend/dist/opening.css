@@ -46,3 +46,6 @@
 .story-ready[data-scene="inicio"] .room-backdrop:after{display:none;background:none}
 
 @media(prefers-reduced-motion:reduce){.intro-bottom a,.intro-bottom a:after{transition:none}}
+
+/* Only descriptive homepage copy changes to black. */
+.story-ready .fh-panel .fh-description{color:#000}
