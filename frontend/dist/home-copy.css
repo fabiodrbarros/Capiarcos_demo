@@ -43,7 +43,7 @@
 }
 
 /* The solutions introduction is a single, larger sentence. */
-.story-ready .fh-services .fh-service-heading h2{font-size:clamp(1.125rem,1.4vw,1.5rem);line-height:1.35;letter-spacing:0;text-transform:none;text-wrap:balance;text-align:center;font-weight:400}
+.story-ready .fh-services .fh-service-heading h2{font-size:clamp(1.125rem,1.4vw,1.5rem);line-height:1.35;letter-spacing:0;text-transform:uppercase;text-wrap:balance;text-align:center;font-weight:400}
 @media(min-width:1101px){.story-ready .fh-service-heading{width:calc(100% + 12vw);margin-left:-6vw}.story-ready .fh-services .fh-service-heading h2{font-size:clamp(1.125rem,1.4vw,1.5rem)}}
 @media(max-width:1100px){.solutions-title-break{display:none}}
 
@@ -65,3 +65,22 @@
 }
 
 .fh-service-heading .solutions-intro{color:#000}
+
+/* Shared heading typography across all five homepage chapters. */
+.story-ready .fh-panel .fh-copy :is(h1,h2),
+.story-ready .fh-services .fh-service-heading h2{
+ font-family:inherit;
+ font-size:clamp(1.125rem,1.4vw,1.5rem);
+ font-weight:400;
+ line-height:1.35;
+ letter-spacing:0;
+ text-transform:uppercase;
+ text-wrap:balance;
+}
+@media(max-width:700px){
+ .story-ready .fh-panel .fh-copy :is(h1,h2),
+ .story-ready .fh-services .fh-service-heading h2{
+  font-size:clamp(.875rem,3.5vw,1rem);
+  line-height:1.3;
+ }
+}

@@ -1,8 +1,8 @@
 import {ease,mix} from './material-story.mjs';
 import {loadImage} from './image-assets.mjs';
-const crops=[[965,543,55,55],[1175,554,85,85]];
+const redCrop=[1175,554,85,85];
 const drawingNames=['01_cozinhas', '02_roupeiros', '03_moveis_tv', '04_quartos', '05_casas_banho', '06_ripados', '07_mesas', '08_portas', '09_escadas', '10_aparadores', '11_escritorios', '12_estantes'];
-const assets=drawingNames.map(name=>loadImage(`/assets/solution-svg/${name}.svg`));
+const assets=drawingNames.map(name=>loadImage(`/assets/solution-images/${name.replaceAll('_','-')}.png`));
 const drawings=assets.map(asset=>asset.image);
 export const drawingsReady=Promise.allSettled(assets.map(asset=>asset.ready));
 export function tilePose(source,destination,p,i){
@@ -13,23 +13,24 @@ export function drawMaterialTiles(ctx,models,p,sources,img,panel,origin={left:0,
  if(!img?.complete||!img.naturalWidth)return;
  ctx.save();
  if(p>=3.99){ctx.beginPath();ctx.rect(panel.left,panel.top,panel.width,panel.height);ctx.clip();}
+ // Only the red material sample opens into the transparent solution images.
+ const source=sources[1],opening=ease(3,3.48,p);
+ if(opening<1){
+  const [sx,sy,sw,sh]=source,grow=1+opening*.25;
+  ctx.save();ctx.globalAlpha=(1-ease(3.04,3.48,p));
+  ctx.drawImage(img,...redCrop,sx-sw*(grow-1)/2,sy-sh*(grow-1)/2,sw*grow,sh*grow);ctx.restore();
+ }
  models.forEach(({svg},i)=>{
   const b=svg.parentElement.getBoundingClientRect();
-  const [x,y,w,h]=tilePose(sources[i%2],[b.left-origin.left,b.top-origin.top,b.width,b.height],p,i);
-  const framed=ease(3.3+i*.01,3.88+i*.005,p),art=ease(3.52+i*.01,3.96,p);
-  ctx.save();ctx.globalAlpha=ease(3,3.04,p);
-  ctx.shadowColor='rgba(54,29,16,.22)';ctx.shadowBlur=w*.08;ctx.shadowOffsetX=w*.04;ctx.shadowOffsetY=w*.055;
-  ctx.drawImage(img,...crops[i%2],x,y,w,h);ctx.shadowColor='transparent';
-  ctx.globalAlpha=framed;ctx.fillStyle='#682725';ctx.fillRect(x,y,w,h);
-  const rim=Math.max(4,w*.035);ctx.fillStyle='#fff';ctx.fillRect(x+rim,y+rim,w-2*rim,h-2*rim);
-  ctx.strokeStyle='#b976604d';ctx.lineWidth=1;ctx.strokeRect(x+.5,y+.5,w-1,h-1);
+  const [x,y,w,h]=tilePose(source,[b.left-origin.left,b.top-origin.top,b.width,b.height],p,i);
+  const art=ease(3.12+i*.012,3.72+i*.012,p);
   const drawing=drawings[i];
   if(drawing.complete&&drawing.naturalWidth){
-   const pad=rim+w*.015,areaW=w-2*pad,areaH=h-2*pad-Math.max(h*.17,18)-4;
+   const pad=w*.025,areaW=w-2*pad,areaH=h-2*pad-Math.max(h*.17,18)-4;
    const scale=Math.min(areaW/drawing.naturalWidth,areaH/drawing.naturalHeight);
    const dw=drawing.naturalWidth*scale,dh=drawing.naturalHeight*scale;
-   ctx.globalAlpha=art;ctx.drawImage(drawing,x+(w-dw)/2,y+pad+(areaH-dh)/2,dw,dh);
+   ctx.save();ctx.globalAlpha=art;
+   ctx.drawImage(drawing,x+(w-dw)/2,y+pad+(areaH-dh)/2,dw,dh);ctx.restore();
   }
-  ctx.restore();
  });ctx.restore();
 }
