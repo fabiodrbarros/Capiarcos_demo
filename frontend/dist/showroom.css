@@ -170,3 +170,8 @@
 .gallery-description{flex-basis:100%;min-width:0;max-width:min(80vw,1200px);margin:0;line-height:1.55;white-space:pre-line;overflow-wrap:anywhere;color:var(--text)}
 .gallery-description[hidden]{display:none}
 @media(max-width:700px){.gallery-description{flex-basis:auto;max-width:100%;margin-top:.5rem}}
+
+/* Contact content: black body copy and brand-red headings. */
+.room-contactos .room-main :is(.c-val,.c-val a,.callcost,.fgr label,.fgr input,.fgr textarea,.form-delivery-note,.form-status, noscript p,noscript a){color:#000}
+.room-contactos .room-main .fgr input::placeholder,.room-contactos .room-main .fgr textarea::placeholder{color:#000}
+.room-contactos .room-main :is(h1,h2,.c-lbl,.room-eyebrow){color:#682725}

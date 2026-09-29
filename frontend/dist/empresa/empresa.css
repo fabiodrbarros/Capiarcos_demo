@@ -61,3 +61,6 @@
  .company-ready .topic-copy{width:44%}
  .company-ready .topic-copy p{font-size:.875rem}
 }
+
+/* Descriptive copy is black; heading colors remain unchanged. */
+.company-page .topic-copy p{color:#000}
