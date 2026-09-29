@@ -24,3 +24,7 @@
  .company-page .world-chapter h2{font-size:1rem}
 }
 @media(prefers-reduced-motion:reduce){.company-page .world-threads{display:none}}
+
+/* Match the approved homepage heading typography. */
+.company-page .topic-copy h2,.company-page .world-chapter h2{font-family:inherit;font-size:clamp(1.125rem,1.4vw,1.5rem);font-weight:400;line-height:1.35;letter-spacing:0;text-transform:uppercase;text-wrap:balance}
+@media(max-width:700px){.company-page .topic-copy h2,.company-page .world-chapter h2{font-size:clamp(.875rem,3.5vw,1rem);line-height:1.3}}
